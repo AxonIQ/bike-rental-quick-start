@@ -50,10 +50,10 @@ public class PaymentSaga {
     @StartSaga
     @SagaEventHandler(associationProperty = "bikeId")
     public void on(BikeRequestedEvent event) {
-        this.bikeId = event.getBikeId();
-        this.renter = event.getRenter();
-        SagaLifecycle.associateWith("paymentReference", event.getRentalReference());
-        preparePayment(event.getRentalReference());
+        this.bikeId = event.bikeId();
+        this.renter = event.renter();
+        SagaLifecycle.associateWith("paymentReference", event.rentalReference());
+        preparePayment(event.rentalReference());
     }
 
     @EndSaga

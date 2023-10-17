@@ -1,6 +1,6 @@
 ### Generate bikes
 # First, generate some bikes
-POST {{rental}}/?bikes=20&bikeType=city
+POST {{rental}}?bikes=20&bikeType=city
 Accept: application/json
 
 ### List all
@@ -10,17 +10,17 @@ Accept: application/json
 
 ### Bike status
 # Show bike status
-GET {{rental}}/bikes/28dc25a1-33cc-42fa-a660-cc19cb8711f1
+GET {{rental}}/bikes/f6dd253e-8398-48c3-b7f1-49c52c21c594
 Accept: application/json
 
 ### Request Bike
 # Request one of the available bikes
-POST {{rental}}/requestBike?bikeId=28dc25a1-33cc-42fa-a660-cc19cb8711f1
+POST {{rental}}/requestBike?bikeId=f6dd253e-8398-48c3-b7f1-49c52c21c594
 Accept: application/json
 
 ### Find paymentID
 # Find the payment for a specific payment reference
-GET {{payment}}/findPayment?reference=f9ad3f92-8a94-488c-b29e-f2c2c437b878
+GET {{payment}}/findPayment?reference=eaeb5a1f-13df-4611-9e32-228af47e7d04
 Accept: application/json
 
 ### Accept Payment

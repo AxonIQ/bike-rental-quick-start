@@ -49,7 +49,7 @@ public class Bike {
 
     @CommandHandler
     public Bike(RegisterBikeCommand command) {
-        apply(new BikeRegisteredEvent(command.getBikeId(), command.getBikeType(), command.getLocation()));
+        apply(new BikeRegisteredEvent(command.bikeId(), command.bikeType(), command.location()));
     }
 
     @CommandHandler
@@ -58,27 +58,27 @@ public class Bike {
             throw new IllegalStateException("Bike is already rented");
         }
         String rentalReference = UUID.randomUUID().toString();
-        apply(new BikeRequestedEvent(command.getBikeId(), command.getRenter(), rentalReference));
+        apply(new BikeRequestedEvent(command.bikeId(), command.renter(), rentalReference));
 
         return rentalReference;
     }
 
     @CommandHandler
     public void handle(ApproveRequestCommand command) {
-        if (!Objects.equals(reservedBy, command.getRenter())
+        if (!Objects.equals(reservedBy, command.renter())
                 || reservationConfirmed) {
             return ;
         }
-        apply(new BikeInUseEvent(command.getBikeId(), command.getRenter()));
+        apply(new BikeInUseEvent(command.bikeId(), command.renter()));
     }
 
     @CommandHandler
     public void handle(RejectRequestCommand command) {
-        if (!Objects.equals(reservedBy, command.getRenter())
+        if (!Objects.equals(reservedBy, command.renter())
                 || reservationConfirmed) {
             return;
         }
-        apply(new RequestRejectedEvent(command.getBikeId()));
+        apply(new RequestRejectedEvent(command.bikeId()));
     }
 
     @CommandHandler
@@ -86,12 +86,12 @@ public class Bike {
         if (this.isAvailable) {
             throw new IllegalStateException("Bike was already returned");
         }
-        apply(new BikeReturnedEvent(command.getBikeId(), command.getLocation()));
+        apply(new BikeReturnedEvent(command.bikeId(), command.location()));
     }
 
     @EventSourcingHandler
     protected void handle(BikeRegisteredEvent event) {
-        this.bikeId = event.getBikeId();
+        this.bikeId = event.bikeId();
         this.isAvailable = true;
     }
 
@@ -104,7 +104,7 @@ public class Bike {
 
     @EventSourcingHandler
     protected void handle(BikeRequestedEvent event) {
-        this.reservedBy = event.getRenter();
+        this.reservedBy = event.renter();
         this.reservationConfirmed = false;
         this.isAvailable = false;
     }
