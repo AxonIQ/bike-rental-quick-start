@@ -50,17 +50,17 @@ public class PaymentStatusProjection {
 
     @EventHandler
     public void handle(PaymentPreparedEvent event) {
-        paymentStatusRepository.save(new PaymentStatus(event.getPaymentId(), event.getAmount(), event.getPaymentReference()));
-        updateEmitter.emit(String.class, event.getPaymentReference()::equals, event.getPaymentId());
+        paymentStatusRepository.save(new PaymentStatus(event.paymentId(), event.amount(), event.paymentReference()));
+        updateEmitter.emit(String.class, event.paymentReference()::equals, event.paymentId());
     }
 
     @EventHandler
     public void handle(PaymentConfirmedEvent event) {
-        paymentStatusRepository.findById(event.getPaymentId()).ifPresent(s -> s.setStatus(APPROVED));
+        paymentStatusRepository.findById(event.paymentId()).ifPresent(s -> s.setStatus(APPROVED));
     }
 
     @EventHandler
     public void handle(PaymentRejectedEvent event) {
-        paymentStatusRepository.findById(event.getPaymentId()).ifPresent(s -> s.setStatus(REJECTED));
+        paymentStatusRepository.findById(event.paymentId()).ifPresent(s -> s.setStatus(REJECTED));
     }
 }

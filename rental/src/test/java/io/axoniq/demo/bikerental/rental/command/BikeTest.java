@@ -42,8 +42,8 @@ class BikeTest {
                .expectResultMessagePayloadMatching(matches(String.class::isInstance))
                .expectEventsMatching(exactSequenceOf(
                        messageWithPayload(matches((BikeRequestedEvent e) ->
-                                                          e.getBikeId().equals("bikeId")
-                                                                  && e.getRenter().equals("rider"))),
+                                                          e.bikeId().equals("bikeId")
+                                                                  && e.renter().equals("rider"))),
                        andNoMore()));
     }
 
@@ -119,8 +119,8 @@ class BikeTest {
                .when(new RequestBikeCommand("bikeId", "newRider"))
                .expectEventsMatching(exactSequenceOf(
                        messageWithPayload(matches((BikeRequestedEvent e) ->
-                                                          e.getBikeId().equals("bikeId")
-                                                                  && e.getRenter().equals("newRider"))),
+                                                          e.bikeId().equals("bikeId")
+                                                                  && e.renter().equals("newRider"))),
                        andNoMore()));
 
 
@@ -134,8 +134,8 @@ class BikeTest {
                .when(new RequestBikeCommand("bikeId", "newRider"))
                .expectEventsMatching(exactSequenceOf(
                        messageWithPayload(matches((BikeRequestedEvent e) ->
-                                                          e.getBikeId().equals("bikeId")
-                                                                  && e.getRenter().equals("newRider"))),
+                                                          e.bikeId().equals("bikeId")
+                                                                  && e.renter().equals("newRider"))),
                        andNoMore()));
 
 

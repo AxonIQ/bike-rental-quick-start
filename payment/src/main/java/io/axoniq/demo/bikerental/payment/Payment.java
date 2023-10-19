@@ -30,27 +30,27 @@ public class Payment {
     @CommandHandler
     public Payment(PreparePaymentCommand command) {
         String paymentId = UUID.randomUUID().toString();
-        apply(new PaymentPreparedEvent(paymentId, command.getAmount(), command.getPaymentReference()));
+        apply(new PaymentPreparedEvent(paymentId, command.amount(), command.paymentReference()));
     }
 
     @CommandHandler
     public void handle(ConfirmPaymentCommand command) {
         if (!closed) {
-            apply(new PaymentConfirmedEvent(command.getPaymentId(), paymentReference));
+            apply(new PaymentConfirmedEvent(command.paymentId(), paymentReference));
         }
     }
 
     @CommandHandler
     public void handle(RejectPaymentCommand command) {
         if (!closed) {
-            apply(new PaymentRejectedEvent(command.getPaymentId(), paymentReference));
+            apply(new PaymentRejectedEvent(command.paymentId(), paymentReference));
         }
     }
 
     @EventSourcingHandler
     protected void on(PaymentPreparedEvent event) {
-        this.id = event.getPaymentId();
-        this.paymentReference = event.getPaymentReference();
+        this.id = event.paymentId();
+        this.paymentReference = event.paymentReference();
     }
 
     @EventSourcingHandler
