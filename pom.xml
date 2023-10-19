@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.5</version>
+		<version>3.1.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.axoniq.demo.bikerental</groupId>
-	<artifactId>bike-rental-quick-start</artifactId>
+	<artifactId>bike-rental</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bike-rental</name>
 	<description>Demo project for Axon</description>
@@ -26,9 +26,9 @@
 	</modules>
 
 	<properties>
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
-		<java.version>21</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<java.version>17</java.version>
 		<axon.version>4.8.2</axon.version>
 	</properties>
 
