@@ -20,13 +20,27 @@ The following software must be installed in your local environment:
 ## Quick Start
 
 * An IDE such as [Jetbrains IDEA](https://www.jetbrains.com/idea/) is recommended.
-
+### Start Services
 Begin by running the RentalApplication and PaymentApplication Services (order of startup does not matter).  
 This will start a docker image of Axon-Server using run the docker-compose.yaml file found in the root of the project. 
 Once you have both services started you can see them connected to Axon-Server at http://localhost:8024/#overview
-![Axon Server Overview](./images/Bike-Rental-Quick-Start-AxonServer-Overview.png)
+![Axon Server Overview](./images/Bike-Rental-Quick-Start-AxonServer-Overview.png).  From this page you are able to
+navigate to the details for each application by clicking on the application in the diagram.  From this page you are able
+to see the list of connected application instances, handled commands, handled queries, and running event processors
 
- 
+### Populate Inventory of Bikes
+In order to begin offering our bike rental service we will need an inventory of bikes.  To do this, navigate to the
+[requests.http](./requests.http) file, find the section with the header ```### Generate bikes``` and executing the http 
+```POST``` command shown.  This will give you an inventory of bikes which you can verify by executing the http command
+found in the```### List all``` section of [requests.http](./requests.http) file.
+
+
+### Generate Bike Rentals
+Now that your inventory is in place it is time to make some money!!  To simulate all the steps of a rental and return 
+(request a bike, completing payment, unlocking, and finally returning) we can execute the http command found at the header
+```### Generate Rentals``` of the of [requests.http](./requests.http) file.
+
+### 
 
 
 
