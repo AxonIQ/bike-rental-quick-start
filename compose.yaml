@@ -1,6 +1,6 @@
 services:
   axonserver:
-    image: 'axoniq/axonserver:2023.1.2-jdk-17-dev'
+    image: 'axoniq/axonserver:latest-dev'
     environment:
       - 'AXONIQ_AXONSERVER_STANDALONE=TRUE'
     ports:
