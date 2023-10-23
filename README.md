@@ -21,7 +21,12 @@ The following software must be installed in your local environment:
 
 * An IDE such as [Jetbrains IDEA](https://www.jetbrains.com/idea/) is recommended.
 
-The 
+Begin by running the RentalApplication and PaymentApplication Services (order of startup does not matter).  
+This will start a docker image of Axon-Server using run the docker-compose.yaml file found in the root of the project. 
+Once you have both services started you can see them connected to Axon-Server at http://localhost:8024/#overview
+![Axon Server Overview](./images/Bike-Rental-Quick-Start-AxonServer-Overview.png)
+
+ 
 
 
 
