@@ -1,15 +1,34 @@
 # Building event-driven applications using DDD, CQRS and Event Sourcing, with Axon Framework
 
-Welcome to this workshop! You will build a "bike rental" sample application
-with [Axon Framework and Axon Server](https://developer.axoniq.io/).
+The goal of this repo is to show how one can develop a structured monolithic application that can evolve to become a set of microservices
+using [Axon Framework and Axon Server](https://developer.axoniq.io/).
 
-## Installation
+This starts as two services, Rental (Monolith) and Payment which work together to run the Axoniq World Wide Bike Rental Service. 
+The Rental service manages the inventory and rental status of bikes.  While the Payment service manages payment processing related to 
+a bike rental.  
+
+![Axoniq World Wide Bike Rental Architecture](./images/Bike-Rental-Quick-Start.monolith.png)
+
+## Pre-requisites
 
 The following software must be installed in your local environment:
 
 * JDK version 21.
 
 * Docker-Compose
+
+## Quick Start
+
+* An IDE such as [Jetbrains IDEA](https://www.jetbrains.com/idea/) is recommended.
+
+The 
+
+
+
+
+
+## Part 2: Evolving monolith to microservices
+* Run [create-microservices.sh](create-microservices.sh)
 
     * To install as a Jar file:
 
