@@ -31,6 +31,7 @@ Once on the details page for an application you are able to see the list of conn
 list of handled commands, list of handled queries, and running event processors
 
 
+## Running our business
 ### Populate Inventory of Bikes
 In order to begin offering our bike rental service we will need an inventory of bikes.  To do this, navigate to the
 [requests.http](./requests.http) file, find the section with the header ```### Generate bikes``` and executing the http 
@@ -43,10 +44,8 @@ Now that your inventory is in place it is time to make some money!!  To simulate
 (request a bike, completing payment, unlocking, and finally returning) we can execute the http command found at the header
 ```### Generate Rentals``` of the of [requests.http](/requests.http) file.
 
-### 
 
-
-## Evolving Payment monolith to microservices
+## Evolving Rental Application monolith to microservices
 Great news!  The Axoniq World Wide Bike Rental Service is renting bikes faster than we can buy them!  As a result our
 Rental Application is experiencing some scalability issues.  To handle this increase in volume on our application it has
 been determined that we need to break out the parts of the Rental Application each in to their own service.  Our updated
@@ -54,7 +53,7 @@ architecture now looks like the following...![Axoniq World Wide Bike Rental Micr
 
 To make this happen run the [create-microservices.sh](create-microservices.sh) script to copy the necessary files into 
 the pre-defined services in the project. Once the script is complete, you must stop the running `RentalApplication` app (port conflict),
-and then run the new services `rental-command`, `rental-payment`, `rental-query`, and `rental-ui`.
+and then run the new services `RentalCommandApplication`, `RentalPaymentApplication`, `RentalQueryApplication`, and `UserInterfaceApplication`.
 
 This allows us to run each aspect of our Rental domain as an independent service with no functional changes to the code base. 
 Our initial approach of using features in Axon Framework such as Command Gateway and Query Gateway have provided us with
@@ -63,6 +62,6 @@ the increased load of our ever growing bike rental business.
 
 
 ## Monitoring our axon based services
-To be able to understand the performance of our services, we can use the ![Axoniq Console](https://console.axoniq.io). Using 
+To be able to understand the performance of our services, we can use the [Axoniq Console](https://console.axoniq.io). Using 
 Axoniq Console we can register each of our microservices, check on performance command handling within our Aggregates (Bike and Payment),
 query handling performance, and event processors as well. 
