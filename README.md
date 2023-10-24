@@ -61,7 +61,7 @@ location independence between our components.   We are now able to evolve and sc
 the increased load of our ever growing bike rental business.
 
 
-## Monitoring our axon based services
+## Monitoring our Axon Framework and Axon Server based services
 To be able to understand the performance of our services, we can use the [Axoniq Console](https://console.axoniq.io). Using 
 Axoniq Console we can register each of our microservices, check on performance command handling within our Aggregates (Bike and Payment),
 query handling performance, and event processors as well. 
