@@ -78,3 +78,11 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental-ui:latest
 
+      - name: Build and push participants service
+        uses: docker/build-push-action@v2
+        with:
+          context: .github/axonserver
+          platforms: linux/amd64,linux/arm64/v8
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/axoniq/bike-rental-axonserver-control-tower:latest
+
