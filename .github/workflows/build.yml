@@ -44,7 +44,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: Install services
         run: |
-          ./mvnw -B -U clean install
+          sh mvnw -B -U clean install
 
       - name: Build and push auctions service
         uses: docker/build-push-action@v2
