@@ -4,39 +4,52 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- tag::parent[] -->
     <parent>
         <groupId>io.axoniq.demo.bikerental</groupId>
         <artifactId>bike-rental</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <!-- end::parent[] -->
 
     <artifactId>rental</artifactId>
 
+    <!-- tag::dependencies[] -->
     <dependencies>
+        <!-- tag::deps-core-api[] -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>core-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
+        <!-- end::deps-core-api[] -->
+        <!-- tag::deps-h2[] -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- end::deps-h2[] -->
+        <!-- tag::deps-reactor[] -->
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+        </dependency>
+        <!-- end::deps-reactor[] -->
+        <!-- tag::deps-springboot-jpa[] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- end::deps-springboot-jpa[] -->
+        <!-- tag::deps-springboot-webflux[] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <!-- end::deps-springboot-webflux[] -->
     </dependencies>
+    <!-- end::dependencies[] -->
 
     <build>
         <plugins>
@@ -54,4 +67,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
