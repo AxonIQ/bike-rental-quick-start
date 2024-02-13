@@ -1,0 +1,12 @@
+name: bikerental-demo
+title: Building A Bike Rental Application
+version: true
+
+asciidoc:
+  attributes:
+    component_description: Getting started with designing, building, and deploying Axon Technology based applications.
+    type: tutorial
+    group: beginner
+
+nav:
+  - modules/ROOT/nav.adoc

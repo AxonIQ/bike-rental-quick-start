@@ -1,0 +1,7 @@
+= Introduction
+:navtitle: Introduction
+:reftext: Building A Bike Rental Application
+
+Building a new application can be a daunting task. This tutorial walks you through the various phases of development, explains the capabilities of Axon Framework and Axon Server.
+
+The result is a simple application you deploy in "production". Then the tutorial teaches you how to evolve the application, make changes and deploy those in different scenarios.
