@@ -1,0 +1,29 @@
+= Bootstraping AxonFramework
+:navtitle: Bootstrap AxonFramework
+:reftext: Configure AxonFramework for your project
+:page-needs-improvement: content
+:page-needs-content: Change the project structure to add the axonframework bom to the root project and then configure the required dependencies in each submodule.
+
+== Configuring Axon Framework dependencies
+
+We will configure the Axon Framework dependencies in the root project. That way we will bootstrap AxonFramework for all the modules in our project.
+
+Thus, we will edit the root `pom.xml` file to add AxonFramework dependencies.
+
+We start by adding a property to define the AxonFramework version:
+
+./pom.xml
+[source,xml]
+----
+include::example$root/pom.xml[tags=properties;props-axonframework;!*]
+----
+
+Once we have defined the `axon.version` property, we need to add the Axon Framework dependencies itself. In this case, as we are using SpringBoot, AxonFramework provides an SpringBoot starter dependency that will bootstrap all the required components from Axon Framework.
+
+Add the following snippet to your `pom.xml` file:
+[source,xml]
+----
+include::example$root/pom.xml[tags=dependencies;deps-axonframework;!*]
+----
+
+Now, we can use AxonFramework in any of the submodules of our project.
