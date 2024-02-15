@@ -1,6 +1,6 @@
 ### Generate bikes
 # First, generate some bikes
-POST {{rental}}?bikes=60&bikeType=city
+POST {{rental}}?bikes=160&bikeType=city
 Accept: application/json
 
 ### List all
@@ -44,5 +44,5 @@ POST {{rental}}/returnBike?bikeId=28dc25a1-33cc-42fa-a660-cc19cb8711f1
 Accept: application/json
 
 ### Generate Rentals
-POST {{rental}}/generateRentals?bikeType=city&loops=30&concurrency=10
+POST {{rental}}/generateRentals?bikeType=city&loops=300&concurrency=10
 Accept: text/plain
