@@ -53,7 +53,7 @@ architecture now looks like the following...![Axoniq World Wide Bike Rental Micr
 
 To make this happen run the [create-microservices.sh](create-microservices.sh) script to copy the necessary files into 
 the pre-defined services in the project. Once the script is complete, you must stop the running `RentalApplication` app (port conflict),
-and then run the new services `RentalCommandApplication`, `RentalPaymentApplication`, `RentalQueryApplication`, and `UserInterfaceApplication`.
+and then run the new services `RentalCommandApplication`, `RentalPaymentSagaApplication`, `RentalQueryApplication`, and `UserInterfaceApplication`.
 
 This allows us to run each aspect of our Rental domain as an independent service with no functional changes to the code base. 
 Our initial approach of using features in Axon Framework such as Command Gateway and Query Gateway have provided us with

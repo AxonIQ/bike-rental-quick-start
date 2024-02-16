@@ -23,6 +23,7 @@
             <version>${project.version}</version>
         </dependency>
         <!-- end::deps-core-api[] -->
+
         <!-- tag::deps-h2[] -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -35,7 +36,36 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- end::deps-reactor[] -->
+        <!-- tag::deps-axonframework[] -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- end::deps-axonframework[] -->
+        <!-- tag::deps-axon-micrometer[] -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-micrometer</artifactId>
+        </dependency>
+        <!-- end::deps-axon-micrometer[] -->
+
+        <!-- tag::deps-springboot-starter-actuator[] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- end::deps-springboot-starter-actuator[] -->
         <!-- tag::deps-springboot-jpa[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,6 +78,13 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <!-- end::deps-springboot-webflux[] -->
+        <!-- tag::deps-springboot-tests[] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- end::deps-springboot-tests[] -->
     </dependencies>
     <!-- end::dependencies[] -->
 
