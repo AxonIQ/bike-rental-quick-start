@@ -3,6 +3,7 @@ services:
     image: 'axoniq/axonserver:latest-dev'
     environment:
       - 'AXONIQ_AXONSERVER_STANDALONE=TRUE'
+      - 'AXONIQ_AXONSERVER_DEVMODE_ENABLED=TRUE'
     ports:
       - '8024:8024'
       - '8124:8124'
