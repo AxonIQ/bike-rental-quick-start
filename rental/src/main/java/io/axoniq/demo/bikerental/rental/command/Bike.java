@@ -22,19 +22,25 @@ import java.util.UUID;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
-@Aggregate(snapshotTriggerDefinition = "bikeSnapshotDefinition")
+//tag::SnapshotTriggerDefinition[]
+@Aggregate(snapshotTriggerDefinition = "bikeSnapshotDefinition") //<.>
+//end::SnapshotTriggerDefinition[]
+//tag::BikeAggregateClass[]
 public class Bike {
 
-    @AggregateIdentifier
+    //tag::BikeAggregateFields[]
+    @AggregateIdentifier //<.>
     private String bikeId;
 
     private boolean isAvailable;
     private String reservedBy;
     private boolean reservationConfirmed;
 
-    public Bike() {
+    public Bike() { //<.>
     }
 
+    //end::BikeAggregateFields[]
+    //tag::JsonCreator[]
     /* Constructor used to reconstruct the aggregate from a JSON based snapshot with Jackson */
     @JsonCreator
     public Bike(@JsonProperty("bikeId") String bikeId,
@@ -46,12 +52,16 @@ public class Bike {
         this.reservedBy = reservedBy;
         this.reservationConfirmed = reservationConfirmed;
     }
+    //end::JsonCreator[]
 
-    @CommandHandler
-    public Bike(RegisterBikeCommand command) {
-        apply(new BikeRegisteredEvent(command.bikeId(), command.bikeType(), command.location()));
+    //tag::RegisterBikeCommandHandler[]
+    @CommandHandler //<.>
+    public Bike(RegisterBikeCommand command) { //<.>
+        apply(new BikeRegisteredEvent(command.bikeId(), command.bikeType(), command.location())); //<.>
     }
 
+    //end::RegisterBikeCommandHandler[]
+    //tag::RequestBikeCommandHandler[]
     @CommandHandler
     public String handle(RequestBikeCommand command) {
         if (!this.isAvailable) {
@@ -63,6 +73,8 @@ public class Bike {
         return rentalReference;
     }
 
+    //end::RequestBikeCommandHandler[]
+    //tag::ApproveRequestCommandHandler[]
     @CommandHandler
     public void handle(ApproveRequestCommand command) {
         if (!Objects.equals(reservedBy, command.renter())
@@ -72,6 +84,8 @@ public class Bike {
         apply(new BikeInUseEvent(command.bikeId(), command.renter()));
     }
 
+    //end::ApproveRequestCommandHandler[]
+    //tag::RejectRequestCommandHandler[]
     @CommandHandler
     public void handle(RejectRequestCommand command) {
         if (!Objects.equals(reservedBy, command.renter())
@@ -81,6 +95,8 @@ public class Bike {
         apply(new RequestRejectedEvent(command.bikeId()));
     }
 
+    //end::RejectRequestCommandHandler[]
+    //tag::ReturnBikeCommandHandler[]
     @CommandHandler
     public void handle(ReturnBikeCommand command) {
         if (this.isAvailable) {
@@ -89,12 +105,16 @@ public class Bike {
         apply(new BikeReturnedEvent(command.bikeId(), command.location()));
     }
 
-    @EventSourcingHandler
-    protected void handle(BikeRegisteredEvent event) {
+    //end::ReturnBikeCommandHandler[]
+    //tag::BikeRegisteredEventSourcingHandler[]
+    @EventSourcingHandler //<.>
+    protected void handle(BikeRegisteredEvent event) { //<.>
         this.bikeId = event.bikeId();
         this.isAvailable = true;
     }
 
+    //end::BikeRegisteredEventSourcingHandler[]
+    //tag::BikeReturnedEventSourcingHandler[]
     @EventSourcingHandler
     protected void handle(BikeReturnedEvent event) {
         this.isAvailable = true;
@@ -102,6 +122,8 @@ public class Bike {
         this.reservedBy = null;
     }
 
+    //end::BikeReturnedEventSourcingHandler[]
+    //tag::BikeRequestedEventSourcingHandler[]
     @EventSourcingHandler
     protected void handle(BikeRequestedEvent event) {
         this.reservedBy = event.renter();
@@ -109,6 +131,8 @@ public class Bike {
         this.isAvailable = false;
     }
 
+    //end::BikeRequestedEventSourcingHandler[]
+    //tag::BikeRequestRejectedEventSourcingHandler[]
     @EventSourcingHandler
     protected void handle(RequestRejectedEvent event) {
         this.reservedBy = null;
@@ -116,12 +140,16 @@ public class Bike {
         this.isAvailable = true;
     }
 
+    //end::BikeRequestRejectedEventSourcingHandler[]
+    //tag::BikeInUseEventSourcingHandler[]
     @EventSourcingHandler
     protected void on(BikeInUseEvent event) {
         this.isAvailable = false;
         this.reservationConfirmed = true;
     }
 
+    //end::BikeInUseEventSourcingHandler[]
+    //tag::getters[]
     // getters for Jackson / JSON Serialization
 
     @SuppressWarnings("unused")
@@ -143,4 +171,6 @@ public class Bike {
     public boolean isReservationConfirmed() {
         return reservationConfirmed;
     }
+    //end::getters[]
 }
+//end::BikeAggregateClass[]

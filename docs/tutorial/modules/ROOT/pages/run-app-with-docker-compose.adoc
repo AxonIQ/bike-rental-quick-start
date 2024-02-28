@@ -1,0 +1,29 @@
+:navtitle: Running Your Application Locally With Docker Compose
+:reftext: Running your application in your local environment with docker compose
+:page-needs-improvement: content
+:page-needs-content: Add content for the empty sections.
+
+
+= Running The Application Locally with Docker Compose
+
+In this step, we will see how to run your application in your local environment with everything you need. Thanks to SpringBoot's support in starting Docker containers and the Axon Server Docker images, it will be an easy task.
+
+== Requisites
+
+To run everything we need easily and with just one click (or shortcut key combination) from your IDE we will use Docker Compose and docker images to start the Axon Server.
+
+Make sure you have installed the link:https://docs.docker.com/engine/[Docker Engine] in your system, or https://docs.docker.com/engine/install/[Install Docker Engine] otherwise.
+
+== Components diagram
+
+=== Axon Server
+
+=== Axon Framework application
+
+== Configuring docker compose
+
+=== Create docker compose descriptor
+
+=== Configuring SpringBoot support to run Docker compose
+
+== Running the application

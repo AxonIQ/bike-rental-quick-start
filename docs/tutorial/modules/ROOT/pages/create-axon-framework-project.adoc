@@ -2,24 +2,56 @@
 :navtitle: Create New Project
 :reftext: Creating A New AxonFramework Project
 
-The first thing we need to do is to create a new project and configure the AxonFramework dependencies that will help us focusing on the business code.
+
+For our sample application, we will create a multi-module maven project containing only two modules: a `core-api` module containing the API definition and messages used within the application and a `rental` module containing the business logic for our bike rental application.
+
+== Project structure
+
+We will design our rental module as a *modular monolith*, which means that we will keep a single project, but with the logic components decoupled so that it is easy to split the module into different pieces later.
+
+First, we need to create a new project and configure the AxonFramework dependencies that will help us focus on the business code.
+
+We will create a maven project with the following structure:
+
+[listing]
+.Bike Rental demo application structure
+----
+📒 bike-rental <.>
+  📒 core-api <.>
+    📂 src
+      📂 main
+        📂 java
+           📦 io.axoniq.demo.bikerental.coreapi <.>
+    📄 pom.xml <.>
+  📒 rental <.>
+    📂 src
+      📂 main
+        📂 java
+           📦 io.axoniq.demo.bikerental.rental <.>
+    📄 pom.xml <.>
+  📄 pom.xml <.>
+----
+
+<.> The `bike-rental` root project is the parent project that will contain all the modules from our application. This root project will define `org.springframework.boot:spring-boot-starter-parent` as its parent to configure SpringBoot support for all the modules.
+<.> The `core-api` project will contain the API and definition of the messages used to communicate the different modules.
+<.> The `io.axoniq.demo.bikerental.coreapi` is the package where we will place our classes with the definition of `Commands`, `Events`, and `Queries` exchanged between different modules.
+<.> The `pom.xml` maven descriptor contains the dependency declaration for the `core-api` project and links to `bike-rental` as its parent project.
+<.> The `rental` module will be our starting point to place the business logic of our application.
+<.> The `io.axoniq.demo.bikerental.rental` package is where we will add the code for our application.
+<.> The `pom.xml` maven descriptor will include the dependencies required for the `rental` module. It also declares `bike-rental` as its parent and inherits any dependency declaration from that project.
+<.> Finally, the `pom.xml` maven descriptor at the root `bike-rental` project keeps the common dependency definition inherited in all the submodules. It also keeps the list of `<modules>` that form part of the project.
+
+
+If you are already experienced with Maven and/or your IDE, you can just create a multi-maven project with the structure described here and move to the next step of this tutorial to xref:boostraping-axonframework[configure Axon Framework in your project.]
+
+If you prefer to follow step-by-step instructions to create the project, keep reading through  the following sections in this step:
 
 == Create the root project
-We will use Maven in this project. We want to create a project composed of several modules that can be deployed independently, so, we will create a multi-module project.
+We will use Maven as the build tool for this project. We aim to create a multi-module project that allows us to deploy each module independently later when -and if- our application reaches the point at which we need to split it and scale out.
 
-We will start by creating the root project: the project that will contain the different modules or subprojects. This corresponds to a root-pom maven project.
+We will start by creating the root project containing the different modules or subprojects. This type corresponds to a maven project with the `packaging` property set to `pom`.
 
-In order to create this root maven project you can use the IDE of your preference, making sure you specify the following values for the project properties:
-
-[horizontal]
-archetypeGroupId:: org.codehaus.mojo.archetypes
-archetypeArtifactId:: pom-root
-archetypeVersion:: RELEASE
-groupId:: io.axoniq.demo.bikerental
-artifactId:: bike-rental
-version:: 0.0.1-SNAPSHOT
-
-Alternatively, you can create the project from your console terminal with the following maven command:
+You can create the project from your console terminal with the following maven command:
 
 [source,shell]
 ----
@@ -33,9 +65,22 @@ Alternatively, you can create the project from your console terminal with the fo
   -DinteractiveMode=false
 ----
 
-Maven will create a `bike-rental` folder with a maven project descriptor file: `pom.xml`. You can import the project in your favourite IDE.
+Maven will create a `bike-rental` folder with a maven project descriptor file: `pom.xml`. You can import the project into your favorite IDE.
 
-We will be using Java 21 for this project, so we can explicitly configure it by adding this properties to the pom.xml file:
+[NOTE]
+====
+Alternatively, you can use your preferred IDE to create the project, making sure to set the following project properties:
+
+[horizontal]
+archetypeGroupId:: org.codehaus.mojo.archetypes
+archetypeArtifactId:: pom-root
+archetypeVersion:: RELEASE
+groupId:: io.axoniq.demo.bikerental
+artifactId:: bike-rental
+version:: 0.0.1-SNAPSHOT
+====
+
+To configure Java 21 for our project, add these properties to the pom.xml file:
 
 [source,xml]
 ----
@@ -43,31 +88,32 @@ include::example$root/pom.xml[tags=properties;!props-axonframework;!props-axoniq
 ----
 
 === Configuring SpringBoot
+Now that we have our root project, we need to configure it to use SpringBoot. We can configure the SpringBoot dependencies in our project in two ways: the first one is by adding them under the `<dependencyManagement>` section of the root `pom.xml` file.
 
-Once we have our root project we need to configure it to use SpringBoot. There are two ways in which we could configure the springboot dependencies in our project: one is by adding them under the `<dependencyManagement>` section of the root `pom.xml` file.
+Alternatively, we can make our root project depend on `org.springframework.boot:spring-boot-starter-parent', which already defines all the dependencies needed to use SpringBoot in our projects.
 
-Alternatively, we can make our root project depend on `org.springfamework.boot:spring-boot-starter-parent` which already defines all the dependencies required to use SpringBoot in our projects.
+We will use the second option. Open your `pom.xml` and add the following snippet right before the `<groupId>` tag:
 
-We will follow the second option. Open your `pom.xml` and add the following snippet right before the `<groupId>` tag:
 [source,xml]
 ----
 include::example$root/pom.xml[tag=spring-boot-starter-parent]
 ----
 
-== Create the project modules.
+== Create the project modules
+We will start by creating a main module for our bike rental application. This module will contain the business logic.
 
-We will start by having an unique main module where we will implement the bussiness logic of our bike rental application. The goal with AxonIQ technologies is to focus on a single application and avoiding the unnecesary complexity of dealing with multiple modules right from the start. And yet, we aim to build our module in such a way that it is prepared to evolve easily into different modules. That is what we call *evolutionary microservices*.
+Our goal with AxonIQ technologies is to focus on a single application and avoid unnecessary complexity by dealing with multiple modules immediately. However, we aim to build our module in a way that allows for easy evolution into different modules. This design is what we call a *modular monolith*.
 
 === Creating the main rental module
 
-Our main module will be the `rental` module. To create it you can use your IDE to add a new module or you can use the following maven command from the root bike-rental folder:
+Our main module will be the `rental` module. To create it, you can use your IDE to add a new module, or you can use the following maven command from the root bike-rental folder:
 
 [source,shell]
 ----
  mvn archetype:generate -DgroupId=io.axoniq.demo.bikerental -DartifactId=rental -Dpackage=io.axoniq.demo.bikerental.rental -DinteractiveMode=false
 ----
 
-After running the command you will see a new directory `rental` directory with a `rental/pom.xml` file which declares the project as a sub-module of the root project:
+After running the `mvn` command you will see a new `rental` directory with a `rental/pom.xml` file, which declares the project as a sub-module of the root project:
 
 .rental/pom.xml
 [source,xml]
@@ -75,7 +121,8 @@ After running the command you will see a new directory `rental` directory with a
 include::example$rental/pom.xml[tag=parent]
 ----
 
-At the same time the maven project descriptor of the root project has been modified to include the new module:
+At the same time, the execution of the `mvn` command also modified the maven project descriptor of the root project to include the new module:
+
 
 ./pom.xml
 [source,xml]
@@ -89,9 +136,9 @@ NOTE: If the IDE does not detect the new module, you may have to refresh the pro
 
 === Creating the core-api subproject
 
-Although we are going to start with a main module for our bussiness logic, we also have already mentioned that we want to be prepared to split our project into different modules when we need to evolve into multiple modules (or microservices)
+Although we are going to code our business logic in a single `rental` module, we also have already mentioned that we want to be able to split our project into different modules when we need to evolve into multiple modules (or microservices).
 
-In order to be prepared to make that step later, we are going to have a module in which we will include the definition of the messages and clases that will be used to communicate the different modules. We will name this project as `core-api`
+So, we are going to have a module in which we will include the definitions of the messages and classes that are used to communicate the different modules. We will name this project as `core-api`.
 
 To create the `core-api` submodule, use your IDE to create a new Module (make sure you create it using the root project as the parent), or you can use the following maven command from the root project's folder:
 
@@ -124,7 +171,7 @@ NOTE: If the IDE does not detect the new module, you may have to refresh the pro
 
 As the last step in creating the multi-module structure for our project, we will declare that the main `rental` module will use the `core-api` module.
 
-In order to do that, declare the following dependency in the maven descriptor file for the `rental` module:
+To do that, declare the following dependency in the maven descriptor file for the `rental` module:
 
 .rental/pom.xml
 [source,xml]
@@ -132,9 +179,9 @@ In order to do that, declare the following dependency in the maven descriptor fi
 include::example$rental/pom.xml[tags=dependencies;deps-core-api;!*]
 ----
 
-With this last step, we are done with creating the structure for our project.
+After completing this last step your project should have the structure that we described in the <<_project_structure,Project Structure section>> at the begining of this step.
 
-In the next step, we will learn how to bootstrap Axon Framework in our project.
+Once that we have our project created, in the next step, we will learn how to bootstrap Axon Framework in our project.
 
 
 

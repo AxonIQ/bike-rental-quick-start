@@ -5,6 +5,9 @@
 :page-needs-content: Add a section or another page with the required tools: Maven, java21, Springboot, etc..
 
 
-Building a new application can be a daunting task. This tutorial walks you through the various phases of development, explains the capabilities of Axon Framework and Axon Server.
+Building a new application from scratch can be daunting, especially when learning something new. This tutorial will guide you through the various stages of development, starting with creating your first project and explaining the capabilities of Axon Framework and Axon Server.
 
-The result is a simple application you deploy in "production". Then the tutorial teaches you how to evolve the application, make changes and deploy those in different scenarios.
+The result is a simple application you can deploy in "production". The tutorial then shows you how to evolve the application, make changes, and deploy it in different scenarios.
+
+This tutorial will guide you through the creation of a "Bike Rental Application" using Axon Framework and Axon Server. You can follow the steps in the tutorial to complete the project from scratch or check out our link:https://github.com/axonIQ/bike-rental-quick-start/[Bike Rental Demo repository in GitHub,role=external,window=_blank].
+

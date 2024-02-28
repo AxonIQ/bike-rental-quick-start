@@ -10,9 +10,9 @@
         <artifactId>bike-rental</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <!-- end::parent[] -->
 
     <artifactId>rental</artifactId>
+    <!-- end::parent[] -->
 
     <!-- tag::dependencies[] -->
     <dependencies>
