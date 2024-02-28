@@ -194,7 +194,7 @@ We must add a method in our controller to handle the HTTP Request to register a 
 
 For this endpoint, we will consider the following request format:
 
-    POST /bikes?bikeType={bikeType}&location={city}
+    POST /bike?bikeType={bikeType}&location={city}
 
 NOTE: When designing a REST endpoint that registers a new element in our system, it is usual to model the API to use a POST request, which contains the information of the entity to create in the body. In this first example, for the sake of simplicity, we will receive the bike details as parameters on the request.
 
@@ -205,7 +205,7 @@ To implement the endpoint that handles these requests, add the following method 
 ----
 include::example$rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/RentalController.java[tags=registerBike;!*,indent=0]
 ----
-<.> The `@PostMapping` links the execution of this method to the reception of `POST /bikes` requests.
+<.> The `@PostMapping` links the execution of this method to the reception of `POST /bike` requests.
 <.> The `bikeType` argument is extracted from the parameter with the same name on the request.
 <.> The `location` argument is filled with the value of the parameter with the same name from the request's URL.
 <.> We must create the `RegisterBikeCommand` that represents the command we will send to the command handler in the command model.

@@ -1,12 +1,12 @@
 ### Register a new bike
 # tag::registerBike[]
-POST {{rental}}/bikes?bikeType=city&location=Madrid
+POST {{rental}}/bike?bikeType=city&location=Madrid
 
 ### end::registerBike[]
 
 ### Generate bikes
 # First, generate some bikes
-POST {{rental}}?bikes=60&bikeType=city
+POST {{rental}}/bikes?count=60&type=city
 Accept: application/json
 
 ### List all
