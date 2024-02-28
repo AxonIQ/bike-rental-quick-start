@@ -1,0 +1,55 @@
+= Bootstraping AxonFramework
+:navtitle: Bootstrap AxonFramework
+:reftext: Configure AxonFramework for your project
+
+In this step we will configure the dependencies to use AxonFramework in our project.
+
+== Configuring Axon's bill of materials (BOM)
+
+To enable the use of Axon Framework, we can configure the required Axon Framework dependencies in our project's `pom.xml` file. Nevertheless, depending on the specific features we plan to use later, we may need to add additional dependencies for other libraries or tools later (for example, `micrometer` or `reactor`).
+
+NOTE: The Bill of Materials (BOM) in Maven is a tool that specifies the list of components, libraries and versions proven to work well together, but without the need to import them until they are specifically referred to later in any of the modules.
+
+Axon provides an `axon-bom` artifact that defines the list of components, libraries, and specfic versions that have been tested and work well. So, we will start by adding the reference to the `axon-bom` in our root project's `pom.xml` maven descriptor.
+
+We will start by defining a property to configure the `axon.version`:
+
+./pom.xml
+[source,xml]
+----
+include::example$root/pom.xml[tags=properties;props-axonframework;!*]
+
+include::example$root/pom.xml[tags=dependencyManagement;deps-axon-bom;!*]
+----
+
+Now, we can declare the dependencies to use Axon Framework in any of the submodules of our project.
+
+=== Declaring Axon dependencies in the rental module
+
+Once the `axon-bom` is declared in the root project, we only need to specify the axon framework dependencies in the maven descriptor `pom.xml` file of the `rental` module.
+
+As we use SpringBoot, we have a convenient way of bootstrapping Axon Framework with the `axon-spring-boot-starter`. We will also add the `axon-test` dependency as we will be adding some tests to our project:
+
+./rental/pom.xml
+[source,xml]
+--
+include::example$rental/pom.xml[tags=dependencies;deps-axonframework;!*]
+--
+
+NOTE: We are not specifying the version for any of the Axon Framework dependencies. The reason is that these dependencies are already defined with their specific versions in the `axon-bom` file that we declared in the root project.
+
+
+=== Adding support to model messages with Axon in the `core-api` module.
+
+We will use the `core-api` module to define the messages used to communicate the different modules of our rental application. Some of those messages will require using some Java annotations provided by AxonFramework. Thus, we need to add some AxonFramework dependencies to the project.
+
+We only need to add the following dependency to the `core-api` maven descriptor file:
+
+./core-api/pom.xml
+[source,xml]
+----
+include::example$core-api/pom.xml[tags=dependencies;deps-axon-modelling;!*]
+----
+
+Now, we are ready to start implementing the first functionality for our bike-rental application.
+

@@ -28,25 +28,53 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RestController
-@RequestMapping("/")
+// tag::RentalControllerClassDefinition[]
+@RestController      // <.>
+@RequestMapping("/") // <.>
 public class RentalController {
+// end::RentalControllerClassDefinition[]
 
     public static final String FIND_ALL_QUERY = "findAll";
     public static final String FIND_ONE_QUERY = "findOne";
     private static final List<String> RENTERS = Arrays.asList("Allard", "Steven", "Josh", "David", "Marc", "Sara", "Milan", "Jeroen", "Marina", "Jeannot");
     private static final List<String> LOCATIONS = Arrays.asList("Amsterdam", "Paris", "Vilnius", "Barcelona", "London", "New York", "Toronto", "Berlin", "Milan", "Rome", "Belgrade");
-    private final CommandGateway commandGateway;
-    private final QueryGateway queryGateway;
 
-    public RentalController(CommandGateway commandGateway, QueryGateway queryGateway) {
+    //tag::ControllerInitialization[]
+    //tag::BusGateways[]
+
+    private final CommandGateway commandGateway;    // <.>
+    private final QueryGateway queryGateway;        // <.>
+    //end::BusGateways[]
+
+    public RentalController(CommandGateway commandGateway, QueryGateway queryGateway) { // <.>
         this.commandGateway = commandGateway;
         this.queryGateway = queryGateway;
     }
 
-    @PostMapping("/bikes")
-    public CompletableFuture<Void> generateBikes(@RequestParam("count") int bikeCount,
-                                                 @RequestParam(value = "type") String bikeType) {
+    //end::ControllerInitialization[]
+    //tag::registerBike[]
+    @PostMapping("/bike") // <.>
+    public CompletableFuture<String> registerBike(
+            @RequestParam("bikeType") String bikeType,      // <.>
+            @RequestParam("location") String location) {    // <.>
+
+        RegisterBikeCommand registerBikeCommand =
+                new RegisterBikeCommand(                // <.>
+                        UUID.randomUUID().toString(),   // <.>
+                        bikeType,
+                        location);
+
+        CompletableFuture<String> commandResult =
+                commandGateway.send(registerBikeCommand); //<.>
+
+        return commandResult; // <.>
+    }
+
+    //end::registerBike[]
+    //tag::generateBikes[]
+    @PostMapping("/bikes") // <.>
+    public CompletableFuture<Void> generateBikes(@RequestParam("count") int bikeCount,              //<.>
+                                                 @RequestParam(value = "type") String bikeType) {   //<.>
         CompletableFuture<Void> all = CompletableFuture.completedFuture(null);
         for (int i = 0; i < bikeCount; i++) {
             all = CompletableFuture.allOf(all,
@@ -55,6 +83,7 @@ public class RentalController {
         return all;
     }
 
+    //end::generateBikes[]
     @GetMapping("/bikes")
     public CompletableFuture<List<BikeStatus>> findAll() {
         return queryGateway.query(FIND_ALL_QUERY, null, ResponseTypes.multipleInstancesOf(BikeStatus.class));
@@ -233,3 +262,4 @@ public class RentalController {
     }
 
 }
+
