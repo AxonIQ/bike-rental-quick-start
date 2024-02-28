@@ -4,7 +4,7 @@
 :page-needs-content: Add content for the empty sections.
 
 
-= Running The Application Locally with Docker Compose
+= Running The Application Locally With Docker Compose
 
 In this step, we will see how to run your application in your local environment with everything you need. Thanks to SpringBoot's support in starting Docker containers and the Axon Server Docker images, it will be an easy task.
 
