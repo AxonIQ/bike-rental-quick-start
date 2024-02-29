@@ -194,7 +194,7 @@ We must add a method in our controller to handle the HTTP Request to register a 
 
 For this endpoint, we will consider the following request format:
 
-    POST /bike?bikeType={bikeType}&location={city}
+    POST /bikes?bikeType={bikeType}&location={city}
 
 NOTE: When designing a REST endpoint that registers a new element in our system, it is usual to model the API to use a POST request, which contains the information of the entity to create in the body. In this first example, for the sake of simplicity, we will receive the bike details as parameters on the request.
 

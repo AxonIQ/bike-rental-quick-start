@@ -53,7 +53,7 @@ public class RentalController {
 
     //end::ControllerInitialization[]
     //tag::registerBike[]
-    @PostMapping("/bike") // <.>
+    @PostMapping("/bikes") // <.>
     public CompletableFuture<String> registerBike(
             @RequestParam("bikeType") String bikeType,      // <.>
             @RequestParam("location") String location) {    // <.>
@@ -72,7 +72,7 @@ public class RentalController {
 
     //end::registerBike[]
     //tag::generateBikes[]
-    @PostMapping("/bikes") // <.>
+    @PostMapping("/bikes/batch") // <.>
     public CompletableFuture<Void> generateBikes(@RequestParam("count") int bikeCount,              //<.>
                                                  @RequestParam(value = "type") String bikeType) {   //<.>
         CompletableFuture<Void> all = CompletableFuture.completedFuture(null);
