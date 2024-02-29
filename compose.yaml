@@ -1,8 +1,8 @@
 services:
-  axonserver:
-    image: 'axoniq/axonserver:latest-dev'
-    environment:
+  axonserver: #<.>
+    image: 'axoniq/axonserver:latest-dev'  # <.>
+    environment: # <.>
       - 'AXONIQ_AXONSERVER_STANDALONE=TRUE'
-    ports:
-      - '8024:8024'
-      - '8124:8124'
+    ports: # <.>
+      - '8024:8024'  # <.>
+      - '8124:8124'  # <.>
