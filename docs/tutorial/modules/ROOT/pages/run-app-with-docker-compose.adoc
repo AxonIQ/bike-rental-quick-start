@@ -1,7 +1,7 @@
 :navtitle: Running Your Application Locally With Docker Compose
-:reftext: Running your application in your local environment with docker compose
+:reftext: Running your application in your local environment with Docker Compose
 
-= Running The Application Locally With Docker Compose
+= Running the Application Locally With Docker Compose
 
 In this step, we will see how to run your application in your local environment with everything you need.
 
@@ -15,14 +15,14 @@ To run everything we need easily and with just one click (or shortcut key combin
 
 Make sure you have installed the link:https://docs.docker.com/engine/[Docker Engine,type=external,target=_blank] in your system, or https://docs.docker.com/engine/install/[Install Docker Engine] otherwise.
 
-== Configuring docker compose
+== Configuring Docker Compose
 
-=== Create docker compose descriptor
-https://docs.docker.com/compose/[Docker compose,type=external,target=_blank] is a tool that allows you to define all the docker containers, networks, volumes and any other characteristics that we need from the infrastructure to run our application.
+=== Docker Compose descriptor
+https://docs.docker.com/compose/[Docker Compose,type=external,target=_blank] is a tool that allows you to define all the docker containers, networks, volumes and any other characteristics that we need from the infrastructure to run our application.
 
-Even if we are going to run only one docker image (Axon Server), docker compose is convenient because allows to start everything in one comand.
+Even if we are going to run only one docker image (Axon Server), Docker Compose is convenient because allows to start everything in one comand.
 
-We will start by creating the docker compose configuration file. Create a `compose.yaml` file in the `root` project with the following contents:
+We will start by creating the Docker Compose configuration file. Create a `compose.yaml` file in the `root` project with the following contents:
 
 [sources,yml]
 .compose.yaml
@@ -49,13 +49,13 @@ Attaching to axonserver-1
 ...
 ----
 
-Wwe don't want to start the server manually, we will configure SpringBoot's support for docker compose so that the docker containers are started automatically when running the application from our IDE.
+We don't want to start the server manually, we will configure SpringBoot's support for Docker Compose so that the docker containers are started automatically when running the application from our IDE.
 
 Stop the container by typing ^C on the console and move to the next section.
 
-=== Configuring SpringBoot support to run Docker compose
+=== Configuring SpringBoot support to run Docker Compose
 
-Since v3.1 Supports starting docker compose services linked to the start of our application.
+Since v3.1 Supports starting Docker Compose services linked to the start of our application.
 
 To enable that feature, we will need to add the following dependency to the maven descriptor `pom.xml` file in our `root` project:
 
