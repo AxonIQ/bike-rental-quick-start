@@ -1,7 +1,7 @@
-= Create New Axon Framework Multi-Project
 :navtitle: Create New Project
 :reftext: Creating A New AxonFramework Project
 
+= Create New Axon Framework Multi-Project
 
 For our sample application, we will create a multi-module maven project containing only two modules: a `core-api` module containing the API definition and messages used within the application and a `rental` module containing the business logic for our bike rental application.
 

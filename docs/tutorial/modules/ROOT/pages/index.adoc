@@ -1,9 +1,9 @@
-= Introduction
 :navtitle: Introduction
 :reftext: Building A Bike Rental Application
 :page-needs-improvement: content
 :page-needs-content: Add a section or another page with the required tools: Maven, java21, Springboot, etc..
 
+= Introduction
 
 Building a new application from scratch can be daunting, especially when learning something new. This tutorial will guide you through the various stages of development, starting with creating your first project and explaining the capabilities of Axon Framework and Axon Server.
 

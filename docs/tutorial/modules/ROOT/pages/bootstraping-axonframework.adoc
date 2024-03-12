@@ -1,6 +1,7 @@
-= Bootstraping AxonFramework
 :navtitle: Bootstrap AxonFramework
 :reftext: Configure AxonFramework for your project
+
+= Bootstraping AxonFramework
 
 In this step we will configure the dependencies to use AxonFramework in our project.
 

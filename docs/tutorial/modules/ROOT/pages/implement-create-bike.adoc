@@ -1,6 +1,7 @@
-= Implement Create New Bike Feature
 :navtitle: Create New Bike Feature
 :reftext: Implementing the create new bike feature
+
+= Implement Create New Bike Feature
 
 In this step of the tutorial, we will implement the support for our first feature: create (or register) a new bike in our system.
 

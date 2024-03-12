@@ -1,7 +1,6 @@
 :navtitle: Running Your Application Locally With Docker Compose
 :reftext: Running your application in your local environment with Docker Compose
 
-
 = Running the Application Locally With Docker Compose
 
 In this step, we will see how to run your application in your local environment with everything you need.
