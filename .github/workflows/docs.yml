@@ -51,4 +51,4 @@ jobs:
               repo: 'axoniq-library-site',
               workflow_id: 'publish.yml',
               ref: 'main'
-            }
+            })
