@@ -42,7 +42,7 @@ We will create a maven project with the following structure:
 <.> Finally, the `pom.xml` maven descriptor at the root `bike-rental` project keeps the common dependency definition inherited in all the submodules. It also keeps the list of `<modules>` that form part of the project.
 
 
-If you are already experienced with Maven and/or your IDE, you can just create a multi-maven project with the structure described here and move to the next step of this tutorial to xref:boostraping-axonframework[configure Axon Framework in your project.]
+If you are already experienced with Maven and/or your IDE, you can just create a multi-maven project with the structure described here and move to the next step of this tutorial to xref:bootstraping-axonframework.adoc[configure Axon Framework in your project.]
 
 If you prefer to follow step-by-step instructions to create the project, keep reading through  the following sections in this step:
 
