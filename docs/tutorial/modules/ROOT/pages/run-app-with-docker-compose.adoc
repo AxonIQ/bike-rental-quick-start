@@ -13,12 +13,12 @@ To avoid having to installing and starting the Axon Server manually, we rely on 
 
 To run everything we need easily and with just one click (or shortcut key combination) from your IDE we will use Docker Compose and docker images to start the Axon Server.
 
-Make sure you have installed the link:https://docs.docker.com/engine/[Docker Engine,type=external,target=_blank] in your system, or https://docs.docker.com/engine/install/[Install Docker Engine] otherwise.
+Make sure you have installed the link:https://docs.docker.com/engine/[Docker Engine,role=external,window=_blank] in your system, or https://docs.docker.com/engine/install/[Install Docker Engine,role=external,window=_blank] otherwise.
 
 == Configuring Docker Compose
 
 === Docker Compose descriptor
-https://docs.docker.com/compose/[Docker Compose,type=external,target=_blank] is a tool that allows you to define all the docker containers, networks, volumes and any other characteristics that we need from the infrastructure to run our application.
+https://docs.docker.com/compose/[Docker Compose,role=external,window=_blank] is a tool that allows you to define all the docker containers, networks, volumes and any other characteristics that we need from the infrastructure to run our application.
 
 Even if we are going to run only one docker image (Axon Server), Docker Compose is convenient because allows to start everything in one comand.
 
@@ -71,7 +71,7 @@ Once that we have added this dependency, we can run our application right from o
 
 Run your application from your IDE. You should see in the logs how SpringBoot dowloads the AxonServer docker image, and starts running AxonServer automatically for you before starting your application:
 
-[,bash]
+[,console]
 ----
 
   .   ____          _            __ _ _
@@ -93,7 +93,7 @@ Run your application from your IDE. You should see in the logs how SpringBoot do
  INFO --- [Rental Monolith] verDockerComposeConnectionDetailsFactory : Detected Axon Server container. To access the dashboard, visit http://127.0.0.1:8024
 ----
 
-After the application starts, you can open your browser and go to `http://localhost:8024`. You will access the Axon Server dashboard.
+After the application starts, you can open your browser and go to `http://localhost:8024[,role=external,window=_blank]`. You will access the Axon Server dashboard.
 
 If you click on the "Overview" button from the right panel, you will see the Axon Server instance and your `Rental Monolith` Application connected to it.
 
