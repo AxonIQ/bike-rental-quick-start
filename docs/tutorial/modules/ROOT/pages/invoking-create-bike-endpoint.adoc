@@ -78,7 +78,7 @@ image::image$AxonServer-Dashboard.png[Screenshot of the Axon Server dashboard, s
 
 === Checking the commands
 
-Click on the `Commands` button on the left side panel. You will see all the command handlers registered by the application(s), which in this case is just one: our `RegisterBikeCommand`.
+Click on the `Commands` button on the left side panel. You will see all the command handlers registered by the application, which in this case is just one: our `RegisterBikeCommand`.
 
 image::image$AxonServer-Commands.png[Screenshot of the Axon Server Commands panel, showing a table with all the CommandHandlers registered and the number of commands processed by the Rental Monolith application]
 
@@ -86,7 +86,7 @@ The table also shows that one `RegisterBikeCommand` was received and processed i
 
 NOTE: If we have different applications connected to Axon Server, there would be another column for each one of them, and the column will show how many commands where received and processed by each application.
 
-=== Checking the Events
+=== Checking the events
 
 In the command handler that we implemented, we validate the command and we sent a `BikeRegisteredEvent` to notify any other component in the system of the change.
 
