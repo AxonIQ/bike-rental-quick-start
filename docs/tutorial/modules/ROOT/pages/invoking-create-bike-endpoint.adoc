@@ -1,0 +1,116 @@
+:navtitle: Invoking the Register Bike Endpoint
+:reftext: Invoking the Register Bike Endpoint
+
+= Execution the Register Bike Endpoint
+
+Now that we have our xref::implement-create-bike.adoc[first feature implemented], and xref::run-app-with-docker-compose.adoc[our application up and running], we can try to invoke the endpoint to register a bike, and see the exchange of commands and events.
+
+== Invoking the endpoint
+
+To test our feature we only need to send the following HTTP request:
+
+
+    POST http://localhost:8080/bikes?bikeType={type}&location={city}
+
+You can do it directly from the command line,  any other HTTP REST Client you are used to or, if you are using IntelliJ IDEA as your IDE, we will show you how to prepare a file to easily execute any of the HTTP Endpoints we are going to use in this project.
+
+=== From the command line
+
+You can simply invoke the endpoint from the command line by typing the following `curl` command in your terminal
+
+[,console]
+----
+> curl -X POST "http://localhost:8080/bikes?bikeType=city&location=Utrecht"
+
+----
+
+The command will print the response of the endpoint invocation, which, in our case, will be the UUID assigned to the new bike.
+
+NOTE: Although we are sending a `POST HTTP` request, in this case we don't need to specify any content in the request of the body, as all the information is specified in the URL parameters. This is not the most usual way to design `POST` requests in `REST` services as the required information is usually retrieved from the request body and it should be specified using either `-d`, `-F` or `--json` options in your `curl` command). Anywa, for the sake of simplicity, we have designed our first `POST` endpoint to have all the required information in the URL parameters.
+
+=== Using IntelliJ IDEA
+
+If you are using IntelliJ IDEA as your IDE, you can benefit from its https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html[HTTP Client plugin,role=external,window=_blank] to define and invoke all the endpoints of your application.
+
+You only need to create file with `.http` or `.rest` extension. And then you can add the URL of the different endpoints you want to invoke in your system. Each of the different should be separated by a line with three hashtag marks (`\###`).
+
+Start by creating within the root project, a text file with the name `requests.http`, and add the following content:
+
+:needs-improvement: change content block to  include::example$root/requests.http[tag=registerBike] and substitute variables with double curly-braces such as {{rental}}
+[source,httprequest]
+./requests.http
+----
+### Register a new bike
+POST http://localhost:8080/bikes?bikeType=city&location=Utrecht
+
+###
+----
+
+Save the file and you will see that IntelliJ IDEA now decorates the line with the `POST` with a small green "play" button. If you click on it, with the 'rental' application running, you will see how the request is sent and executed.
+
+[source]
+----
+POST http://localhost:8080/bikes?bikeType=city&location=Utrecht
+
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 36
+
+9c27e890-8498-4329-afd6-58302b796fab
+
+Response code: 200 (OK); Time: 107ms (107 ms); Content length: 36 bytes (36 B)
+----
+
+== Following the execution of the register bike request in Axon Server
+
+After invoking the endpoint we can check how the request was processed and the messages that were sent in our application.
+
+For that, we will use the Axon Server dashboard. First, open your browser and open the foloowing URL:
+
+    http://localhost:8024/
+
+You will see the Axon Server dashboard, with the  default instance and the `Rental Monolith` application connected.
+
+image::image$AxonServer-Dashboard.png[Screenshot of the Axon Server dashboard, showing the Rental Application connected to the Axon Server instance]
+
+=== Checking the commands
+
+Click on the `Commands` button on the left side panel. You will see all the command handlers registered by the application(s), which in this case is just one: our `RegisterBikeCommand`.
+
+image::image$AxonServer-Commands.png[Screenshot of the Axon Server Commands panel, showing a table with all the CommandHandlers registered and the number of commands processed by the Rental Monolith application]
+
+The table also shows that one `RegisterBikeCommand` was received and processed in the system by the `Rental Monolith` application, which corresponds to the command created by the `RentalController` and sent through the `CommandGateway`.
+
+NOTE: If we have different applications connected to Axon Server, there would be another column for each one of them, and the column will show how many commands where received and processed by each application.
+
+=== Checking the Events
+
+In the command handler that we implemented, we validate the command and we sent a `BikeRegisteredEvent` to notify any other component in the system of the change.
+
+To see if that event was sent, click on the `Search` button on the left menu at the Axon Server Dashboard. You will aceess the page to search all the Events that were sent and are stored in Axon Server.
+
+Without specifying anything on the query field (leave it empty), click on the Search button. You will see the only event that was sent as a result of executing the command handler:
+
+image::image$AxonServer-BikeRegisteredEvent.png[A screenshot of the Events Search page in Axon Server, showing the BikeRegisteredEvent]
+
+If you double-click on the event, a pop-up window will show all the details of the event.
+
+image::image$AxonServer-BikeRegisteredEvent-details.png[A screenshot of the Events Search page in Axon Server, showing the details of the BikeRegisteredEvent]
+
+This means that our system received the request to register a new bike and processed it correctly by creating and sending the corresponding command and, as a result of handling the command, creating, sending and storing the `BikeRegisteredEvent`.
+
+This last `BikeRegisteredEvent` will be reused in the future for any component (like any projection in the query model) that registers to receive these type of events. The `BikeRegisteredEvent` will be also used by the command model whenever the `Bike` entity needs to be rebuilt (or refreshed).
+
+=== Conclusion
+
+Thanks to the info provided by Axon Server, it's easy to check the commands and events (and also the queries) that were sent and its content. This is useful when we want to check the messages that are being exchanged in our system.
+
+Nevertheless, we may also want to have some automated tests in the form of unit tests so that we don't need to do this manual checks everytime.
+
+In the next section we will learn how to write a test case with Axon to check that the command is processed correctly by the command handler.
+
+
+

@@ -1,8 +1,5 @@
 ### Register a new bike
-# tag::registerBike[]
-POST {{rental}}/bikes?bikeType=city&location=Madrid
-
-### end::registerBike[]
+POST {{rental}}/bikes?bikeType=city&location=Utrecht
 
 ### Generate bikes
 # First, generate some bikes
