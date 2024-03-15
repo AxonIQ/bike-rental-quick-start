@@ -19,22 +19,30 @@ import static org.axonframework.test.matchers.Matchers.exactSequenceOf;
 import static org.axonframework.test.matchers.Matchers.matches;
 import static org.axonframework.test.matchers.Matchers.messageWithPayload;
 
+//tag::BikeTestClass[]
 class BikeTest {
 
-    private AggregateTestFixture<Bike> fixture;
+    //tag::BikeTestFixture[]
+    private AggregateTestFixture<Bike> fixture; //<.>
 
-    @BeforeEach
+    //end::BikeTestFixture[]
+    //tag::InitBikeTestFixture[]
+    @BeforeEach //<.>
     void setUp() {
-        fixture = new AggregateTestFixture<>(Bike.class);
+        fixture = new AggregateTestFixture<>(Bike.class); //<.>
     }
 
+    //end::InitBikeTestFixture[]
+    //tag::RegisterBikeCommandHandlerTest[]
     @Test
     void canRegisterBike() {
-        fixture.givenNoPriorActivity()
-               .when(new RegisterBikeCommand("bikeId", "city", "Amsterdam"))
-               .expectEvents(new BikeRegisteredEvent("bikeId", "city", "Amsterdam"));
+        fixture.givenNoPriorActivity()  //<.>
+               .when(new RegisterBikeCommand("bikeId-1234", "city-bike", "Amsterdam")) //<.>
+               .expectEvents(new BikeRegisteredEvent("bikeId-1234", "city-bike", "Amsterdam")); //<.>
     }
 
+    //end::RegisterBikeCommandHandlerTest[]
+    //tag::otherTests[]
     @Test
     void canRequestAvailableBike() {
         fixture.given(new BikeRegisteredEvent("bikeId", "city", "Amsterdam"))
@@ -137,7 +145,8 @@ class BikeTest {
                                                           e.bikeId().equals("bikeId")
                                                                   && e.renter().equals("newRider"))),
                        andNoMore()));
-
-
     }
+    //end::otherTests[]
+
 }
+//end::BikeTestClass[]
