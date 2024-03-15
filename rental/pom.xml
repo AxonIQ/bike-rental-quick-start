@@ -48,10 +48,6 @@
             <artifactId>axon-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.axoniq.console</groupId>
-            <artifactId>console-framework-client-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
             <scope>test</scope>
@@ -63,7 +59,12 @@
             <artifactId>axon-micrometer</artifactId>
         </dependency>
         <!-- end::deps-axon-micrometer[] -->
-
+        <!-- tag::deps-axoniq-console[] -->
+        <dependency>
+            <groupId>io.axoniq.console</groupId>
+            <artifactId>console-framework-client-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- end::deps-axoniq-console[] -->
         <!-- tag::deps-springboot-starter-actuator[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
