@@ -25,6 +25,9 @@ include::example$root/pom.xml[tags=dependencyManagement;deps-axon-bom;!*]
 
 Now, we can declare the dependencies to use Axon Framework in any of the submodules of our project.
 
+
+anchor:axon-dependencies[]
+
 === Declaring Axon dependencies in the rental module
 
 Once the `axon-bom` is declared in the root project, we only need to specify the axon framework dependencies in the maven descriptor `pom.xml` file of the `rental` module.

@@ -110,4 +110,4 @@ Thanks to the information provided by Axon Server, it's easy to check the comman
 
 However, we may also want to have some automated tests in the form of unit tests so that we don't have to do these manual checks every time.
 
-In the next section, we will learn how to write a test case with Axon to ensure that the command handler processes the command correctly.
+In the next section, we will learn how to xref::unit-testing-commands.adoc[write a test case with Axon to ensure the command handler] processes the command correctly.
