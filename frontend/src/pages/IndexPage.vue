@@ -71,12 +71,12 @@ import URL from '../settings'
 
 const newBikeParams = ref({
   count: 10,
-  type: "mountainbike"
+  type: "mountain bike"
 })
 
 
 const rentalsParams = ref({
-            bikeType : "mountainbike",
+            bikeType : "mountain bike",
             loops : "64",
             concurrency : "8",
             abandonPaymentFactor: 0,

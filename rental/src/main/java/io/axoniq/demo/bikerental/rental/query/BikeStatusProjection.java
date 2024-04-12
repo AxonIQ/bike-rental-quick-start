@@ -1,12 +1,6 @@
 package io.axoniq.demo.bikerental.rental.query;
 
-import io.axoniq.demo.bikerental.coreapi.rental.BikeInUseEvent;
-import io.axoniq.demo.bikerental.coreapi.rental.BikeRegisteredEvent;
-import io.axoniq.demo.bikerental.coreapi.rental.BikeRequestedEvent;
-import io.axoniq.demo.bikerental.coreapi.rental.BikeReturnedEvent;
-import io.axoniq.demo.bikerental.coreapi.rental.BikeStatus;
-import io.axoniq.demo.bikerental.coreapi.rental.RentalStatus;
-import io.axoniq.demo.bikerental.coreapi.rental.RequestRejectedEvent;
+import io.axoniq.demo.bikerental.coreapi.rental.*;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
@@ -67,7 +61,6 @@ public class BikeStatusProjection {
                                 updateEmitter.emit(q -> "findAll".equals(q.getQueryName()), bs);
                                 updateEmitter.emit(String.class, event.bikeId()::equals, bs);
                             });
-
     }
 
     @EventHandler
@@ -83,18 +76,23 @@ public class BikeStatusProjection {
                             });
     }
 
-    @QueryHandler(queryName = "findAll")
+    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ALL)
     public Iterable<BikeStatus> findAll() {
         return bikeStatusRepository.findAll();
     }
 
-    @QueryHandler(queryName = "findAvailable")
+    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_AVAILABLE)
     public Iterable<BikeStatus> findAvailable(String bikeType) {
         return bikeStatusRepository.findAllByBikeTypeAndStatus(bikeType, RentalStatus.AVAILABLE);
     }
 
-    @QueryHandler(queryName = "findOne")
+    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ONE)
     public BikeStatus findOne(String bikeId) {
         return bikeStatusRepository.findById(bikeId).orElse(null);
+    }
+
+    @QueryHandler
+    public long countOfBikesByType(CountOfBikesByTypeQuery query) {
+        return bikeStatusRepository.countBikeStatusesByBikeType(query.bikeType());
     }
 }
