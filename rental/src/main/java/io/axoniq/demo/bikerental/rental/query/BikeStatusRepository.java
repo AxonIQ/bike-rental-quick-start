@@ -7,9 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface BikeStatusRepository extends JpaRepository<BikeStatus, String> {
+//tag::InterfaceDefinition[]
+@Repository //<.>
+public interface BikeStatusRepository
+        extends JpaRepository<BikeStatus, String> { //<.>
 
+    //tag::QueryMethods[]
     List<BikeStatus> findAllByBikeTypeAndStatus(String bikeType, RentalStatus status);
+    //end::QueryMethods[]
 
 }
+//end::InterfaceDefinition[]
