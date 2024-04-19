@@ -1,6 +1,6 @@
 services:
   axonserver: #<.>
-    image: 'axoniq/axonserver:latest-dev'  # <.>
+    image: 'axoniq/axonserver:latest'  # <.>
     environment: # <.>
       - 'AXONIQ_AXONSERVER_STANDALONE=TRUE'
     ports: # <.>
