@@ -59,9 +59,9 @@ Vary: Access-Control-Request-Headers
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 36
 
-9c27e890-8498-4329-afd6-58302b796fab
+8427681b-1ee6-4e0a-b5d8-c524b9ed553d
 
-Response code: 200 (OK); Time: 107ms (107 ms); Content length: 36 bytes (36 B)
+Response code: 200 (OK); Time: 591ms (591 ms); Content length: 36 bytes (36 B)
 ----
 
 == Following the execution of the register bike request in Axon Server
@@ -82,9 +82,8 @@ Click on the `Commands` button in the left panel. You will see all the command h
 
 image::image$AxonServer-Commands.png[Screenshot of the Axon Server Commands panel, showing a table with all registered command handlers and the number of commands processed by the Rental Monolith application]
 
-The table also shows that one `RegisterBikeCommand` was received and processed in the system by the `Rental Monolith` application, which corresponds to the command created by the `RentalController` and sent through the `CommandGateway`.
+The panel also shows that one `RegisterBikeCommand` was received and processed in the system by the `Rental Monolith` application, which corresponds to the command created by the `RentalController` and sent through the `CommandGateway`.
 
-NOTE:  If we had different applications connected to Axon Server, there would be a separate column for each one of them, and the column would show how many commands were received and processed by each application.
 
 === Reviewing the events
 
@@ -92,11 +91,11 @@ When we implemented the command handler, we validated the command and sent a `Bi
 
 To see if this event was sent, click on the `Search` button on the left menu panel of the Axon Server Dashboard. This action will bring up a page allowing you to search for all events sent and stored in Axon Server.
 
-Click on the Search button without specifying anything in the query field (leave it empty). You will see the only event that was sent as a result of running the command handler:
+Click on the magnifier button on right side of the `Query` field without specifying anything in it (leave it empty). You will see in the table below the only event that was sent as a result of running the command handler:
 
 image::image$AxonServer-BikeRegisteredEvent.png[A screenshot of the Events Search page in Axon Server, showing the BikeRegisteredEvent]
 
-Double-clicking on the event will bring up a popup panel showing all the event details.
+If you click on the eye icon in the of the `Action` column on the row of the event will bring up a popup panel showing all the event details.
 
 image::image$AxonServer-BikeRegisteredEvent-details.png[A screenshot of the Events Search page in Axon Server, showing the details of the BikeRegisteredEvent]
 

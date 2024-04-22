@@ -6,24 +6,36 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
+//tag::ClassDefinition[]
 @Component
 public class BikeStatusProjection {
 
-    private final BikeStatusRepository bikeStatusRepository;
+    //tag::Repository[]
+    private final BikeStatusRepository bikeStatusRepository; //<.>
+    //end::Repository[]
+    //tag::UpdateEmitter[]
     private final QueryUpdateEmitter updateEmitter;
 
+    //end::UpdateEmitter[]
+    //tag::Constructor[]
     public BikeStatusProjection(BikeStatusRepository bikeStatusRepository, QueryUpdateEmitter updateEmitter) {
         this.bikeStatusRepository = bikeStatusRepository;
         this.updateEmitter = updateEmitter;
     }
 
-    @EventHandler
-    public void on(BikeRegisteredEvent event) {
-        var bikeStatus = new BikeStatus(event.bikeId(), event.bikeType(), event.location());
-        bikeStatusRepository.save(bikeStatus);
-        updateEmitter.emit(q -> "findAll".equals(q.getQueryName()), bikeStatus);
+    //end::Constructor[]
+    //tag::EventHandlers[]
+    //tag::BikeRegisteredEventHandler[]
+    @EventHandler //<.>
+    public void on(BikeRegisteredEvent event) { //<.>
+        var bikeStatus = new BikeStatus(event.bikeId(), event.bikeType(), event.location()); //<.>
+        bikeStatusRepository.save(bikeStatus); //<.>
+        //tag::UpdateEmitter[]
+        updateEmitter.emit(q -> "findAll".equals(q.getQueryName()), bikeStatus); //<.>
+        //end::UpdateEmitter[]
     }
 
+    //end::BikeRegisteredEventHandler[]
     @EventHandler
     public void on(BikeRequestedEvent event) {
         bikeStatusRepository.findById(event.bikeId())
@@ -61,6 +73,7 @@ public class BikeStatusProjection {
                                 updateEmitter.emit(q -> "findAll".equals(q.getQueryName()), bs);
                                 updateEmitter.emit(String.class, event.bikeId()::equals, bs);
                             });
+
     }
 
     @EventHandler
@@ -76,23 +89,29 @@ public class BikeStatusProjection {
                             });
     }
 
-    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ALL)
-    public Iterable<BikeStatus> findAll() {
-        return bikeStatusRepository.findAll();
+    //end::EventHandlers[]
+    //tag::QueryHandlers[]
+    //tag::findAllQueryHandler[]
+    @QueryHandler(queryName = "findAll") //<.>
+    public Iterable<BikeStatus> findAll() { // <.>
+        return bikeStatusRepository.findAll(); //<.>
     }
 
-    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_AVAILABLE)
-    public Iterable<BikeStatus> findAvailable(String bikeType) {
+    //end::findAllQueryHandler[]
+    @QueryHandler(queryName = "findAvailable") //<.>
+    public Iterable<BikeStatus> findAvailable(String bikeType) { //<.>
         return bikeStatusRepository.findAllByBikeTypeAndStatus(bikeType, RentalStatus.AVAILABLE);
     }
 
-    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ONE)
-    public BikeStatus findOne(String bikeId) {
-        return bikeStatusRepository.findById(bikeId).orElse(null);
+    @QueryHandler(queryName = "findOne") // <.>
+    public BikeStatus findOne(String bikeId) { //<.>
+        return bikeStatusRepository.findById(bikeId).orElse(null); //<.>
     }
 
     @QueryHandler
     public long countOfBikesByType(CountOfBikesByTypeQuery query) {
         return bikeStatusRepository.countBikeStatusesByBikeType(query.bikeType());
     }
+    //end::QueryHandlers[]
 }
+//end::ClassDefinition[]

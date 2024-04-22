@@ -25,8 +25,8 @@ import java.util.concurrent.CompletableFuture;
 public class RentalController {
 // end::RentalControllerClassDefinition[]
 
-    public static final String FIND_ALL_QUERY = "findAll";
-    public static final String FIND_ONE_QUERY = "findOne";
+//    public static final String FIND_ALL_QUERY = "findAll";
+//    public static final String FIND_ONE_QUERY = "findOne";
 
     //tag::ControllerInitialization[]
     //tag::BusGateways[]
@@ -76,11 +76,12 @@ public class RentalController {
     }
 
     //end::generateBikes[]
+    //tag::findAll[]
     @GetMapping("/bikes")
     public CompletableFuture<List<BikeStatus>> findAll() {
         return queryGateway.query(BikeStatusNamedQueries.FIND_ALL, null, ResponseTypes.multipleInstancesOf(BikeStatus.class));
     }
-
+    //end::findAll[]
     @GetMapping("/bikeUpdates")
     public Flux<ServerSentEvent<String>> subscribeToAllUpdates() {
         SubscriptionQueryResult<List<BikeStatus>, BikeStatus> subscriptionQueryResult = queryGateway.subscriptionQuery(BikeStatusNamedQueries.FIND_ALL, null, ResponseTypes.multipleInstancesOf(BikeStatus.class), ResponseTypes.instanceOf(BikeStatus.class));
@@ -149,7 +150,7 @@ public class RentalController {
 
     @GetMapping(value = "watch", produces = "text/event-stream")
     public Flux<String> watchAll() {
-        SubscriptionQueryResult<List<BikeStatus>, BikeStatus> subscriptionQuery = queryGateway.subscriptionQuery(FIND_ALL_QUERY, null, ResponseTypes.multipleInstancesOf(BikeStatus.class), ResponseTypes.instanceOf(BikeStatus.class));
+        SubscriptionQueryResult<List<BikeStatus>, BikeStatus> subscriptionQuery = queryGateway.subscriptionQuery(BikeStatusNamedQueries.FIND_ALL, null, ResponseTypes.multipleInstancesOf(BikeStatus.class), ResponseTypes.instanceOf(BikeStatus.class));
         return subscriptionQuery.initialResult()
                                 .flatMapMany(Flux::fromIterable)
                                 .concatWith(subscriptionQuery.updates())
@@ -158,7 +159,7 @@ public class RentalController {
 
     @GetMapping(value = "watch/{bikeId}", produces = "text/event-stream")
     public Flux<String> watchBike(@PathVariable("bikeId") String bikeId) {
-        SubscriptionQueryResult<BikeStatus, BikeStatus> subscriptionQuery = queryGateway.subscriptionQuery(FIND_ONE_QUERY, bikeId, ResponseTypes.instanceOf(BikeStatus.class), ResponseTypes.instanceOf(BikeStatus.class));
+        SubscriptionQueryResult<BikeStatus, BikeStatus> subscriptionQuery = queryGateway.subscriptionQuery(BikeStatusNamedQueries.FIND_ONE, bikeId, ResponseTypes.instanceOf(BikeStatus.class), ResponseTypes.instanceOf(BikeStatus.class));
         return subscriptionQuery.initialResult()
                                 .concatWith(subscriptionQuery.updates())
                                 .map(bs -> bs.getBikeId() + " -> " + bs.description());
@@ -175,9 +176,10 @@ public class RentalController {
           return this.bikeRentalDataGenerator.generateRentals(bikeType, loops, concurrency, abandonPaymentFactor, delay);
     }
 
-    @GetMapping("/bikes/{bikeId}")
-    public CompletableFuture<BikeStatus> findStatus(@PathVariable("bikeId") String bikeId) {
-        return queryGateway.query(FIND_ONE_QUERY, bikeId, BikeStatus.class);
+    //tag::findOneQuery[]
+    @GetMapping("/bikes/{bikeId}") // <.>
+    public CompletableFuture<BikeStatus> findStatus(@PathVariable("bikeId") String bikeId) { //<.>
+        return queryGateway.query(BikeStatusNamedQueries.FIND_ONE, bikeId, BikeStatus.class); //<.>
     }
 
 

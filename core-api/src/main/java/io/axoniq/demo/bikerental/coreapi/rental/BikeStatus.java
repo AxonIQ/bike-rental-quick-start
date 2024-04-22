@@ -3,10 +3,16 @@ package io.axoniq.demo.bikerental.coreapi.rental;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-@Entity
+//tag::BikeStatusEntity[]
+@Entity //<.>
+//end::BikeStatusEntity[]
+//tag::BikeStatusClass[]
 public class BikeStatus {
 
-    @Id
+    //tag::Fields[]
+    //tag::PersistenceIdAnnotation[]
+    @Id //<.>
+    //end::PersistenceIdAnnotation[]
     private String bikeId;
     private String bikeType;
     private String location;
@@ -16,6 +22,8 @@ public class BikeStatus {
     public BikeStatus() {
     }
 
+    //end::Fields[]
+    //tag::Constructor[]
     public BikeStatus(String bikeId, String bikeType, String location) {
         this.bikeId = bikeId;
         this.bikeType = bikeType;
@@ -23,32 +31,24 @@ public class BikeStatus {
         this.status = RentalStatus.AVAILABLE;
     }
 
+    //end::Constructor[]
+    //tag::Methods[]
+    //tag::Accessors[]
+    // Accessor methods
     public String getBikeId() {
         return bikeId;
+    }
+
+    public String getBikeType() {
+        return bikeType;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void returnedAt(String location) {
-        this.location = location;
-        this.status = RentalStatus.AVAILABLE;
-        this.renter = null;
-    }
-
     public String getRenter() {
         return renter;
-    }
-
-    public void requestedBy(String renter) {
-        this.renter = renter;
-        this.status = RentalStatus.REQUESTED;
-    }
-
-    public void rentedBy(String renter) {
-        this.renter = renter;
-        this.status = RentalStatus.RENTED;
     }
 
     public RentalStatus getStatus() {
@@ -68,7 +68,25 @@ public class BikeStatus {
         }
     }
 
-    public String getBikeType() {
-        return bikeType;
+    //end::Accessors[]
+    //tag::Modifiers[]
+    public void returnedAt(String location) {
+        this.location = location;
+        this.status = RentalStatus.AVAILABLE;
+        this.renter = null;
     }
+
+
+    public void requestedBy(String renter) {
+        this.renter = renter;
+        this.status = RentalStatus.REQUESTED;
+    }
+
+    public void rentedBy(String renter) {
+        this.renter = renter;
+        this.status = RentalStatus.RENTED;
+    }
+    //end:Modifiers[]
+    //end::Methods[]
 }
+//end::BikeStatusClass[]
