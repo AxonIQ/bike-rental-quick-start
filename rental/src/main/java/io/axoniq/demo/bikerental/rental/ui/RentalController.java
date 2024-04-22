@@ -34,8 +34,10 @@ import java.util.concurrent.TimeUnit;
 public class RentalController {
 // end::RentalControllerClassDefinition[]
 
+    //tag::constantsQueryNames[]
     public static final String FIND_ALL_QUERY = "findAll";
     public static final String FIND_ONE_QUERY = "findOne";
+    //end::constantsQueryNames[]
     private static final List<String> RENTERS = Arrays.asList("Allard", "Steven", "Josh", "David", "Marc", "Sara", "Milan", "Jeroen", "Marina", "Jeannot");
     private static final List<String> LOCATIONS = Arrays.asList("Amsterdam", "Paris", "Vilnius", "Barcelona", "London", "New York", "Toronto", "Berlin", "Milan", "Rome", "Belgrade");
 
@@ -84,11 +86,17 @@ public class RentalController {
     }
 
     //end::generateBikes[]
-    @GetMapping("/bikes")
-    public CompletableFuture<List<BikeStatus>> findAll() {
-        return queryGateway.query(FIND_ALL_QUERY, null, ResponseTypes.multipleInstancesOf(BikeStatus.class));
+    //tag::findAll[]
+    @GetMapping("/bikes") //<.>
+    public CompletableFuture<List<BikeStatus>> findAll() { //<.>
+        return queryGateway.query( //<.>
+                FIND_ALL_QUERY, //<.>
+                null, //<.>
+                ResponseTypes.multipleInstancesOf(BikeStatus.class) //<.>
+        );
     }
 
+    //end::findAll[]
     @GetMapping("/bikeUpdates")
     public Flux<ServerSentEvent<String>> subscribeToAllUpdates() {
         SubscriptionQueryResult<List<BikeStatus>, BikeStatus> subscriptionQueryResult = queryGateway.subscriptionQuery(FIND_ALL_QUERY, null, ResponseTypes.multipleInstancesOf(BikeStatus.class), ResponseTypes.instanceOf(BikeStatus.class));
@@ -187,11 +195,12 @@ public class RentalController {
                             concurrency);
     }
 
-    @GetMapping("/bikes/{bikeId}")
-    public CompletableFuture<BikeStatus> findStatus(@PathVariable("bikeId") String bikeId) {
-        return queryGateway.query(FIND_ONE_QUERY, bikeId, BikeStatus.class);
+    //tag::findOneQuery[]
+    @GetMapping("/bikes/{bikeId}") // <.>
+    public CompletableFuture<BikeStatus> findStatus(@PathVariable("bikeId") String bikeId) { //<.>
+        return queryGateway.query(FIND_ONE_QUERY, bikeId, BikeStatus.class); //<.>
     }
-
+    //end::findOneQuery[]
     private Mono<String> executeRentalCycle(String bikeType, String renter, int abandonPaymentFactor, int delay) {
         CompletableFuture<String> result = selectRandomAvailableBike(bikeType)
                 .thenCompose(bikeId -> commandGateway.send(new RequestBikeCommand(bikeId, renter))
