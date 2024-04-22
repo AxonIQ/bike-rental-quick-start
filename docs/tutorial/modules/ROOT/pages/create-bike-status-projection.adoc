@@ -428,4 +428,3 @@ We will explore some more advanced topics of building applications with Axon Fra
 
 
 
-
