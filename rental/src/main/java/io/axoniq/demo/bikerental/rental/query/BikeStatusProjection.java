@@ -29,6 +29,7 @@ public class BikeStatusProjection {
         bikeStatusRepository.findById(event.bikeId())
                             .map(bs -> {
                                 bs.requestedBy(event.renter());
+                                bikeStatusRepository.save(bs);
                                 return bs;
                             })
                             .ifPresent(bs -> {
@@ -42,6 +43,7 @@ public class BikeStatusProjection {
         bikeStatusRepository.findById(event.bikeId())
                             .map(bs -> {
                                 bs.rentedBy(event.renter());
+                                bikeStatusRepository.save(bs);
                                 return bs;
                             })
                             .ifPresent(bs -> {
@@ -55,6 +57,7 @@ public class BikeStatusProjection {
         bikeStatusRepository.findById(event.bikeId())
                             .map(bs -> {
                                 bs.returnedAt(event.location());
+                                bikeStatusRepository.save(bs);
                                 return bs;
                             })
                             .ifPresent(bs -> {
@@ -68,6 +71,7 @@ public class BikeStatusProjection {
         bikeStatusRepository.findById(event.bikeId())
                             .map(bs -> {
                                 bs.returnedAt(bs.getLocation());
+                                bikeStatusRepository.save(bs);
                                 return bs;
                             })
                             .ifPresent(bs -> {

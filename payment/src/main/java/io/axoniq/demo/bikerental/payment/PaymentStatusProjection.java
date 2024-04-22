@@ -56,11 +56,18 @@ public class PaymentStatusProjection {
 
     @EventHandler
     public void handle(PaymentConfirmedEvent event) {
-        paymentStatusRepository.findById(event.paymentId()).ifPresent(s -> s.setStatus(APPROVED));
+        paymentStatusRepository.findById(event.paymentId()).ifPresent(s -> {
+            s.setStatus(APPROVED);
+            paymentStatusRepository.save(s);
+        });
+
     }
 
     @EventHandler
     public void handle(PaymentRejectedEvent event) {
-        paymentStatusRepository.findById(event.paymentId()).ifPresent(s -> s.setStatus(REJECTED));
+        paymentStatusRepository.findById(event.paymentId()).ifPresent(s -> {
+            s.setStatus(REJECTED);
+            paymentStatusRepository.save(s);
+        });
     }
 }

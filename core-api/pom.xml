@@ -19,7 +19,7 @@
         <!-- tag::deps-spring-boot-starter-data[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- end::deps-spring-boot-starter-data[] -->

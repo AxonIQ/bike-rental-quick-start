@@ -1,20 +1,21 @@
 package io.axoniq.demo.bikerental.payment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.axoniq.demo.bikerental.coreapi.payment.PaymentStatus;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.ConfigurerModule;
-import org.axonframework.eventhandling.tokenstore.jpa.TokenEntry;
+import org.axonframework.eventhandling.tokenstore.TokenStore;
+import org.axonframework.extensions.mongo.DefaultMongoTemplate;
+import org.axonframework.extensions.mongo.eventsourcing.tokenstore.MongoTokenStore;
+import org.axonframework.serialization.Serializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-@EntityScan(basePackageClasses = {PaymentStatus.class, TokenEntry.class})
 @SpringBootApplication
 public class PaymentApplication {
 
@@ -42,5 +43,23 @@ public class PaymentApplication {
                         (c, b) -> b.workerExecutor(workerExecutorService())
                                    .batchSize(100)
                 );
+    }
+
+
+
+    @Bean
+    public DefaultMongoTemplate axonMongoTemplate(MongoTemplate mongoTemplate) {
+        return DefaultMongoTemplate.builder()
+                .mongoDatabase(mongoTemplate.getMongoDatabaseFactory().getMongoDatabase())
+                .build();
+    }
+
+    @Bean
+    public TokenStore mongoTokenStore(DefaultMongoTemplate axonMongoTemplate, Serializer serializer) {
+
+        return MongoTokenStore.builder()
+                .mongoTemplate(axonMongoTemplate)
+                .serializer(serializer)
+                .build();
     }
 }

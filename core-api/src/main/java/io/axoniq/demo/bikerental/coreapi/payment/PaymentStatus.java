@@ -1,9 +1,7 @@
 package io.axoniq.demo.bikerental.coreapi.payment;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 
-@Entity
 public class PaymentStatus {
     @Id
     private String id;

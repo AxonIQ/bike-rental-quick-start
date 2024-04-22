@@ -6,3 +6,8 @@ services:
     ports: # <.>
       - '8024:8024'  # <.>
       - '8124:8124'  # <.>
+
+  mongodb:
+    image: 'mongo:latest'
+    ports:
+      - '27017:27017'

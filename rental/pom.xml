@@ -24,13 +24,6 @@
         </dependency>
         <!-- end::deps-core-api[] -->
 
-        <!-- tag::deps-h2[] -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- end::deps-h2[] -->
         <!-- tag::deps-reactor[] -->
         <dependency>
             <groupId>io.projectreactor</groupId>
@@ -52,11 +45,16 @@
             <artifactId>console-framework-client-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.axonframework.extensions.mongo</groupId>
+            <artifactId>axon-mongo</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- end::deps-axonframework[] -->
+
         <!-- tag::deps-axon-micrometer[] -->
         <dependency>
             <groupId>org.axonframework</groupId>
@@ -70,12 +68,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- end::deps-springboot-starter-actuator[] -->
-        <!-- tag::deps-springboot-jpa[] -->
+        <!-- tag::deps-springboot-data-mongodb[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <!-- end::deps-springboot-jpa[] -->
+        <!-- end::deps-springboot-data-mongodb[] -->
         <!-- tag::deps-springboot-webflux[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
