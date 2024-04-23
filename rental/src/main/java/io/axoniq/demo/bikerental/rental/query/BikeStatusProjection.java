@@ -73,7 +73,6 @@ public class BikeStatusProjection {
                                 updateEmitter.emit(q -> "findAll".equals(q.getQueryName()), bs);
                                 updateEmitter.emit(String.class, event.bikeId()::equals, bs);
                             });
-
     }
 
     @EventHandler
@@ -92,18 +91,18 @@ public class BikeStatusProjection {
     //end::EventHandlers[]
     //tag::QueryHandlers[]
     //tag::findAllQueryHandler[]
-    @QueryHandler(queryName = "findAll") //<.>
+    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ALL) //<.>
     public Iterable<BikeStatus> findAll() { // <.>
         return bikeStatusRepository.findAll(); //<.>
     }
 
     //end::findAllQueryHandler[]
-    @QueryHandler(queryName = "findAvailable") //<.>
+    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_AVAILABLE) //<.>
     public Iterable<BikeStatus> findAvailable(String bikeType) { //<.>
         return bikeStatusRepository.findAllByBikeTypeAndStatus(bikeType, RentalStatus.AVAILABLE);
     }
 
-    @QueryHandler(queryName = "findOne") // <.>
+    @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ONE) // <.>
     public BikeStatus findOne(String bikeId) { //<.>
         return bikeStatusRepository.findById(bikeId).orElse(null); //<.>
     }

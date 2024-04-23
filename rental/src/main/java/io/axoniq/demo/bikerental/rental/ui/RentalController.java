@@ -77,9 +77,13 @@ public class RentalController {
 
     //end::generateBikes[]
     //tag::findAll[]
-    @GetMapping("/bikes")
-    public CompletableFuture<List<BikeStatus>> findAll() {
-        return queryGateway.query(BikeStatusNamedQueries.FIND_ALL, null, ResponseTypes.multipleInstancesOf(BikeStatus.class));
+    @GetMapping("/bikes") //<.>
+    public CompletableFuture<List<BikeStatus>> findAll() { //<.>
+        return queryGateway.query( //<.>
+                BikeStatusNamedQueries.FIND_ALL, //<.>
+                null, //<.>
+                ResponseTypes.multipleInstancesOf(BikeStatus.class) //<.>
+        );
     }
     //end::findAll[]
     @GetMapping("/bikeUpdates")
@@ -182,6 +186,6 @@ public class RentalController {
         return queryGateway.query(BikeStatusNamedQueries.FIND_ONE, bikeId, BikeStatus.class); //<.>
     }
 
-
+    //end::findOneQuery[]
 }
 
