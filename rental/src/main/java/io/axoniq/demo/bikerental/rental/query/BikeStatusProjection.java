@@ -97,16 +97,20 @@ public class BikeStatusProjection {
     }
 
     //end::findAllQueryHandler[]
+    //tag::findAvailableQueryHandler[]
     @QueryHandler(queryName = BikeStatusNamedQueries.FIND_AVAILABLE) //<.>
     public Iterable<BikeStatus> findAvailable(String bikeType) { //<.>
         return bikeStatusRepository.findAllByBikeTypeAndStatus(bikeType, RentalStatus.AVAILABLE);
     }
 
+    //end::findAvailableQueryHandler[]
+    //tag::findOneQueryHandler[]
     @QueryHandler(queryName = BikeStatusNamedQueries.FIND_ONE) // <.>
     public BikeStatus findOne(String bikeId) { //<.>
         return bikeStatusRepository.findById(bikeId).orElse(null); //<.>
     }
 
+    //end::findOneQueryHandler[]
     @QueryHandler
     public long countOfBikesByType(CountOfBikesByTypeQuery query) {
         return bikeStatusRepository.countBikeStatusesByBikeType(query.bikeType());
