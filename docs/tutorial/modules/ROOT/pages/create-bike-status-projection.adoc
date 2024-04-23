@@ -268,7 +268,7 @@ include::example$rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/Rental
 
 }
 ----
-<.> The `@GetMapping` annotation configures the method to be invoked when a `GET` request to `/bikes/{bikeId}` is received, and defines the part of the url that comes after `/bikes/` to be assigned to the `bikeId` path variable.
+<.> The `@GetMapping` annotation configures the method to be invoked when a `GET` request to `/bikes/{bikeId}` is received, and defines the part of the URL that comes after `/bikes/` to be assigned to the `bikeId` path variable.
 <.> The `@PathVariable("bikeId")` annotation instruct Spring to provide to the method argument the value of the URL that matches the `bikeId` path variable.
 <.> We use the `query` method of the `queryGateway` to send the query message. This time, we specify the provide `bikeId` as the query criteria as the second argument, and the `BikeStatus.class` as the type of the response we are expecting from the query.
 
