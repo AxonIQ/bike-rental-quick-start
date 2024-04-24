@@ -97,6 +97,6 @@ public class Simulator {
                 this.loops,
                 this.concurrency,
                 this.abandonPaymentFactor,
-                this.delayBetweenLoops).toStream().forEach(logger::info);
+                this.delayBetweenLoops).subscribe(logger::info);
     }
 }
