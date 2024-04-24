@@ -117,6 +117,25 @@ Our next task in defining our projection is to implement the support for handlin
 
 We need to add a `@QueryHandler` method for each query we want to support. Since we already have the bike statuses persisted in the way we need to return the information, we only need to query the database and return that.
 
+Before jumping into creating the methds to handle the queries, we need to consider how we are going to identify the different queries.
+
+=== Using named queries.
+
+Axon Framework allows different ways to identify a query message and link that query to the right method for handling it. In this tutorial we are going to start using the most simple way to identify a query: by assigning each query a name.
+
+We are going to use `String` constants to make sure we always refer to the same query name, both in the modules that send the query messages and in the components that are handling them.
+
+So, as the first step we will create a class to define and share those query names in different components. Define the following class in the `core-api` module:
+
+[source,java]
+./core-api/src/main/java/io/axoniq/demo/bikerental/coreapi/rental/BikeStatusNamedQueries.java
+----
+include::example$core-api/src/main/java/io/axoniq/demo/bikerental/coreapi/rental/BikeStatusNamedQueries.java[]
+----
+
+Now that we have the names of the queries defined, let's define the methods that will handle and respond them.
+
+
 === Implement a query to return all the bikes.
 
 Let's start by implementing a method to return all the bikes (with their status) defined in our system. Add the following method to your `BikeStatusProjection` class:
@@ -130,7 +149,8 @@ include::example$rental/src/main/java/io/axoniq/demo/bikerental/rental/query/Bik
 <.> Since our query has no parameters (we want to retrieve the information for *all the bikes* in our system), our query handler method does not receive any parameters. It only needs to return the list of items we find in our DB.
 <.> As we have the information already prepared and aligned with the response format (thanks to the `EventHandler`s), we only need to retrieve the information from the repository and return it.
 
-In short, we have defined a query handler method that Axon Framework will call upon the reception of a query message to `findAll` the bikes in our system. And the method will simply retrieve the up-to-date information from the DB and return the `BikeStatus` for all the bikes.
+In short, we have defined a query handler method that Axon Framework will call upon the reception of a query message to `FIND_ALL` the bikes in our system. And the method will simply retrieve the up-to-date information from the DB and return the `BikeStatus` for all the bikes.
+
 
 === Implementing support for other queries in our projection.
 
@@ -141,12 +161,12 @@ For example, if we want to support queries to return all the available bikes, fi
 [source,java]
 .rental/src/main/java/io/axoniq/demo/bikerental/rental/query/BikeStatusProjection.java
 ----
-include::example$rental/src/main/java/io/axoniq/demo/bikerental/rental/query/BikeStatusProjection.java[tags=ClassDefinition;QueryHandlers;!*]
+include::example$rental/src/main/java/io/axoniq/demo/bikerental/rental/query/BikeStatusProjection.java[tags=ClassDefinition;findAvailableQueryHandler;findOneQueryHandler;!*]
 ----
 <.> We define a new `QueryHandler` method for the `findAvailable` query.
 <.> The query will filter by the type of the bike, so we need to add the `bikeType` argument to the method.
 <.> We need to add a specific method to our `BikeStatusRepository` that implements the query to the DB. We will do that right after this. Since we are using Spring Data, the name of the method should follow a specific pattern. (More on this in a few lines)
-<.> We define another `QueryHandler` method for the `findOne` query.
+<.> We define another `QueryHandler` method for the `FIND_ONE` query.
 <.> In this query, we only need to return one bike, and we need the `bikeId` as an argument to the method. In this case, we will return a single `BikeStatus` because we are returning a single element and not a collection.
 <.> The default `findById` method provided by the Spring Data `JpaRepository` returns an `Optional<T>` when we look up an item based on its `id`. This is because the `id` we are looking for may not exist in our DB. So we add a fallback to return `null` in case there is no bike  with the given `bikeId` in the DB.
 

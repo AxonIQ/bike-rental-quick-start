@@ -14,6 +14,7 @@ public interface BikeStatusRepository
 
     //tag::QueryMethods[]
     List<BikeStatus> findAllByBikeTypeAndStatus(String bikeType, RentalStatus status);
+    long countBikeStatusesByBikeType(String bikeType);
     //end::QueryMethods[]
 
 }
