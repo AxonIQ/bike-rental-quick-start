@@ -59,6 +59,13 @@
             <artifactId>axon-micrometer</artifactId>
         </dependency>
         <!-- end::deps-axon-micrometer[] -->
+        <!-- tag::deps-axon-firestarter[] -->
+        <dependency>
+            <groupId>org.axonframework.firestarter</groupId>
+            <artifactId>firestarter-spring-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- end::deps-axon-firestarter[] -->
         <!-- tag::deps-axoniq-console[] -->
         <dependency>
             <groupId>io.axoniq.console</groupId>
