@@ -32,7 +32,6 @@
         <dependency>
             <groupId>org.axonframework.firestarter</groupId>
             <artifactId>firestarter-spring-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.axoniq.console</groupId>
