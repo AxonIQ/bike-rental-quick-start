@@ -17,6 +17,7 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -57,6 +58,11 @@ public class Bike {
     //tag::RegisterBikeCommandHandler[]
     @CommandHandler //<.>
     public Bike(RegisterBikeCommand command) { //<.>
+        var seconds = Instant.now().getEpochSecond();
+        if (seconds % 5 ==0) {
+            throw new IllegalStateException("Can't accept new bikes right now");
+        }
+
         apply(new BikeRegisteredEvent(command.bikeId(), command.bikeType(), command.location())); //<.>
     }
 

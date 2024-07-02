@@ -2,6 +2,10 @@ package io.axoniq.demo.bikerental.rental;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.axoniq.demo.bikerental.coreapi.rental.BikeStatus;
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
+import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
 import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.ConfigurationScopeAwareProvider;
@@ -29,6 +33,18 @@ public class RentalApplication {
     public static void main(String[] args) {
         SpringApplication.run(RentalApplication.class, args);
     }
+
+    //configuring retry scheduler for command gateway.  This will handle retrying if a non-transient exception occurs
+    //when attempting to send a command
+    //https://docs.axoniq.io/reference-guide/axon-framework/axon-framework-commands/infrastructure#retryscheduler
+    @Bean
+    public CommandGateway commandGatewayWithRetry(CommandBus commandBus){
+
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(5);
+        IntervalRetryScheduler rs = IntervalRetryScheduler.builder().retryExecutor(scheduledExecutorService).maxRetryCount(5).retryInterval(1000).build();
+        return DefaultCommandGateway.builder().commandBus(commandBus).retryScheduler(rs).build();
+    }
+
 
     @Bean(destroyMethod = "")
     public DeadlineManager deadlineManager(TransactionManager transactionManager,
