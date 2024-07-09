@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: microservices/rental-command
-          platforms: linux/amd64,linux/arm64, linux/arm64/v7
+          platforms: linux/amd64,linux/arm64, linux/arm64/v7, linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental-command:latest
 
@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: microservices/rental-payment
-          platforms: linux/amd64,linux/arm64, linux/arm64/v7
+          platforms: linux/amd64,linux/arm64, linux/arm64/v7, linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental-rental-payment:latest
 
@@ -67,7 +67,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: payment
-          platforms: linux/amd64,linux/arm64, linux/arm64/v7
+          platforms: linux/amd64,linux/arm64, linux/arm64/v7, linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental-payment:latest
 
@@ -75,7 +75,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: microservices/rental-query
-          platforms: linux/amd64,linux/arm64, linux/arm64/v7
+          platforms: linux/amd64,linux/arm64, linux/arm64/v7, linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental-query:latest
 
@@ -83,7 +83,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: microservices/rental-ui
-          platforms: linux/amd64,linux/arm64, linux/arm64/v7
+          platforms: linux/amd64,linux/arm64, linux/arm64/v7, linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental-ui:latest
 
@@ -91,7 +91,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: rental
-          platforms: linux/amd64,linux/arm64, linux/arm64/v7
+          platforms: linux/amd64,linux/arm64, linux/arm64/v7, linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/axoniq/bike-rental:latest
 
