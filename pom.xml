@@ -68,7 +68,7 @@
 			<dependency>
 				<groupId>org.axonframework.firestarter</groupId>
 				<artifactId>firestarter-spring-starter</artifactId>
-				<version>0.0.1</version>
+				<version>0.0.2</version>
 			</dependency>
 			<!-- end::deps-axon-firestarter[] -->
 			<!-- tag::deps-axoniq-console[] -->
