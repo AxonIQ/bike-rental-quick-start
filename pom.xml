@@ -65,11 +65,11 @@
             </dependency>
             <!-- end::deps-axon-bom[] -->
 			<!-- tag::deps-axon-firestarter[] -->
-            <dependency>
-            	<groupId>org.axonframework.firestarter</groupId>
-                <artifactId>firestarter-spring-starter</artifactId>
-                <version>0.0.2</version>
-            </dependency>
+			<dependency>
+				<groupId>org.axonframework.firestarter</groupId>
+				<artifactId>firestarter-spring-starter</artifactId>
+				<version>0.0.2</version>
+			</dependency>
 			<!-- end::deps-axon-firestarter[] -->
 			<!-- tag::deps-axoniq-console[] -->
             <dependency>
