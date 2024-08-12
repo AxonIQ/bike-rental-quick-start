@@ -1,6 +1,6 @@
 # Documentation For Bike Rental Demo App.
 
-This folder contains the docs for the Bike Rental Application. It is written following as part of the [AxonIQ Library](https://library.axoniq.io), and it's [written in Ascii and built with Antora.](https://library.axoniq.io/contribution_guide/overview/platform.html)
+This folder contains the docs for the Bike Rental Application. It is written as part of the [AxonIQ Library](https://library.axoniq.io), and it's [written in Ascii and built with Antora.](https://library.axoniq.io/contribution_guide/overview/platform.html)
 
 ## Contributing to the docs.
 
@@ -12,7 +12,7 @@ If you want to build and explore the docs locally (because you have made changes
 
 You can check the [detailed information on how the process to build the docs works](https://library.axoniq.io/contribution_guide/overview/build.html), but in short, all you have to do is: 
 
-1. Make sure you have Node, Antora and Vale installed in your system.
+1. Make sure you have Node  Antora and Vale installed in your system.
 2. CD to the `docs/_playbook` folder.
 3. Run `npx antora playbook.yaml`. Antora will generate the set of static html files under `docs/_playbook/build/site`
 4. Move to `docs/_playbook/build/site` and execute some local http server to serve files in that directory. For example by executing `python3 -m http.server 8070`

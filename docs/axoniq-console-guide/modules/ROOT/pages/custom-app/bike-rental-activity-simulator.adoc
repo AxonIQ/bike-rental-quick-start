@@ -1,0 +1,3 @@
+:navtitle: Application activity Simulator
+
+= Add Activity Simulator to Your Application

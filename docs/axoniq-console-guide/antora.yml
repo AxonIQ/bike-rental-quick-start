@@ -1,0 +1,12 @@
+name: bikerental-console-demo
+title: Monitoring your AxonFramework Application with AxonIQ Console
+version: true
+
+asciidoc:
+  attributes:
+    component_description: Monitor your Axon application with AxonIQ Console, helping you to detect wich parts of your system have a poor performance and get some hints on what can be improved.
+    type: guide
+    group: axon-framework
+
+nav:
+  - modules/ROOT/nav.adoc

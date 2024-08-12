@@ -1,0 +1,23 @@
+:navtitle: Introduction
+:reftext: Monitoring your Axon Application with AxonIQ Console
+
+= Introduction
+
+There is a good number of reasons to create a modular distributed applications. These type of applications can scale better, support more workload, react in a elastic manner (scaling up or down) to suddent peaks in the workload, and many more. All of those benefits come from relying on designs and concepts like Event-Driven communication, Location Transparency and loose coupling.
+
+On the other side, these kind of distributed applications usually make a little bit harder for the DevOps teams to get a comprehensive view of how the whole system is behaving, and sometimes makes more difficult the task to debug and identify bottlenecks or components that have a poor performance.
+
+The usual way of complex systems to allow monitoring is by providing some kind of telemetry that it is usually collected and presented in Graphana Dashboards for example. But that information still requires someone who can understand and read where the performance problems could be.
+
+While Axon Framework and Axon Server provides that telemetry, we also provide a better tool to collect those metrics and present the information in a more "opinionated" way that gives a comprehensive and more clear view of all the components of your application and analize their performance in an easier way.
+
+In this guide, we will use the AxonIQ Console as our tool to gather that telemetry and observe the performance of our system. We will also create some performance problems on-purpose on our sample `bike-rental` demos application in order to see how AxonIQ Console helps us in detecting those problems.
+
+You can read more about link:https://console.axoniq.io[AxonIQ Console,role=external,window=_blank] in the xref:axoniq-console-getting-started:ROOT:index.adoc[AxonIQConsole Getting Started Guide.,window=_blank]
+
+This tutorial will guide you through the process to connect the bike rental application to AxonIQ Console and see the how to monitor the behaviour of your distributed system built using Axon Technologies. During this process, we will also use some components to simulate activity for our `Bike Rental` application. Furthermore, to make things more interesting, we will also use the `Axon Fire-Starter` to cause some problems on purpose on the application and show how AxonIQ Console can help you detect them.
+
+Don't worry if you don't want to adapt your application. We will also show you how to use a working demo application and go directly to running it and monitoring its performance.
+
+Let's get started.
+

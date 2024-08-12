@@ -1,0 +1,3 @@
+:navtitle: Monitoring your Application with AxonIQ Console
+
+= Monitoring your Application with AxonIQ Console

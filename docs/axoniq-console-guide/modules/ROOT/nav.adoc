@@ -1,0 +1,15 @@
+* xref:index.adoc[]
+** xref:introduction/required-components-and-tools.adoc[]
+** xref:introduction/guide-structure.adoc[]
+
+* xref:axoniq-console.adoc[]
+* xref:connect-your-app.adoc[]
+** xref:custom-app/prepare-app-for-console.adoc[]
+** xref:custom-app/bike-rental-activity-simulator.adoc[]
+
+* xref:monitoring/index.adoc[]
+** xref:custom-app/your-app-in-axoniq-console.adoc[]
+** xref:custom-app/add-axon-firestarter.adoc[]
+** xref:monitoring/issues-w-firestarter.adoc[]
+
+* xref:conclusion.adoc[]
