@@ -1,0 +1,13 @@
+:navtitle: Introduction
+:reftext: Monitoring your Axon Application with AxonIQ Console
+
+= Introduction
+
+Once that we have our event-driven distributed application deployed to production, there may some cases in which the behaviour or performance of our application is not what we expected. That could be caused by our application having a higher load that the expected, because some component is acting as a bottleneck and should be scaled or because a message is stuck or causing problems somewhere in our system architecture.
+
+Before jumping into the different software components trying to locate the problem, it would be useful to have a bird's-eye view of our system and see where the potential problems could be.
+
+In this guide we are going to see how you can connect your Axon Framework based application to AxonIQ Console and get that comprehensive view of your system behaviour. During the guide, we will use the `bike-rental` demo application, but you can use the directions provided in the guide to connect your own Axon Framework based application.
+
+NOTE: If you don't have an Axon Framerwork based application, the guide will also show you how you run and monitor an application using an already working sample application packed as a set of docker images (you will only need to run a `docker-compose` command).
+

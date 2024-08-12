@@ -1,0 +1,22 @@
+:navtitle: Connect your Application
+
+= Connect your Application to AxonIQ Console
+
+Once that you have signed up and created your free account in AxonIQ Console, we can connect our application `bike-rental` application (or any other Axon Framework based application you may have) and see how it is monitored by AxonIQ Console.
+
+In the second dialog after xref::axoniq-console.adoc#_set_up_your_free_axoniq_console_account[setting up your AxonIQ Console account] you were presented with two options to get started using AxonIQ Console, this is where this guide will follow two alternative paths, depending on whether you already have a working application built with Axon Framework (such as the `bike-rental` application built during xref:bikerental-demo::index.adoc[]]) or if you prefer to simply use the demo AxonIQ Console has already prepared for you.
+
+[NOTE]
+====
+AxonIQ Console provides detailed instructions con how to connect your own Java or Axon Framework based application, or alternatively, provides a `docker-compose.yaml` file that allows you to run a version of the `bike-rental` application already configured to connect to the AxonIQ Console environment you have just created.
+
+In the second dialog of the xref:axoniq-console-getting-started:ac-gs-setup:setting-up-your-account.adoc[First time setup steps,window=_blank,role=external] step you will be able to choose your preferred option. You can try to follow the detailed steps provided directly by AxonIQ Console UI to connect your application and skip this guide directly to xref:monitoring/index.adoc
+====
+
+If you want to follow detailed instructions to prepare and connect your own Axon Framework based application, go to xref:custom-app/prepare-app-for-console.adoc[]
+
+If you want to read the detailed instructions in this guide to run the docker-based application that AxonIQ Console already has available, click on xref:docker-based-demo/start-docker-based-demo.adoc[]
+
+
+
+

@@ -1,0 +1,3 @@
+:navtitle: Creating and Detecting Issues in your Application
+
+= Creating and Detecting Issues in your Application

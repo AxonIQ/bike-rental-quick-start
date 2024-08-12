@@ -1,0 +1,3 @@
+:navtitle: Prepare your App for AxonIQ Console
+
+= Prepare your Application for AxonIQ Console
