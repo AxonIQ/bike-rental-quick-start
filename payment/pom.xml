@@ -12,61 +12,78 @@
 
     <artifactId>payment</artifactId>
 
+    <!-- tag::dependencies[] -->
     <dependencies>
+        <!-- tag::deps-core-api[] -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>core-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <!-- end::deps-core-api[] -->
+        <!-- tag::deps-h2[] -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
+        <!-- end::deps-h2[] -->
+        <!-- tag::deps-axonframework[] -->
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.axonframework.firestarter</groupId>
-            <artifactId>firestarter-spring-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.axoniq.console</groupId>
-            <artifactId>console-framework-client-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-micrometer</artifactId>
         </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-- end::deps-axonframework[] -->
+        <!-- tag::deps-axon-micrometer[] -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-micrometer</artifactId>
+        </dependency>
+        <!-- end::deps-axon-micrometer[] -->
+        <!-- tag::deps-axon-firestarter[] -->
+        <dependency>
+            <groupId>org.axonframework.firestarter</groupId>
+            <artifactId>firestarter-spring-starter</artifactId>
+        </dependency>
+        <!-- end::deps-axon-firestarter[] -->
+        <!-- tag::deps-axoniq-console[] -->
+        <dependency>
+            <groupId>io.axoniq.console</groupId>
+            <artifactId>console-framework-client-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- end::deps-axoniq-console[] -->
+        <!-- tag::deps-springboot-starter-actuator[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- end::deps-springboot-starter-actuator[] -->
+        <!-- tag::deps-springboot-jpa[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- end::deps-springboot-jpa[] -->
+        <!-- tag::deps-springboot-webflux[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-
+        <!-- end::deps-springboot-webflux[] -->
+        <!-- tag::deps-springboot-tests[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-- end::deps-springboot-tests[] -->
     </dependencies>
+    <!-- end::dependencies[] -->
 
     <build>
         <plugins>

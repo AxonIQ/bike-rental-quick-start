@@ -47,7 +47,7 @@
         <axon.version>4.9.4</axon.version>
 		<!-- end::props-axonframework[] -->
 		<!-- tag::props-axoniq-console-client[] -->
-		<console-framework-client.version>1.3.0</console-framework-client.version>
+        <console-framework-client.version>1.7.2</console-framework-client.version>
 		<!-- end::props-axoniq-console-client[] -->
     </properties>
 	<!-- end::properties[] -->
@@ -68,7 +68,7 @@
 			<dependency>
 				<groupId>org.axonframework.firestarter</groupId>
 				<artifactId>firestarter-spring-starter</artifactId>
-				<version>0.0.1</version>
+				<version>0.0.2</version>
 			</dependency>
 			<!-- end::deps-axon-firestarter[] -->
 			<!-- tag::deps-axoniq-console[] -->
