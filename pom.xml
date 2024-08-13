@@ -47,7 +47,7 @@
         <axon.version>4.9.4</axon.version>
 		<!-- end::props-axonframework[] -->
 		<!-- tag::props-axoniq-console-client[] -->
-		<console-framework-client.version>1.7.1</console-framework-client.version>
+        <console-framework-client.version>1.7.2</console-framework-client.version>
 		<!-- end::props-axoniq-console-client[] -->
     </properties>
 	<!-- end::properties[] -->
