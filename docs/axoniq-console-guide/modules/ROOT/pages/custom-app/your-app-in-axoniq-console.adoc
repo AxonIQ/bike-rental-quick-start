@@ -2,3 +2,136 @@
 
 = Overview your Application in AxonIQ Console
 
+Once that you start your application and all the different modules connect to AxonIQ Console you should be able to see how they are behaving in the AxonIQ Console dashboard.
+
+The information collected from your system and shown in the AxonIQ Console dashboard is grouped into different xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:dashboard.adoc[tabs,window=_blank,role=extenrnal] to provide you a comphenensive view of your system, and also allow to dive into more detailed information for specific components.
+
+Let's take a quick tour through the AxonIQ Console Dashboard now that we have our application connected.
+
+== Start tab
+
+The start tab will show all the components from our project that have been configured and connected to AxonIQ Console.
+
+image:ac-dashboard-tab-start.png[align="center",alt="Screenshot of the Start tab of the AxonIQ Console dashboard with the modules from the docker-based bike rental demo application connected."]
+
+[NOTE]
+====
+Depending on the version of the application that you have configured to connect to AxonIQ Console you may see different number of applications connected. The screenshot above corresponds to the docker-based bike rental application which has the axon-framework application divided into 5 microservices (if you are running the version of the bike rental application you have developed following the tutorial you may only see two modules connected).
+
+The docker-based bike rental demo also has Axon Server configured to connect to AxonIQ Console, so you may also not see the same thing in the bottom half of the screen. Don't worry about that difference, as we will focus for now on the monitoring capabilities of the Axon Framework application.
+
+If you are running the bike-rental demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial, your start tab will most likely be the following:
+
+image:ac-dashboard-tab-start-local-simple-app.png[align="center",alt="Screenshot of the Axon Frameworks applications panel in the start tab of the AxonIQ Console dashboard showing only the Payment and Rental modules that correspond to the bike-rental application built following the 'Building an Axon Framework application from scratch' tutorial"]
+
+====
+
+If you click on any of the modules, the panel will display additional information about the number of instances of that module connected, the handlers defined in that module and the number of event processors that the application is running.
+
+image:ac-dashboard-tab-start-details.png[align="center",alt="Screenshot of the 'Axon Framework applications' panel from the 'Start' tab of the AxonIQ Console dashboard showing the extended information for one of the modules connected. In this case the extended information for the 'Payment Processor' module is displayed, showing that the module has 1 instances connected, defines 5 handlers and has 1 out of 1 processors online."]
+
+== Applications tab
+
+The 'Applications' tab shows a summary of the different modules and its status.
+
+The information is divided in two different sections. On the top half of the panel there is a list of the different modules with specific information such as the number of online instances, the Axon Framework version they are using or the CPU and memory use of each of them.
+
+image:ac-dashboard-tab-apps-list.png[align="center",alt="Screenshot of the list of the connected applications in the 'applications' tab of the AxonIQ Console dashboard. The panel shows a table with five modules connected and, for each one of them, displays information on the number of Online clientes, the Axon Framework version, the console-client version, the CPU usage, the commandBus and QueryBus capacity and the percentage of Heap used. It also shows a column to display if the each module has raised any alert."]
+
+Below that table, there are several graphs that show the evolution over the last 10 minutes of different indicatros of the performance and behaviour of all the modules.
+
+image:ac-dashboard-tab-apps-stats.png[align="center",alt="Screenshot of the Application Statistics graphs in the 'Application' tab of the AxonIQ Console dashboard. The panel shows five graphs (Process CPU Usage, Heap Usage, CommandBus Capacity, Query Bus Capacity and Nodes) with the evolution over the last 10 minutes. Close to the 'Application Statistics' title of the section there is a message showing that there are 5 out of 8 graphs selected."]
+
+You can customize the list of graphs that you want to see in this area if you click on arrow close to the message that shows that there are currently 5 out of 8 graphs selected. That will show a drop-down list to select the graphs you want from a list of 8 graphs available.
+
+image::ac-dashboard-tabs-apps-select-graphs.png[align=center,alt="Screenshot of the drop-down list that allows to select which graphs with application statistics will be shown in the 'Applications tab'"]
+
+=== Detailed application information.
+
+If you click on any of the modules from the table shown in the xref:_applications_tab['Applications' tab], the tab contents will change to display more information specific to that module.
+
+For example, if you click on the 'Payment Processor' module you will have access to more insights about the performance of that module and their components:
+
+==== Online clients
+
+In this table you will see the number of instances of the module that are running and connected to AxonIQ Console.
+
+image::ac-details-apps-online-clients.png[alt="Screenshot of the list of Online clients for the 'Payment Processor' module in the detailed view of the applications tab in AxonIQ Console". The list shows only an instance of the module running with its node name, the Axon-Dramework version (4.9.3) and the  Console client version (1.7.1)]
+
+In this case, we will only have instance in the table. But, if at some point we need to scale out this module by deploying new instances because we detect that the Payment processor takes more time to process the payments, we would see all these clients listed with different node identifiers.:
+
+image::ac-details-apps-online-clients-n.png[alt="Screenshot of the list of Online clients for the 'Payment Processor' module in the detailed view of the applications tab in AxonIQ Console". The list shows four different instances of the module running with different node names, the Axon-Dramework version (4.9.3) and the  Console client version (1.7.1)]
+
+=== Slowest handlers
+
+The panel also shows a list of the five slowest handlers contained in the application. For each of these handlers, the table shows the component name, the handler method and the time that takes the handler to process a message, measured in milliseconds expressed with its median value and the ninetieth percentile.
+
+If you see a poor performance in your application maybe one of these slowest handlers is one of the places to start looking at.
+
+image::ac-details-apps-slowest-handlers.png[alt="Screenshot of the list of the five slowest handlers in the application"]
+
+If you click on any of the handlers you will access that specifc xref:_[handler detailed view] in the 'Handlers insights' tab.
+
+=== Application configuration
+
+We can also check the configuration of the different messaging components that the application is using. You can switch the view clicking on the three tab titles of the Configuration panel:
+
+==== Components
+
+The components table show information about the different messaging components used by the module, along with the implementation used, whether the component is connected to an Axon Server instance and information about any Dispatch or Handler Interceptors attached to the Bus or the serializers used.
+
+image::ac-details-apps-config-components.png[alt="Screenshot of the view of messaging components in the Configuration section of the details view in the applications tab of AxonIQ Console. The view contains a table with three rows, one for each component configured in the Payment Processor module: a CommandBus, a QueryBus and an EventStore. The table shows in different columns information like the Implementation of the component, the implementation of the Local Segment, a mark to indicate whether that component is connected to an Axon Server instance, the default context, the list fo Dispatch Interceptors configured, the List of Handleer Interceptors and the Serializers used in each component."]
+
+This information could be useful, for example to check that if any there is an interceptor attached to a Command or QueryBus that may be affecting the time that takes processing certain types of messages, or, if the serializer used to send or receive the messages is the expected one.
+
+==== Processors
+
+The processors table shows information about the event processors used in the application, along with more detailed information like the type of processor, the batch size, error handlers or any incerceptors or other components configured or attached to the processor.
+
+image::ac-details-apps-config-processors.png[alt="Screenshot of the table with that displays the configuration for each one of the event processors of a certain module in the detailed view of an application within the 'Applications' tab of the AxonIQ Console dashboard"]
+
+If you click on a particular processor in this table, you will switch to the xref::_['Details view"] of that specific processor within the 'Processors' tab.
+
+==== Versions
+
+Clicking on the 'Versions' label will display a list of all the Axon Framework module libraries used along with their versions. This view is useful to see that the Axon Framework version used by the application and to check that all the libraries are using the latest released version.
+
+image::ac-details-apps-config-versions.png[alt="Screenshot of the list of Axon Framework libraries and their versions used by the application in the 'configuration' section of the details view of the 'Applications' tab of AxonIQ Console. The table also shows a checkbox to include the unused libraries in the list"]
+
+You can also check the `show unused libraries' to include the list of libraries defined but not used by the module.
+
+=== Application statistics
+
+The last section of the Application details is comprised by several graphs that display the evolution over time of different metrics of the behaviour of the application.
+
+image::ac-details-apps-stats.png[alt="Screenshot of the application statistic graphs shown for an application or module in the detailed view of the 'Applications' tab. The screenshot shows four different graphs showing the application 'Live Thread Count', the 'System Load', the 'Heap Usage' and the number of 'Nodes' during the last 10 minutes. Above the graphs, on the left, next to the Application Statistics title, there is a label that reads '4 out of 8 graphs selected' with an arrow that indicates it is a drop-down menu. On the top right side of the panel, there is another drop-down field that shows the timeframe of 10 minutes configured for the graphs."]
+
+==== Selecting the graphs shown.
+
+You can select the graphs you want to see by clicking in the arrow next to the label that shows that 4 out of 8 graphs are selected. Doing that will show a drop-down box with all the graphs available.
+
+image::ac-details-apps-stats-graphs-select.png[alt="Screenshot of the dropdown menu showing all the graphs available to be displayed in the 'Application Statistics' of the detailed view of the 'Applications' Tab in AxonIQ Console dashboard. The following graphs are available: Process CPU Usage, System CPU Usage, Command Bus Capacity, Query Bus Capacity, Live Thread Count, System Load, Heap Usage and Nodes."]
+
+==== Configuring the time window for the graphs
+
+By default, the graphs in the Application Statistics section will show the evolution on the module's behaviour during the last ten minutes. You can configure a different time window for the graphs using the drop-down selector in the top right side of the graphs.
+
+image::ac-details-apps-stats-graphs-time-window.png[alt="Screenshot of the drop-down selector shown in the top right side that allows to configure diferent time frames for the graphs in the 'Application Statistics' view of the 'Applications' tab of AxonIQ Console. The drop-down box offerent the following options: 10 minutes, 1 hour, 6 hours, 1 day, 1 week, 2 weeks, 4 weeks"]
+
+If you choose a different value for the time window, you will see your graphs updated to show the evolution of your application's behaviour over that period of time.
+
+NOTE: The free plan tier of AxonIQ Console only keeps info from your connected applications for the last 10 minutes. That should be enough for evaluation purposes, but if you see the benefits of AxonIQ Console for monitoring your system, it will be better to use with your production applications one of the xref:reference-axoniq-console::billing.adoc[AxonIQ Console paid tiers] that keep information for longer periods of time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
