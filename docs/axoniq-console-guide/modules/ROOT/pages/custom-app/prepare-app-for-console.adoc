@@ -8,7 +8,7 @@ In this section we will prepare and connect our Axon Framework-based application
 ====
 During the process to create your account, AxonIQ Console presented you the panel below to chose whether you wanted to "connect your application" or "start the demo"
 
-image::ac-connect-app-or-start-demo.png[alt="Screenshot of the AxonIQ Console dialog showing two options for instructions on how to connect an application. On the left side, there is a blue button to 'Connect my application' and on the right side, there is a blue button with the text 'Start demo'."]
+include::partial$connect-app-or-start-demo-screenshot.adoc[]
 
 This article corresponds to the instructions shown when the option to "connect my application" was selected in that dialog.
 
@@ -35,7 +35,7 @@ In our case, as we are going to connect the `Bike Rental` application that we bu
 
 The following screen instructs us to add the `io.axoniq.console:console-framework-client-spring-boot-starter` library to your app. This library will be used by Axon Framework to connect to AxonIQ Console and send the telemetry data required from our application to check its behaviour.
 
-NOTE: If you want to now exactly what type of data is collected and sent to AxonIQ Console by this library, you can check it on the link:https://github.com/AxonIQ/console-framework-client?tab=readme-ov-file#data-sent-to-axoniq[Data sent to AxonIQ] section at the link:https://github.com/AxonIQ/console-framework-client[AxonIQ Console Framework Client project repository in Github]
+NOTE: If you want to now exactly what type of data is collected and sent to AxonIQ Console by this library, you can check it on the link:https://github.com/AxonIQ/console-framework-client?tab=readme-ov-file#data-sent-to-axoniq[Data sent to AxonIQ] section at the link:https://github.com/AxonIQ/console-framework-client[AxonIQ Console Framework Client project repository in GitHub]
 
 Thus, go to the root `pom.xml` file of your `bike-rental` project and add the following:
 
@@ -101,6 +101,8 @@ axoniq.console.credentials=<your credential token here>
 axoniq.console.dlq-mode=NONE
 ----
 
+NOTE: If you are using the version of the `bike-rental` application that has split the `rental` module into several `microservices/rental-*` modules, you will need to configure these properties for in the `src/main/resources/application.properties` file for all the different microservice modules.
+
 Click on the `Next` button to continue.
 
 == Connect your application to AxonIQ Console
@@ -126,7 +128,7 @@ image:ac-dashboard.png[alt="Screenshot of the main AxonIQ Console dasboard with 
 
 The dashboard includes several tabs to group different information collected from the modules that are connected to AxonIQ Console. These tabs and the information they contain are briefly described in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:dashboard.adoc[AxonIQ Console Getting Started Guide]
 
-You can explore a little bit the information provided in the different tabs, but as the application is idle, the information will not be very useful at this time.
+You can explore a little bit the information provided in the different tabs, but as the application is idle, the information will not be much useful at this time.
 
 In our next step we will add some activity simulator to our application to make things more interesting in the AxonIQ Console dashboard.
 

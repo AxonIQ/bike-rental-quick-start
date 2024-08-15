@@ -1,0 +1,1 @@
+image::ac-connect-app-or-start-demo.png[align="center",alt="Screenshot of the AxonIQ Console dialog showing two options for instructions on how to connect an application. On the left side, there is a blue button to 'Connect my application' and on the right side, there is a blue button with the text 'Start demo'."]
