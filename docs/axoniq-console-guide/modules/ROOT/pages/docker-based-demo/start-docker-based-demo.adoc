@@ -1,3 +1,95 @@
 :navtitle: Run Docker-Based Demo
 
-= Run Docker-Based Demo
+= Using Docker-Based Bike-Rental Demo
+
+AxonIQ Console provides a working Axon Framework-based application ready to run in your local machine and connect to your AxonIQ Console dashboard.
+
+This demo application has a feature (thanks to the use of link:https://github.com/AxonFramework/AxonFramework-FireStarter[AxonFramework-Firestarter library]) that allows to introduce in certain components of your Axon-Framework application some delays or configure the percentage of messages that will cause an error. This way, you will be able to experiment yourself by causing some problems in your application and see how AxonIQ Console detects them. Thus, you will see the real benefit of using AxonIQ Console.
+
+== Requisites.
+
+Running the docker-based bike-rental demo in your local machine is easy. The bike-rental demo with all its modules is available through a `docker-compose.yml` descriptor, so you will only need the following elements:
+
+- link:https://docs.docker.com/compose/install/[Docker Desktop and Docker compose,window=_blank,role=external] installed in your local machine.
+- A free link:https://console.axoniq.io/[AxonIQ Console,window=_blank,role=external] account. If you don't have one already, you can follow the instructions in xref::axoniq-console.adoc[] section of this tutorial.
+
+== Dowload the demo application.
+
+During the sign-up process of your free link:https://console.axoniq.io/[AxonIQ Console,window=_blank,role=external] account you will see a dialog that allows you to choose between getting instructions to connect your own application or to start the demo.
+
+include::partial$connect-app-or-start-demo-screenshot.adoc[]
+
+[TIP]
+====
+If you already have an AxonIQ Console account and you don't see the previous panel which is part of the sign-up process you can access the instructions to download the docker-base demo app by creating a new Environment within a Workspace, and then, in the 'Start' tab, below the "Connect Axon Framework applications" section, you will see the three options to connect your custom application or start the demo.
+
+image:ac-dasboard-start-no-apps.png[align="center",alt="Screenshot of the AxonIQ Console dashboard with the 'Start' tab selected when there is no applications configured to connect to AxonIQ Console. The panel shows the three buttons to access the instructions to configure a Spring Boot Axon framework-based application, a plain java Axon Framework-based application or to run the bike-retnal demo and connect to this AxonIQ Console environment."]
+====
+
+Click on the 'Start demo' button, and you will see another dialog panel that allows you to download the docker compose descriptor file that will download and run the demo application locally.
+
+image:ac-download-docker-compose-file.png[align="center",alt="Screenshot of the dialog panel that explains the demo is based on a docker-compose file. The panel shows a button to download the docker compose file."]
+
+Click on the 'Download Compose file' and save the `docker-compose.yml` file in a local folder in your machine.
+
+The `docker-compose.yaml` file configures several docker images with:
+
+- the different microservices that the demo application is divided into: Payment Processor Service, Rental Command Service, Rental Payments Service, Rental Query Service and Rental UI.
+- an Axon Server instance that the different microservices will use as Event Store and Message Broker.
+
+All of them are already configured with the credentials to connect to you AxonIQ Console dashboard.
+
+WARNING: The `docker-compose.yaml` file provided in this step is customized for your specific account and AxonIQ Console workspace. Don't share this file with other collleagues, as it will connect their app to your workspace. If you recommend other colleagues to try AxonIQ Console, they will have their own version of the docker compose file available for them when they sign up.
+
+== Running locally the demo application.
+
+When you download the `docker-compose.yml` file, AxonIQ Console will display a dialog panel waiting for the different components to connect.
+
+image:ac-docker-app-waiting.png[align="center",alt="Screenshot of the panel that shows AxonIQ Console waiting for the different components of the docker-based demo application to start and connect."]
+
+All you have to do now is open a terminal, go to the folder in which you downloaded the `docker-compose.yml` file and type the following:
+
+[source,bash]
+----
+❯❯ docker compose up
+----
+
+You will see that docker starts downloading and starting the different docker images required to run the demo application, and will immediately start the containers. This may take some time depending on your internet connection.
+
+[source,console]
+----
+❯❯ docker compose up
+[+] Running 8/14
+ ⠏ service-rental-payment [⡀] 15.12MB / 79.56MB Pulling                                                                                                268.9s
+   ⠦ 1044f17e2323 Downloading [=========>                                         ]  15.12MB/79.56MB                                                   266.7s
+ ✔ axon-server Pulled                                                                                                                                    1.6s
+ ✔ service-payment Pulled                                                                                                                              194.9s
+   ✔ 7ae84cee97a8 Pull complete                                                                                                                        113.5s
+   ✔ 7ed31eaf5ef8 Pull complete                                                                                                                        192.4s
+   ✔ 9ee97334f60b Pull complete                                                                                                                        192.4s
+   ✔ 29e6b66d6884 Pull complete                                                                                                                        192.8s
+ ⠇ service-ui [⣤] 29.19MB / 55.7MB  Pulling                                                                                                            268.9s
+   ⠦ 2389b0240d5b Downloading [==========================>                        ]  29.19MB/55.7MB                                                    266.7s
+ ✔ service-command Pulled                                                                                                                              218.0s
+   ✔ 0397a9d5ba94 Pull complete                                                                                                                        215.7s
+ ⠇ service-query [⣷] 75.69MB / 79.56MB Pulling                                                                                                         268.9s
+   ⠦ 70f9be2efb6e Downloading [===============================================>   ]  75.69MB/79.56MB                                                   266.7s
+
+----
+
+After download finishes, and the containers are started you will see the demo application components connected to AxonIQ Console:
+
+image:ac-docker-app-connected.png[align="center",alt="Screenshot of the panel showing that all the components from the docker-based bike-rental demo application have sucessfully connected to AxonIQ Console"]
+
+ Click on the "Continue" button.
+
+Congratulations! you have successfully connected your application to AxonIQ Console. Before showing you the AxonIQ Console dashboard and all the information about how your system is behaving, you will see another dialog with some links that could be useful for learning more about "AxonIQ Console tools".
+
+image:ac-docker-app-connected-links.png[align="center",alt="Screenshot of a panel showing some resouces and links that could be useful to learn about AxonIQ technologies. There is a linke to visit AxonIQ Academy, another link to visit the GitHub repository with the source of AxonFramework and finally there is also a link to the AxonIQ Discuss platform, which is the forums for the Axon community."]
+
+Click on the "Go to my workspace" to access your AxonIQ Console dashboard and see how AxonIQ Console monitors your application.
+
+
+
+
+
