@@ -190,7 +190,7 @@ image::ac-details-processors-segments.png[alt="Screenshot of the table of segmen
 
 The table of segments offers the possibility, via a button on the 'Actions' column, to move any segment to another instance if there are more than one instances with the event processor running.
 
-==== Event Handlers
+==== Event handlers
 
 Clicking on the 'Event Handlers' tab, the processor details view will display a table with all the event handlers defined associated with the event processor.
 
@@ -241,6 +241,67 @@ image::ac-details-processors-stats-app-select-graphs.png[]
 You can also configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
 
 image::ac-details-processor-stats-apps-time-window.png[]
+
+== Aggregates tab
+
+The Aggregates tab shows a list of all the Aggregates that are defined as part of the Command model.
+
+image::ac-dashboard-tab-aggregates.png[alt="Screenshot of the Aggregates tab of the AxonIQ Console dashboard, showing the information for the two aggregates defined in the bike-rental demo application: Payment and Bike. The tab shows a table with nine columns to display the following information for each aggregate: A mark to show if there is any alert triggered associated with the aggregate, the application name, the aggregate name, the error rate, thorughput and the execution time of commands sent to the aggregate, the load and lock time and the stream size of the events read to load the aggregate. "]
+
+If you click on any of the aggregates, the tab will show the details view for that Aggregate.
+
+=== Aggregate details
+
+Clicking on the 'Payment' aggregate row from the summary table of the Aggregates tab, will show the following details about the behaviour of processing request that are related to that aggregate.
+
+==== Aggregate Handlers
+
+The first table in the aggregate details view of the 'Aggregates' tab shows all the message (commands in this case) handlers defined in the application that are associated with the Aggregate.
+
+image::ac-details-aggregate-handlers.png[alt="Screenshot of the table from the Aggregate details view in the AxonIQ Console dashboard that shows all the command handlers defined"]
+
+As we can see, in our `bike-rental` demo application there are three commands that affect the 'Payment' aggregate: The `PreparePaymentCommand`, the `ConfirmPaymentCommand` and the `RejectPaymentCommand`. In our application the handlers for the first two are working with a good throughput, while the handler for the last one, is idle, as the application is not receiving any commands of that type.
+
+=== Message sources.
+
+In a event-based distributed system sometimes is easy to loose track of where the messages come from and where they are sent to. AxonIQ Console provides convenient ways to see how the different messages (commands, queries and events) travel between the different components of our system.
+
+The message sources (and the message destinations) tables in the Aggregate details view of the 'Aggregates' Tab in the AxonIQ Console dashboard is one of these useful tools to see where the commands that affect the aggregate comes from.
+
+image::ac-details-aggregate-msg-sources.png[]
+
+In our example, we can see the different message handlers or components that trigger one of the commands that affect the 'Payment' aggregate. The table in our case shows that, althought there are several points in the source code that could trigger commands for the aggregate, only the reception of `BikeRequestedEvent` are triggering the commands that affect the aggregate.
+
+NOTE: If you click on any of the rows in the table, you will jump to the handler insights view showing the details of the handler for that message.
+
+=== Message destinations
+
+Similarly to the xref:_message_sources[], the message destinations allow to see what messages are triggered from the Aggregate and all the components defined in our system that handle those messages.
+
+image::ac-details-aggregates-msg-destinations.png[]
+
+In our example, we can see that there are three different messages triggered from the aggregate: `PaymentConfirmedEvent`, `PaymentPreparedEvent`, and `PaymentRejectedEvent`.
+
+We can also see the all the handlers defined for each one of these events. For example, in the case of the `PaymentConfirmedEvent` there are two components that define a handler for it: the `PaymentSaga` and the `PaymentStatusProjection`.
+
+NOTE: If you click on any of the rows in the table, you will jump to the handler insights view showing the details of the handler for that message.
+
+=== Aggregate Statistics
+
+Below the general details of the aggregate, there is a section that display some graphs to show how different metrics relative to the behaviour of the aggregate evolved over time.
+
+image::ac-details-aggregates-stats.png[]
+
+In this case you will see by default graphs that shows the evolution of the overview in distribution in time of processing a (comand) request that affects an aggregate, or the message rate, or the time spent in the handler method, among other grpahs.
+
+As in every other section in the AxonIQ Console dashboard that shows these type of graphs, you can select or deselect the graphs that are displayed in this section by clicking on the blue arrow pointing down that indicated the number of graphs selected.
+
+And you can also configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
+
+Finally, if you need to see any of the graphs in more detail, you can click on the graph and it will show in bigger size in the center of the page.
+
+
+
 
 
 
