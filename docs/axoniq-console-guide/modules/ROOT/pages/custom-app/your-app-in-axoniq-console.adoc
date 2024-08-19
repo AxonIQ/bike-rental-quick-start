@@ -122,6 +122,133 @@ If you choose a different value for the time window, you will see your graphs up
 
 NOTE: The free plan tier of AxonIQ Console only keeps info from your connected applications for the last 10 minutes. That should be enough for evaluation purposes, but if you see the benefits of AxonIQ Console for monitoring your system, it will be better to use with your production applications one of the xref:reference-axoniq-console::billing.adoc[AxonIQ Console paid tiers] that keep information for longer periods of time.
 
+If you click on any of the graphs, it will be shown in bigger size in the middle of the screen.
+
+image::ac-details-apps-stats-graph-detail.png[alt="Screenshot of one of the Live Thread Count graph, when it is displayed in bigger size in the detailed view of the 'Applications' tab in AxonIQ Console."]
+
+== Processors tab
+
+The 'Processors' tab groups all the information about the event processors defined in your system. The tab displays a table with the different processors, the application or module where they are defined, the processor name and information about the status and performance of each event processor.
+
+[NOTE]
+====
+Event Processors are the components in an Axon Framework application that take care of the necessary tasks to process an Event (for example, starting a transaction, if needed) and call the Event Handler, which will define the business logic attached to the reception of the event.
+
+You can learn more about xref:axon_framework_ref:events:event-processors/README.adoc[Event Processors in Axon Framework applications] in the section dedicated to them from the Axon Framework Reference Guide
+====
+
+In the case of our application, we can see the tree event processors that we have defined in our bike-rental application:
+
+image::ac-dashboard-tab-processors.png[alt="Screenshot of the table that displays the Event processors defined in the system as shown in the ' Processors tab of the AxonIQ Console dashboard."]
+
+=== Processor details
+
+If you click on any processor from the table, AxonIQ Console will display a page with all the detailed information that is gathered from the processor behaviour.
+
+For example, if we click on the `io.axoniq.demo.bikerental.payment` processor from the `Payment Processor` application, we will see a lot of details on how that event processor is performing:
+
+image::ac-details-processors.png[alt="Screenshot of the processor detailed view in the 'Processors' tab of the AxonIQ Console dashboard. The sreenshot shows part of the detailed information of `io.axoniq.demo.bikerental.payment` processor, including the summary info table, the list of instances, and three graphs with processor performance statisctis: Segment claim percentage, latency and number of online nodes."]
+
+Let's briefly go over the different sections
+
+==== Processor summary
+
+The detailed page first show table with the processor's capacity summary:
+
+image::ac-details-processors-summary.png[alt="Screenshot of the summary info table from the processor details view in the 'Processors' tab of the AxonIQ Console dashboard. The table shows a summary of basic information on the processor's performance: The processor's name (io.axoniq.demo.bikerental.payment), the processor mode (Pooled streaming), the number of running instances (1 out of 1), the number of segments claimed (16), the claim percentage (100%), the free sgement capacity (32751) and the latency, expressed with two values, the ingest latency (denoted by an arrow pointing down: 3 ms) and the commit latency (denoted by a DB icon with a plus sign: 4 ms). Finally there is a row to show if there is any automation configured for the processor (in the screenshot no automation is shown).  Below the table there is a row with four buttons to start, pause the processors or to marge or split segments claimed by the processor and to reset the processor config."]
+
+Apart from the basic information about the processor, like the name, the mode the number of running instances or details about the segments claimed by the processor, this table also shows if there is any automation rules configured for the processor (in the case of the screenshot there is none).
+
+Finally, the summary table offers several buttons that allow to modify the processor's behaviour, which could be useful in case of a bad performance:
+
+- image:ac-details-processors-btn-start.png[fit=line,alt="a blue button with a play icon"] The play button allows to start the event processor on all nodes.
+- image:ac-details-processors-btn-pause.png[fit=line,alt="A blue button with the 'pause' icon"] The pause button allows to pause the event processor on all nodes.
+- image:ac-details-processors-btn-merge.png[fit=line,alt="a blue button with two lines going from left to right that merge into one arrow. The icon conveys the 'merge' action."] The merge button merges the largest two segments into one. This can only be done when there are more than one segment.
+- image:ac-details-processors-btn-split.png[fit=line,alt="a blue button with a line that separates into two different arrows. The icon conveys the 'split' action."] The split button, splits the smallest segment into two. This can only be done when there are free threads and all segments are claimed.
+
+NOTE: If you want to learn more about how events are processed in an Axon Framework application and how the segments are split or merged you can read xref:axon_framework_ref:tuning:event-processing.adoc#_increasing_and_decreasing_segment_counts[Increasing and decreasing segment counts] section of the Event Processing Tuning article at the Axon Framework Reference Guide.
+
+There is a fifth option to reset the processor. Resetting the processor implies invoking any @ResetHandler methods for this processor and reset the tokens to a desired position. After clicking the 'reset processor' link, AxonIQ Console will display a dialog window asking which is the preferred position that you want to set the processor to.
+
+image::ac-details-processors-reset.png[alt="Screenshot of the 'Reset processor' dialog that explains what implies resetting the processor and offering three options for the position to set the processor to: Tail of event store - index 0 (the default selected option), Head of event store - last index, and Index at a certain point date and time. Finally there is a button to 'Execute reset']
+
+NOTE: If you click select the 'Index at a certain date and time' option, a field to set the desired date and time will appear.
+
+==== Instances
+
+Next to the summarized info table, there is another table that shows specific information for each one of the instances.
+
+image::ac-details-processor-instances.png[alt="Screenshot of the table that shows the processor running in each of the instances connected to AxonIQ Console. The table has five columns (Instance name, Status, Stream percentage, Latency and Actions) and one row per instance connected (in the screenshot there is only one instance connected)."]
+
+Along the processor information for each instance, like the status, stream percentage or latency, there is also a column that allows to pause or start the processor in one specific instance. This allows more granular operation of the processors than the buttons shown in the xref:#_processor_summary[].
+
+==== Segments
+
+Clicking on the 'Segments' tab of the processor details view will display a list of all the segments into which the Event Stream is split.
+
+image::ac-details-processors-segments.png[alt="Screenshot of the table of segments as it is shown in the details view of the 'Processors' tab in the AxonIQ Console dashboard. The table has seven rows to show, for each Segment, the segment number, the Node name that has claimed it, the Status, the Position at which the processor is on the segment, the ingest and commit latency, the percentage of the stream that the processor is responsible for reading and a column for actions that can be done on the segument.]
+
+The table of segments offers the possibility, via a button on the 'Actions' column, to move any segment to another instance if there are more than one instances with the event processor running.
+
+==== Event Handlers
+
+Clicking on the 'Event Handlers' tab, the processor details view will display a table with all the event handlers defined associated with the event processor.
+
+image::ac-details-processors-eventhandlers.png[alt="Screenshot of the table of event handlers associated to events processed by this event processor. The table has eight columns to show, for each event handler, a marker if there any alerts triggered by the handler, the message linked to the event handler, the throughtput, the error rate, and the event handler processing time measured with the min value, the median value, the value corresponding to the ninetieth percentile and the max value."]
+
+==== Automation
+
+The last tab of the main area in the processors detailed view allows to configure some automation rules for the event processor.
+
+image::ac-details-processors-automation.png[alt="Screenshot of the dialog that allows to configure some automation to manage the event processor."]
+
+This panel allows to configure some rules to balance the segments or to scale and balance the segments automatically on certain cases.
+
+WARNING: This feature is only for the paid plans of AxonIQ Console.
+
+=== Processor statistics
+
+Right below the main area, the processor details view displays three graphs with statistics on how different performance metrics of the event processor have evolved over time.
+
+image::ac-details-processor-statistics.png[alt="Screenshot of the graphs corresponding to the Processor statistics section of the processor's details view in the 'Processor' tab of the AxonIQ Console dashboard. The section shows three line graphs corresponding to the evolution over the last 10 minutes of the Segment claim Percentage, the Latency (displaying the ingest and commit latency with lines of different color), and the number of online nodes. On the top left side of the section, next to the 'Processor Statistics' title, there is a label indicating that 3 out of 3 graphs are displayed and a arrow pointing down that indicates the message is a drow-down menu. On the top right side of the section there is another drop-down selector with the label "Time Window" and with the selected value of 10 minutes."]
+
+ By default, this section includes graphs for the evolution of the percentage of segments claimed, the latency and the number of online nodes.
+
+By clicking on the blue arrow pointing down that indicated the number of graphs selected, a drop-down selector will appear that allows you select or deselect the graphs that are displayed in this section.
+
+image::ac-details-processor-stats-select-graphs.png[]
+
+Finally, you can configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
+
+image::ac-details-processor-stats-time-window.png[]
+
+You can see any of the graphs in bigger detail by clickin on them.
+
+image::ac-details-processor-stats-latency.png[]
+
+=== Application statistics
+
+The last section of the processor's details view includes some additional graphs with statistics of several metrics on the application performance that may be useful to check related to the processor's performance.
+
+image::ac-details-processor-stats-apps.png[]
+
+In this case you will see by default graphs that shows the evolution over the last minute of the application's CPU usage, the System CPU usage, the command bus and quey bus capacity, the number of live threads in the different applications, or the system load, among other graphs...
+
+As with the processor's statistics section, you can select or deselect the graphs that are displayed in this section by clicking on the blue arrow pointing down that indicated the number of graphs selected.
+
+image::ac-details-processors-stats-app-select-graphs.png[]
+
+You can also configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
+
+image::ac-details-processor-stats-apps-time-window.png[]
+
+
+
+
+
+
+
+
 
 
 
