@@ -397,6 +397,39 @@ This is exactly the information that we will see if we click on the 'Message des
 
 image::ac-details-handler-msg-destinations.png[alt="Screenshot of the Message destination table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
 
+== Message Flow
+
+At the details view of the Handler Insights tab and Aggregates tab, we already saw that AxonIQ Console offers a way to see the source of the messages (events, commands or queries) that are processed by a specific handler. AxonIQ console also offers a way to see the components that receive other messages that a concrete handler sends.
+
+That feature offers a good way to see the "neighbourgs" of a component, that is, the handlers that are related because they emit or receive messages connected to the current component. That also allows us to have a small view of how certain messages flow through that specific component
+
+But sometimes it is useful to have a more comprehensive view of the messages flowing in our system. That is exactly the view that offers the 'Message Flow' tab.
+
+image::ac-dashboard-msg-flow.png[alt="Screenshot of the Message Flow tab in the AxonIQ Console dashboard"]
+
+In this diagram, by default we can see the different elements of our system and how they are connected:
+
+- The applications are represented by big circles
+- The components (Aggregates, Projections or Sagas) that are source or destination for messages (events, commands or queries), repreesnted by smaller dots.
+- The messages flowing from message sources to message destinations. These are represented by animated dotted arc lines. The stroke of those lines is bigger or smaller depending on the amount of messages flowing: the thicker the line, the more messages that are being sent in that specific connection.
+- Optionally you can select the diagram to contain also the Buses that originate some of the messages.
+
+=== Customize the Message Flow.
+
+The diagram allows certain configuration so that you can customize it to better display your system (or to your preferences).
+
+The first thing you can do is zoom in or zoom out the diagram by scrolling with your mouse over the diagram.
+
+You can also rearrange any of the elements on the diagram (Applications or components), and the rest of connected components will follow your new arrangement.
+
+Beyond that manual arrangement of the elements in the graph, you can also adjust some properties on how the graph is drawn. On the right side of the graph you have several sections to change the "physics" of the elements in the diagram.
+
+image::ac-dashboard-msg-flow-data-selection.png[fit=line,alt="Screenshot of the panel to configure the data shown in the Message Flow diagram of the AxonIQ Console dashboard."]
+image::ac-dashboard-msg-flow-aesthetics.png[fit=line,alt="Screenshot of the panel to configure the aestethics of the Message Flow diagram in the AxonIQ Console dashboard."]
+image::ac-dashboard-msg-flow-forces.png[fit=line,alt="Screenshot of the panel to configure the forces used to draw the Message flow diagram in the AxonIQ Console dashboard"]
+
+You can spend some time playing around with the different options and see how it renders different versions of the diagram showing how the different components of your application are connected and how the messages flow through your applications.
+
 
 
 
