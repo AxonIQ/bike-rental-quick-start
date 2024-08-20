@@ -300,24 +300,102 @@ And you can also configure the time window displayed by the graphs using the 'Ti
 
 Finally, if you need to see any of the graphs in more detail, you can click on the graph and it will show in bigger size in the center of the page.
 
+== Handler insights
+
+The 'Handler Insights' tab offers a view to see all the message handlers defined in our system. The table shown in this view is a complete view of all the points in our application that are receiving and dealing with any type of messages.
+
+image::ac-dashboard-handler-insights.png[alt="Screenshot of the handler insight tab of the AxonIQ Console dashboard."]
+
+In the main table we can see listed all the message handler methods defined in our applications for processing commands, events or queries.
+
+For each handler the table displays information to locate the handler, such as the application, the component and the message that it handles. Below that information tha table also shows some metrics to see how the handler is performing.
+
+[NOTE]
+====
+In our example, we can see that the `RequestBikeCommand` handler in the `RentalCommand` application has an alert. This is expected because in the `bike-rental` demo application is implemented to cause up to a 5% of errors in this handler.
+
+This is a hint of the benefits of using AxonIQ Console to monitor and detect problems in our system. This is only a hint of the benefits and power of AxnonIQ Console: we will create more problems on purpose in our application and see how they are detected in a later section of this tutorial.
+====
+
+=== Filtering handlers
+
+On the right side of the main table showing all the message handlers, there are a series of categories that allow you to filter out the list and narrow the information that you want to see.
+
+image::ac-dashboard-handlers-filter.png[alt="Screenshot of the side-menu filter handler-insights table per application, message type, handler type or search for a specific handler."]
+
+For example, if just want to focus on the queries that are handled by a specific application such as the Payment processor, we could simply click on the `Payment Processor` under `All Applications` category, and then select `QueryMessage` under `All Message Types` and we will see our table updated:
+
+image::ac-dashboard-handlers-filtered.png[Screenshot of the 'Handlers Insights' tab of the AxonIQ Console dashboard, showing the message handlers filtered to show only the message hanlders for QueryMessages defined in the Payment processor application. The main table only shows one message handler, the handler for `getPaymentId` queries in the `PaymentStatusProjection`]
+
+If you want to reset the filter to show all the handlers again you only need to select `All Applications` and `All Message Types` again in the side-menu.
+
+=== Searching for a specific handler.
+
+If you know the name of a specific message handler, you can use the 'Filter Hanlders' input file at the bottom of the filter side-menu to introduce the name -or part of it- of the mesage type or component type.
+
+When you start typing, the main table will update with only those message handlers whose Component name or message name contains the search text you introduce.
+
+image::ac-dashboard-tab-handler-search.png[alt="Screenshot of the 'Handler Insights' tab of the AxonIQ Console dashboard showing only the handlers that match the query 'Pay' in the 'Filter Handlers' input field."]
 
 
+=== Handler details
+
+If you click on any of the rows of the 'Handlers Insights' tab, the page will display detailed information about that specific handler.
+
+==== Handler statistics
+
+The first section in the Handler Insight details view displays a group of graphs that shows how different metrics of the Handler behaviour evolved over the last period of time.
+
+image::ac-details-handler-statistics.png[alt="Screenshot of the Handler insight details view in the AxonIQ Console some some graphs with statistics about the recent behaviour of the handler."]
+
+NOTE: If you want to see one of these graphs in more detail you can click on it and it will become bigger, and pop up to the center of the screen.
+
+===== Handler Overview
+
+The first graph shows an overview of the time spent by the handler in the different steps of preocessing a message. This includes the handler execution time, the time spent to commit the message to the buses and the overhead.
+
+:page-needs-improvement: Add links to explain more in detail the execution time, the ocmmit time and the overhead (probably from the AxonIQ Console reference guide).
+
+image::ac-details-handlers-stats-overview.png[alt="Screenshot of the message handlers statistics overview"]
+
+===== Message Rate
+
+The message rate graph shows the evolution of number of messages received and processed per minute in the last period of time. It also shows the amount of the messages that caused an error when they were processed.
+
+image::ac-details-handlers-stats-msg-rate.png[alt="Screenshot of the Message rate graphs from the Handler Insights details in the AxonIQ Console dashboard."]
+
+===== Total time
+
+The total time graph shows the evolution of different statistical measures of the time it took to process a message in the handler.
+
+image::ac-details-handler-stats-total-time.png[alt="Screenshot of the 'Total Time' graph from the Handler Insights details in the AxonIQ Console dashboard."]
+
+The graphs shows the time that took to process the fastest message (the minimun time), the time that took to process the slowest message (the Maximun time), the mediam value of the time that took to process the messages (the median), and the max time that took to process the ninety percent of the fastests messages.
 
 
+===== Handler Time
 
+The 'Handler Time' graph shows the evolution of different statistical measuers of the time spent by the handler in processing the messages.
 
+image::ac-details-handler-stats-handler-time.png[alt="Screenshot of the 'Handler Time' graph from the Handler Insights details in the AxonIQ Console dashboard." ]
 
+The graph shows the time that took to process the fastest message (the minimun time), the time that took to process the slowest message (the Maximun time), the mediam value of the time that took to process the messages (the median), and the max time that took to process the ninety percent of the fatest messages.
 
+==== Message Sources
 
+Clicking on the 'Message Sources' label, the Handler Insights detail view will show all the components that send the messages that are processed by this handler.
 
+image::ac-details-handler-msg-sources.png[alt="Screenshot of the Message sources table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
 
+In an event-based distributed system this is a very useful information to track the messages and connect the message handler with other components in our system that produce the information our component consumes. This helps to connect the different components from our distributed architecture and sometimes it gives the context we need to debug and understand potential problems.
 
+==== Message destinations
 
+Similarly to the xref:_message_sources[] sometimes is useful to see what components will receive and handle events or messages that sent from the handler we are examining.
 
+This is exactly the information that we will see if we click on the 'Message destinations' label from the 'Handler Insights' details view.
 
-
-
-
+image::ac-details-handler-msg-destinations.png[alt="Screenshot of the Message destination table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
 
 
 
