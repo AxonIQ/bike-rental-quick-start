@@ -254,7 +254,7 @@ If you click on any of the aggregates, the tab will show the details view for th
 
 Clicking on the 'Payment' aggregate row from the summary table of the Aggregates tab, will show the following details about the behaviour of processing request that are related to that aggregate.
 
-==== Aggregate Handlers
+==== Aggregate handlers
 
 The first table in the aggregate details view of the 'Aggregates' tab shows all the message (commands in this case) handlers defined in the application that are associated with the Aggregate.
 
@@ -286,7 +286,7 @@ We can also see the all the handlers defined for each one of these events. For e
 
 NOTE: If you click on any of the rows in the table, you will jump to the handler insights view showing the details of the handler for that message.
 
-=== Aggregate Statistics
+=== Aggregate statistics
 
 Below the general details of the aggregate, there is a section that display some graphs to show how different metrics relative to the behaviour of the aggregate evolved over time.
 
@@ -350,7 +350,7 @@ image::ac-details-handler-statistics.png[alt="Screenshot of the Handler insight 
 
 NOTE: If you want to see one of these graphs in more detail you can click on it and it will become bigger, and pop up to the center of the screen.
 
-===== Handler Overview
+===== Handler overview
 
 The first graph shows an overview of the time spent by the handler in the different steps of preocessing a message. This includes the handler execution time, the time spent to commit the message to the buses and the overhead.
 
@@ -358,7 +358,7 @@ The first graph shows an overview of the time spent by the handler in the differ
 
 image::ac-details-handlers-stats-overview.png[alt="Screenshot of the message handlers statistics overview"]
 
-===== Message Rate
+===== Message rate
 
 The message rate graph shows the evolution of number of messages received and processed per minute in the last period of time. It also shows the amount of the messages that caused an error when they were processed.
 
@@ -373,7 +373,7 @@ image::ac-details-handler-stats-total-time.png[alt="Screenshot of the 'Total Tim
 The graphs shows the time that took to process the fastest message (the minimun time), the time that took to process the slowest message (the Maximun time), the mediam value of the time that took to process the messages (the median), and the max time that took to process the ninety percent of the fastests messages.
 
 
-===== Handler Time
+===== Handler time
 
 The 'Handler Time' graph shows the evolution of different statistical measuers of the time spent by the handler in processing the messages.
 
@@ -381,13 +381,14 @@ image::ac-details-handler-stats-handler-time.png[alt="Screenshot of the 'Handler
 
 The graph shows the time that took to process the fastest message (the minimun time), the time that took to process the slowest message (the Maximun time), the mediam value of the time that took to process the messages (the median), and the max time that took to process the ninety percent of the fatest messages.
 
-==== Message Sources
+==== Message sources
 
 Clicking on the 'Message Sources' label, the Handler Insights detail view will show all the components that send the messages that are processed by this handler.
 
 image::ac-details-handler-msg-sources.png[alt="Screenshot of the Message sources table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
 
-In an event-based distributed system this is a very useful information to track the messages and connect the message handler with other components in our system that produce the information our component consumes. This helps to connect the different components from our distributed architecture and sometimes it gives the context we need to debug and understand potential problems.
+In an event-based distributed system this is useful information to track the messages and connect the message handler with other components in our system that produce the information our component consumes. This helps to connect the different components from our distributed architecture and sometimes it gives the context we need to debug and understand potential problems.
+In an event-based distributed system this is useful information to track the messages and connect the message handler with other components in our system that produce the information our component consumes. This helps to connect the different components from our distributed architecture and sometimes it gives the context we need to debug and understand potential problems.
 
 ==== Message destinations
 
@@ -397,13 +398,13 @@ This is exactly the information that we will see if we click on the 'Message des
 
 image::ac-details-handler-msg-destinations.png[alt="Screenshot of the Message destination table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
 
-== Message Flow
+== Message flow
 
 At the details view of the Handler Insights tab and Aggregates tab, we already saw that AxonIQ Console offers a way to see the source of the messages (events, commands or queries) that are processed by a specific handler. AxonIQ console also offers a way to see the components that receive other messages that a concrete handler sends.
 
 That feature offers a good way to see the "neighbourgs" of a component, that is, the handlers that are related because they emit or receive messages connected to the current component. That also allows us to have a small view of how certain messages flow through that specific component
 
-But sometimes it is useful to have a more comprehensive view of the messages flowing in our system. That is exactly the view that offers the 'Message Flow' tab.
+Apart from that, sometimes it is useful to have a more comprehensive view of the messages flowing in our system. That is exactly the view that offers the 'Message Flow' tab.
 
 image::ac-dashboard-msg-flow.png[alt="Screenshot of the Message Flow tab in the AxonIQ Console dashboard"]
 
@@ -414,7 +415,7 @@ In this diagram, by default we can see the different elements of our system and 
 - The messages flowing from message sources to message destinations. These are represented by animated dotted arc lines. The stroke of those lines is bigger or smaller depending on the amount of messages flowing: the thicker the line, the more messages that are being sent in that specific connection.
 - Optionally you can select the diagram to contain also the Buses that originate some of the messages.
 
-=== Customize the Message Flow.
+=== Customize the message flow diagram.
 
 The diagram allows certain configuration so that you can customize it to better display your system (or to your preferences).
 
