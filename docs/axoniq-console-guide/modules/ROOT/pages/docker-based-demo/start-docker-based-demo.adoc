@@ -89,7 +89,7 @@ image:ac-docker-app-connected-links.png[align="center",alt="Screenshot of a pane
 
 Click on the "Go to my workspace" to access your AxonIQ Console dashboard and see how AxonIQ Console monitors your application.
 
-
+In the next step we will take a look at how xref::custom-app/your-app-in-axoniq-console.adoc[AxonIQ Console shows the information about your application's behaviour and performance].
 
 
 
