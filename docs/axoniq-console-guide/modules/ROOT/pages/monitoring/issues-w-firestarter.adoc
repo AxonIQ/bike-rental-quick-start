@@ -1,3 +1,134 @@
 :navtitle: Creating and Detecting Issues in your Application
 
-= Creating and Detecting Issues in your Application
+= Detecting Issues in your Application
+
+In this step of the tutorial we will create a couple of delays and errors on-purpose within the `bike-rental` demo application that we have connected to our AxonIQ Console dashboard. After configuring the application to present some kind of misbehaviour or bad performance we will see more clearly how AxonIQ Console helps us monitor and detect those issues in our application.
+
+NOTE: We will use AxonFramework Firestarter we added in the xref::custom-app/add-axon-firestarter.adoc[] step of this tutorial to introduce the behaviour problems in our application. This library is not intended to be used in production environments but for scenarios in which we aim to do some stress test or chaos testing of our system.
+
+:page-needs-improvement: content
+:page-needs-content: Define independent error scenarios and have them as separate articles. i.e. Detecting a slow event handler, detecting a heavy aggregate (with no snapshots), detecting slow query handlers, ...
+
+== Detecting a slow event handler
+
+In this example, we are going to see how AxonIQ Console helps detecting one or serveral event handlers that have a poor performance in our system.
+
+=== Generate a slow event handler
+
+The first thing we need is a slow event handler. In this case we are going to leverage the use of the AxonFramework Firestarter to manually configure some delays in the event handlers of the Payment module.
+
+Access to the `/fire-starter/` endpoint of your Payment module.
+
+WARNING: Don't forget the last slash in the URL
+
+.Access the Firestarter Config page of your `Payment` module
+[TIP]
+====
+
+If you are using the `bike-rental` application you created following the xref:bikerental-demo::index.adoc[] tutorial, you simply need to access http://localhost:8081/fire-starter/ in your URL.
+
+If you are using the docker-based `bike-rental` demo application available from AxonIQ Console, you need to open the http://localhost:10106/fire-starter/ URL in your browser
+====
+
+Click on the 'Event Handlers' button under the 'Events' category. Configure a fixed delay of 200 ms for all the Event Handlers in the Payment module and click on the 'Save taints' button
+
+image::af-firestarter-payment-event-handlers-taint-200ms.png[alt="Screenshot of the Firestarter page of the Payment Processor with a fixed delay of 200 ms"]
+
+Soon after applying your configuration to have a fixed delay in the event handlers AxonIQ Console will detect that delay and will show indicators in different places. Let's see the different places in which that abnormal performance is shown.
+
+=== The applications tab
+
+We can start at the 'Applications' tab where we may not see any indicator by default.
+
+image::ac-issues-slow-handlers-applications.png[alt="Screenshot of the Applications tab of the AxonIQ Console Dashboard."]
+
+[NOTE]
+====
+If you upgrade to one of the paid-tiers of AxonIQ Console, you will enable the Alerts and Monitoring, and the main applications tab will show an alert close to the module that is showing slow handlers:
+
+====
+
+If we dive a little bit and click on the 'Payment Processor' application to access the details view of the module, we will see the list of top five slowest handlers showing the two event handlers with a high latency.
+
+image::ac-issues-applications-slow-handlers.png[alt="Screenshot of the Application details view in the AxonIQ Console dashboard showing two slow event handlers in the Payment processor application."]
+
+If we click on any of those two slow event handlers, we will navigate to the xref:#_the_handler_insights_tab['Handler Insights' tab with the detailed view of that processor] loaded.
+
+=== The processors tab
+
+At the processors tab we can also see that the 'Payment Procesor' application is showing a high latency.
+
+image::ac-issues-processors-high-latency.png[]
+
+TIP: If you are looking for bottlenecks or slow handlers, you can click on the 'Latency' column to order the different processors starting from the one with higher latencies.
+
+Clicking on the 'Payment Processor' row will load the detailed view of that processor which, will give you access to more information that could explain or, at least, to give you more context on why that high latency is produced
+
+image::ac-issues-processor-high-latency.png[alt="Screenshot of the details view in the Processor tab of the AxonIQ Console dashboard, showing the Payment processor with a high latency."]
+
+In this detailed view you will see when the latency started to increase thanks to the 'Processor statistics' graphs that show the evolution of the latency over the last period of time.
+
+[TIP]
+====
+You can also check the rest of the Processor statistics graphs to add more context to the problem. Maybe the high latency corresponds to a lower number of nodes available at some moment in time (which could imply you need to scale out again your application adding more nodes)
+
+You can also check the 'Processor statistics' in relation with some of the 'Application Statististics' graphs showing System CPU Usage or the Buses capacity. These aditional graphs may explain other reasons for the high latency.
+====
+
+In our case, the high latency is due to our explicit delay configuration in AxoFramework Firestarter, so the other graphs will not show any variation.
+
+If none of the other graphs add any context to the high latency, the scenario corresponds to some slow algorithm that needs to be fixed in the 'event handlers' (or, in our case, remove the manually introduced delay in AxonFramework Firestarter).
+
+
+=== The handler insights tab
+
+If you click on the 'Handler Insights' tab you also will see these two event handlers showing a high latency.
+
+image::ac-issues-slow-handlers.png[]
+
+TIP: If you are looking for slow handlers, you can order all the handlers by the time it takes to process the events if you click on any of the column headers that show the execution time (min, median, ninetieth percentile or max).
+
+When you click on one of the slow handlers, the details view for that Handler will display different graphs with the evolution of the Handler and total time.
+
+You can use the different graphs to add more context and see if there is another graph that also explains why the high latency is produced (like for example a sudden increase in the message rate, a change in the number of online nodes, or a sudden change in the System CPU usage.)
+
+image::ac-issues-slow-handlers-insights-detail.png[alt="Screenshot of the detailed view of the Handler Insight at the AxonIQ Console dashboard showing the high latency graphs of the PaymentPreparedEvent handler"]
+
+Remember that you can always click on any of the graphs to show it in bigger detail.
+
+image::ac-issues-slow-handler-insights-handler-time.png[alt="Screenshot of the 'Handler Time' graph detailed graph from the Handler Insights tab at the AxonIQ Console Dashboard."]
+
+NOTE: You can see in this graph how the different statistic values go up in different moments. The max latency value is detected inmmediately after configuring the delay in AxonFramework Firestarter, while the mean, ninetieth percentil and min values take more time to go up.
+
+
+=== Alerts in the start tab
+
+If you upgrade your link:https://www.axoniq.io/pricing/axoniq-console[AxonIQ Console subscription] to one of the paid plans you will have access to the notification and alerting features.
+
+That means that the problems will become more evident in form of Alerts right from the start page.
+
+image::ac-issues-start-payment-high-latency.png[]
+
+On top of that, you can configure notifications or integrate with other tools that you may already be using for that purpose, such as slack, PagerDuty or email.
+
+
+
+== Conclusion
+
+You can experiment with AxonFramework Firestarter, introducing delays or errors in different places of your modules and applications and seeing how AxonIQ Console reacts and identifies the different bottlenecks you created in your system.
+
+Doing these experiments you will see how you could benefit from connecting your production applications to AxonIQ Console and adding the AxonIQ Console dashboard as another useful element to your devops toolbelt.
+
+[TIP]
+====
+You can play a little game with your work colleagues to experiment the power of AxonIQ Console. You can ask your colleague to configure some problems in the demo application using AxonFramework Firestarter, and then you can try to detect where the problem is using AxonIQ Console.
+
+Then you can take turns and in the second round you will be configuring some problems in the application, and ask them if they can figure out what problem you intrdouced.
+
+Take notes and explore all the possibilities that AxonIQ Console offers. Was it easy to find the problems? Which problems are detected more easily with AxonIQ Console? Which are the most useful tabs to start looking for issues? Which are the most difficult issues to detect? Is there any other useful information you miss in AxonIQ Console?
+
+Don't be shy and don't hesitate to share your experience with us and with the rest of the community in link:https://discuss.axoniq.io/c/axoniq-console/35[the AxonIQ Console category of our Discuss forums].
+====
+
+
+
