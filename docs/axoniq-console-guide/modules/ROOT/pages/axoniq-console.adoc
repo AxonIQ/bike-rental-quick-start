@@ -1,30 +1,29 @@
-:navtitle: Setting AxonIQ Console
-:reftext: Setting up your free AxonIQ Console
+:navtitle: Setting up AxonIQ Console
+:reftext: Setting up your free AxonIQ Console account
 
 = Introducing AxonIQ Console
 
-link:https://console.axoniq.io[AxonIQ Console,role=external,window=_blank] is the tool that we will use in this tutorial to show you how to monitor your distributed application built with Axon and detect any components that are not performing well or other bottlenecks.
+link:https://console.axoniq.io[AxonIQ Console,role=external,window=_blank] is the tool we will use in this tutorial to show you how to monitor your distributed application built with Axon and identify any components that are not performing as expected or other bottlenecks and issues.
 
-We will use the free tier of AxonIQ Console in this tutorial, which is enough for connecting a small application and experience first-hand the features and benefits that it will provide for you.
+We will use the free plan of AxonIQ Console in this tutorial, which is sufficient to connect a small application and experience its features and benefits firsthand.
 
-If you want to get a grasp of what AxonIQ Console has to offer, you can read about the different panels and dashboards in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:overview-tab.adoc["Monitor Axon Framework applications"] section of the xref:axoniq-console-getting-started:ROOT:index.adoc[AxonIQ Console getting started guide.,window=_blank]
+In case you prefer to get a more complete idea of what AxonIQ Console has to offer before creating your account, you can read about the different panels and dashboards in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:overview-tab.adoc["Monitoring Axon Framework Applications"] section of the xref:axoniq-console-getting-started:ROOT:index.adoc[AxonIQ Console Getting Started Guide.,window=_blank]
 
-If you prefer to go ahead and discover its features by directly connecting an application, just move to the next section. We will offer you two alternatives, either by connecting your own version of the "Bike Rental" application or by directly using a "Bike Rental" demo application we have already prepared for you.
-
+If you prefer to explore and discover its features by directly connecting an application, keep reading: We will help you to either connect your own version of the "Bike Rental" application or use a docker-based "Bike Rental" demo application we have already prepared for you.
 
 == Set up your free AxonIQ Console account.
 
-So, the first step will be to set up your free account in AxonIQ Console. In order to do that, you just need to follow the steps described in the following sections of the xref:axoniq-console-getting-started::index.adoc[AxonIQ Console Getting Started Guide]:
+The first step is to set up your free AxonIQ Console account. To do this, simply follow the steps described in the following sections of the xref:axoniq-console-getting-started::index.adoc[AxonIQ Console Getting Started Guide]:
 
-1. xref:axoniq-console-getting-started:ac-gs-setup:access.adoc[Sign up and create your free AxonIQ Console account]
+1. xref:axoniq-console-getting-started:ac-gs-setup:access.adoc[Register and create your free AxonIQ Console account]
 
-2. xref:axoniq-console-getting-started:ac-gs-setup:setting-up-your-account.adoc#_part_1_setting_up_your_account[Configure your account details] and move to the next section when you are presented with a page giving you the option to either connect your application or start the demo.
+2. xref:axoniq-console-getting-started:ac-gs-setup:setting-up-your-account.adoc#_part_1_setting_up_your_account[Configure your account details] and proceed to the next section in this guide when you are presented with a page that gives you the option to either connect your application or run the demo.
 
 [NOTE]
 ====
-AxonIQ Console provides detailed instructions con how to connect your own Java or Axon Framework based application, or alternatively, provides a `docker-compose.yaml` file that allows you to run a version of the `bike-rental` application already configured to connect to the AxonIQ Console environment you have just created.
+AxonIQ Console provides detailed instructions con how to connect your own Java or Axon Framework based application, or alternatively, provides a `docker-compose.yaml` file that allows you to run a version of the `bike-rental` application that is already configured to connect to the AxonIQ Console environment you have just created.
 
-In the second dialog of the xref:axoniq-console-getting-started:ac-gs-setup:setting-up-your-account.adoc[First time setup steps,window=_blank,role=external] step you will be able to choose your preferred option. You can try to follow the detailed steps provided directly by AxonIQ Console UI to connect your application and skip this guide directly to xref:monitoring/index.adoc
+In the second dialog of the xref:axoniq-console-getting-started:ac-gs-setup:setting-up-your-account.adoc[First time setup steps,window=_blank,role=external] step, you can choose your preferred option. You can try to follow the detailed steps provided directly by AxonIQ Console UI to connect your application and skip this guide directly to xref:monitoring/index.adoc[]
 ====
 
 
