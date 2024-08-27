@@ -1,15 +1,15 @@
 = Structure Overview
 
-This guide provides different alternative paths for you to follow. Choose the one that best fits you.
+This guide offers several alternative paths for you to follow. Choose the one that works best for you.
 
-1. In all the cases, the guide will start by guiding you through the process of **creating your free account at AxonIQ Console**, the online service that we are going to use to connect our Axon Framework based applications.
+1. In all cases, the guide will begin by walking you through the process of **creating your free account at AxonIQ Console**, the online service we will use to connect our Axon Framework-based applications.
 
-2. After that, the guide will offer you different paths to prepare and **connect an application to be monitored by AxonIQ Console**:
+2. After that, the guide will offer you several ways to prepare and **connect an application to be monitored by AxonIQ Console**:
 
-    - Using the `bike-rental` demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial (or any other AxonFramework based application you already have ready to run).
-    - Using the docker based demo application available from the AxonIQ Console dashboard.
+    - Using the `bike-rental` demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial (or any other AxonFramework-based application you already have ready to run).
+    - Using the Docker-based demo application available from the AxonIQ Console dashboard.
 
-3. Create some delays or cause errors on your application and see how **AxonIQ Console monitors and detects performance issues in your application**. For this step, we will use the `AxonFramework Firestarter` library that allows us to easily configure and alter the behaviour in different points of an Axon Framework based application.
+3. Create some delays or cause errors in your application and see how xref::monitoring/issues-w-firestarter.adoc[**AxonIQ Console monitors and detects performance issues in your application**]. For this step, we will use the `AxonFramework Firestarter` library, which allows us to easily configure and Change the behavior in different points of an Axon Framework-based application.
 
 If you are ready, let's get to it.
 

@@ -2,27 +2,29 @@
 
 = Components and Tools Used During This Guide.
 
-These are the tools that we are going to use during this guide:
+There are not too many prerequisites or knowledge you need to follow this guide, and we provide options for you to quickly have everything you need.
+
+These are the tools that we will use throughout this guide:
 
 == AxonIQ Console
 
-We will show you how to create your free account in AxonIQ Console in the first steps of this guide.
+The first steps of this guide will show you how to create your free AxonIQ Console account.
 
-The main tool that we will use for this guide is AxonIQ Console, an online service that allows you to connect your application and provides a dashboard with a comprehensive view of your system behaviour, while it also allows you to step into more detailed information on each of the modules/components of your system.
+The main tool we will use for this guide is AxonIQ Console, an online service that allows you to connect your application and provides a dashboard with a comprehensive view of your system behavior. It also allows you to drill down into more detailed information about each of your system's modules/components.
 
-AxonIQ Console also allows to configure alerts that will notify you in case of certain performance thresholds are trespassed.
+AxonIQ Console also allows you to configure alerts to notify you when certain performance thresholds are exceeded.
 
 == Axon Framework based application (optional).
 
-This will be application that will be monitoring. During the guide, we will use the `bike-rental` demo application that you built with the xref:bikerental-demo::index.adoc[], but you can also use your own Axon Framework based application, if you already have one.
+This will be the application that we will be monitoring. During this guide, we will use the `bike-rental` demo application you built with the xref:bikerental-demo::index.adoc[], but you can also use your own Axon Framework-based application if you already have one.
 
-If you don't have an application built using Axon Framework ready, we will also provide you a working version of the `bike-rental` demo application that you can run easily with `docker`.
+If you don't have an application built using Axon Framework ready, we will also provide you with a working version of the `bike-rental` demo application that you can easily run with `docker`.
 
 
 == Axon Firestarter library (optional).
 
-In order to make things more interesting, we will try to cause performance problems in our running application. That way we could see the real power of AxonIQ Console detecting those problems.
+To make things more interesting, we will deliberately cause performance problems in our running application. This will allow us see the real power of AxonIQ Console in detecting these problems.
 
-To alter the application normal behaviour on purpose and create those performance issues in our application in an easy way, we will add to our application the https://github.com/AxonFramework/AxonFramework-FireStarter[Axon Framework Firestarter library,window=_blank,role=external].
+In order to intentionally change the expected behavior of the application and create these performance problems in our application in an easy way, we will add the https://github.com/AxonFramework/AxonFramework-FireStarter[Axon Framework Firestarter library,window=_blank,role=external] to our application.
 
 NOTE: If you plan to use the `bike-rental-demo` application that we provide via docker images, don't worry, as this version already has this feature enabled.

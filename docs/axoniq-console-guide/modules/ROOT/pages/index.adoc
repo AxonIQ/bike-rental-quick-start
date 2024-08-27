@@ -3,11 +3,11 @@
 
 = Introduction
 
-Once that we have our event-driven distributed application deployed to production, there may some cases in which the behaviour or performance of our application is not what we expected. That could be caused by our application having a higher load that the expected, because some component is acting as a bottleneck and should be scaled or because a message is stuck or causing problems somewhere in our system architecture.
+Once we have our event-driven distributed application in production, there may be some cases where the behavior or performance of our application is not what we expected. This unexpected performance could be because our application has a higher load than expected, because some component is acting as a bottleneck and should be scaled or because a message is stuck or causing problems somewhere in our system architecture.
 
-Before jumping into the different software components trying to locate the problem, it would be useful to have a bird's-eye view of our system and see where the potential problems could be.
+Before randomly jumping into the various software components trying to locate the source of the problem, it would be helpful to have a bird's-eye view of our system and see where the potential issues might be.
 
-In this guide we are going to see how you can connect your Axon Framework based application to AxonIQ Console and get that comprehensive view of your system behaviour. During the guide, we will use the `bike-rental` demo application, but you can use the directions provided in the guide to connect your own Axon Framework based application.
+In this guide, we will see how you can connect your Axon Framework-based application to the AxonIQ Console and get this comprehensive view of your system behavior. We will use the `bike-rental` demo application during the guide, but you can use the instructions provided in the guide to connect your own Axon Framework-based application.
 
-NOTE: If you don't have an Axon Framerwork based application, the guide will also show you how you run and monitor an application using an already working sample application packed as a set of docker images (you will only need to run a `docker-compose` command).
+NOTE: If you don't have an Axon Framerwork-based application, the guide will also show you how to run and monitor an application using an already working example application packaged as a set of docker images (all you will need to do is run a `docker-compose` command).
 
