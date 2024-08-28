@@ -1,3 +1,11 @@
 :navtitle: Application activity Simulator
 
 = Add Activity Simulator to Your Application
+
+After connecting our Axon Framework-based application to AxonIQ Console, and in order to see the benefits of AxonIQ Console while monitoring our system, we will need to send some requests to our application.
+
+We could simply start sending some requests manually to our the REST endpoints defined by our bike-rental application. But that will be soon a tedious task to repeat if we want to focus on monitoring our application.
+
+So, in this step, we are going to introduce some code to make our application active without the need of us having to manually send requests. To keep things easy and quick, we will do this in two steps:
+
+1. First we will define a new
