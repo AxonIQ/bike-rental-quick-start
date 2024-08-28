@@ -1,3 +1,13 @@
 :navtitle: Monitoring your Application with AxonIQ Console
 
 = Monitoring your Application with AxonIQ Console
+
+Now we come to the exciting part of this guide, where we will see AxonIQ Console in action: we will be able to introduce some problems in our application (or start some small fires) and we will use AxonIQ Console to detect these problems.
+
+The steps in this section are broken down into:
+
+1. First, we will look at xref:monitoring/your-app-in-axoniq-console.adoc[overview of all the information that AxonIQ Console displays about our application] behavior. We will walk you through the AxonIQ Console dashboard to  familiarize you with it.
+2. To see the real power of AxonIQ Console, we will xref:monitoring/add-axon-firestarter.adoc[introduce Axon FireStarter]. A library that allows you to introduce some delays and errors at certain points of your Axon Framework-based application.
+3. With Axon Firestarter added, we can xref:monitoring/issues-w-firestarter.adoc[make our application to misbehave and see how AxonIQ Console detects those problems].
+
+Proceed to the next section to continue.
