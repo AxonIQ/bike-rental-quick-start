@@ -7,7 +7,7 @@ link:https://console.axoniq.io[AxonIQ Console,role=external,window=_blank] is th
 
 We will use the free plan of AxonIQ Console in this tutorial, which is sufficient to connect a small application and experience its features and benefits firsthand.
 
-In case you prefer to get a more complete idea of what AxonIQ Console has to offer before creating your account, you can read about the different panels and dashboards in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:overview-tab.adoc["Monitoring Axon Framework Applications"] section of the xref:axoniq-console-getting-started:ROOT:index.adoc[AxonIQ Console Getting Started Guide.,window=_blank]
+If you prefer to get a complete idea of what AxonIQ Console has to offer before creating your account, you can read about the different panels and dashboards in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:overview-tab.adoc["Monitoring Axon Framework Applications"] section of the xref:axoniq-console-getting-started:ROOT:index.adoc[AxonIQ Console Getting Started Guide.,window=_blank]
 
 If you prefer to explore and discover its features by directly connecting an application, keep reading: We will help you to either connect your own version of the "Bike Rental" application or use a docker-based "Bike Rental" demo application we have already prepared for you.
 
