@@ -4,6 +4,8 @@
 
 This section will prepare and connect our Axon Framework-based application to AxonIQ Console. We will follow the steps provided by the AxonIQ Console interface after xref:axoniq-console.adoc#_set_up_your_free_axoniq_console_account[signing up and setting up our free AxonIQ Console account].
 
+TIP: If you did not followed the xref:bikerental-demo::index.adoc[] tutorial and you do not have an Axon Framework-based application ready to connect to AxonIQ Console, you can also use a docker-based bike-rental application that we have prepared for you to easily start and connect to AxonIQ Console. Just skip to xref::connect-your-app/docker-based-demo/start-docker-based-demo.adoc[] section of this guide.
+
 [NOTE]
 ====
 During the process of creating your account, AxonIQ Console presented you with the following panel to choose whether to "connect your application" or "start the demo".
@@ -12,7 +14,7 @@ include::partial$connect-app-or-start-demo-screenshot.adoc[]
 
 The rest of this article corresponds to the instructions displayed when the "Connect my application" option is selected in this dialog.
 
-If you prefer to explore AxonIQ Console features using the demo application and you clicked on the 'Start Demo' button, you may want to refer to xref::docker-based-demo/start-docker-based-demo.adoc[] instead.
+If you prefer to explore AxonIQ Console features using the demo application and you clicked on the 'Start Demo' button, you may want to refer to xref:connect-your-app/docker-based-demo/start-docker-based-demo.adoc[] instead.
 ====
 
 == Create AxonIQ Console workspace and environment.
@@ -31,7 +33,7 @@ After creating the workspace, we must prepare our application to connect to Axon
 
 image:ac-springboot-or-plain-java.png[alt="Screenshot of the AxonIQ Console dialog with the option to install the AxonIQ Console client library for SpringBoot or plan Java-based applications. On the left side is a button with the text 'Spring Boot starter' and on the right side another button with the title 'Java Configuration'"].
 
-In our case, we will use the `Bike Rental` application that we created during the xref:bikerental-demo::index.adoc[] tutorial, built using Spring Boot, we should click the 'Spring Boot Starter' button.
+In our case, we will use the `Bike Rental` application that we created during the xref:bikerental-demo:ROOT:index.adoc[] tutorial, built using Spring Boot, we should click the 'Spring Boot Starter' button.
 
 The following screen instructs us to add the `io.axoniq.console:console-framework-client-spring-boot-starter` library to your application. The Axon Framework will use this library to connect to AxonIQ Console and send the necessary telemetry data from our application to check its behavior.
 
@@ -111,7 +113,7 @@ We have everything configured in our Axon Framework-based application to connect
 
 image:ac-waiting-for-app.png[alt="Screenshot of the dialog box showing that AxonIQ Console is ready and waiting for the application to connect."]
 
-Now, all you need to do is run your local application. Start both the `payment` and `rental` modules from your IDE as we did in the xref:bikerental-demo::run-app-with-docker-compose.adoc[] step of the tutorial.
+Now, all you need to do is run your local application. Start both the `payment` and `rental` modules from your IDE as we did in the xref:bikerental-demo:ROOT:run-app-with-docker-compose.adoc[] step of the tutorial.
 
 After launching the applications, you should see the connection in AxonIQ Console:
 
@@ -134,7 +136,7 @@ You can explore a little bit the information provided in the different tabs, but
 
 If you are using your own application it would be useful to have a script that invokes some of the endpoints of the application to keep it under certain workload.
 
-If you are using the `bike-rental` demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial, you can also check the Activity Simulator we have in the link:https://github.com/AxonIQ/bike-rental-quick-start[bike-rental GitHub repository] (take a look at the link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/Simulator.java[Simulator] and link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/SimulatorConfigController.java[] classes and also the link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/resources/application-simulator.properties[`application-simulator.properties` file])
+If you are using the `bike-rental` demo application you developed following the xref:bikerental-demo:ROOT:index.adoc[] tutorial, you can also check the Activity Simulator we have in the link:https://github.com/AxonIQ/bike-rental-quick-start[bike-rental GitHub repository] (take a look at the link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/Simulator.java[Simulator] and link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/SimulatorConfigController.java[] classes and also the link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/resources/application-simulator.properties[`application-simulator.properties` file])
 
 If you are using the docker-based `bike-rental` demo application provided by AxonIQ Console, you are lucky, as this version already has the activity simulator included.
 ====
