@@ -2,42 +2,42 @@
 
 = Prepare your Application for AxonIQ Console
 
-In this section we will prepare and connect our Axon Framework-based application to AxonIQ Console. We will follow the steps provided by the AxonIQ Console UI after xref:axoniq-console.adoc#_set_up_your_free_axoniq_console_account[signing up and setting up our free AxonIQ Console account].
+This section will prepare and connect our Axon Framework-based application to AxonIQ Console. We will follow the steps provided by the AxonIQ Console interface after xref:axoniq-console.adoc#_set_up_your_free_axoniq_console_account[signing up and setting up our free AxonIQ Console account].
 
 [NOTE]
 ====
-During the process to create your account, AxonIQ Console presented you the panel below to chose whether you wanted to "connect your application" or "start the demo"
+During the process of creating your account, AxonIQ Console presented you with the following panel to choose whether to "connect your application" or "start the demo".
 
 include::partial$connect-app-or-start-demo-screenshot.adoc[]
 
-This article corresponds to the instructions shown when the option to "connect my application" was selected in that dialog.
+The rest of this article corresponds to the instructions displayed when the "Connect my application" option is selected in this dialog.
 
-If you prefer to explore AxonIQ Console features using the demo application and, thus, you clicked on the 'Start demo' button, you may want to go to xref::docker-based-demo/start-docker-based-demo.adoc[] instead.
+If you prefer to explore AxonIQ Console features using the demo application and you clicked on the 'Start Demo' button, you may want to refer to xref::docker-based-demo/start-docker-based-demo.adoc[] instead.
 ====
 
 == Create AxonIQ Console workspace and environment.
 
-After selecting the "Connect my application" option, the AxonIQ Console onboarding flow will ask you to give a name for the "Workspace" and "Environment".
+After selecting the "Connect my application" option, the AxonIQ Console onboarding flow will ask you to name your "Workspace" and "Environment".
 
-xref:reference-axoniq-console:::workspaces/index.adoc[Workspaces] are the way that AxonIQ Console has to group and separate different applications. A good name for the Workspace is the name of the project or software system that groups all the applications/modules that will connect to this space in AxonIQ Console.
+xref:reference-axoniq-console:::workspaces/index.adoc[Workspaces] are the way that AxonIQ Console groups and separates different applications. A good name for the workspace is the name of the project or software system that groups all the applications/modules that will connect to that space in AxonIQ Console.
 
-In this case, we suggest you to use "Bike Rental" as the name of the Workspace and click on the 'Continue' button.
+In this case, we recommend that you use "Bike Rental" as the workspace's name and click on the 'Continue' button.
 
-image::ac-create-wks-bike-rental.png[alt="Screenshot of the AxonIQ Console dialog that asks for a project name to create a new workspace. The dialog shows a title that reads 'Let's connect your application' and explains that the first step is to create a workspace and suggest using the project name as the name for the workspace. Below there is a field with the title 'Project name' that is filled with the text 'Bike Rental'. Finally there is an orange button to continue with the process."]
+image::ac-create-wks-bike-rental.png[alt="Screenshot of the AxonIQ Console dialog asking for a project name to create a new workspace. The dialog shows a title that reads 'Let´s connect your application' and explains that the first step is to create a workspace. It suggests using the project name as the workspace name. Below is a field titled 'Project name' filled with the 'Bike Rental' text. Finally, there is an orange button to continue the process."]
 
 == Add AxonIQ Console client library
 
-After creating the workspace, we need to prepare our application to connect to AxonIQ Console. The process depends on whether our Axon Framework-based application is built using Spring Boot or using plain Java.
+After creating the workspace, we must prepare our application to connect to AxonIQ Console. The process depends on whether our Axon Framework-based application is built using Spring Boot or plain Java.
 
-image:ac-springboot-or-plain-java.png[alt="Screenshot of the AxonIQ Console dialog giving the choice to install the AxonIQ Console client library to SproingBoot or plan java built applications. On the left side there is a button with the text 'Spring Boot starter' and on the right side another button with the title 'Java Configuration'"].
+image:ac-springboot-or-plain-java.png[alt="Screenshot of the AxonIQ Console dialog with the option to install the AxonIQ Console client library for SpringBoot or plan Java-based applications. On the left side is a button with the text 'Spring Boot starter' and on the right side another button with the title 'Java Configuration'"].
 
-In our case, as we are going to connect the `Bike Rental` application that we built during the xref:bikerental-demo::index.adoc[] tutorial, and that is created using Spring Boot, click on the 'Spring Boot Starter' button.
+In our case, we will use the `Bike Rental` application that we created during the xref:bikerental-demo::index.adoc[] tutorial, built using Spring Boot, we should click the 'Spring Boot Starter' button.
 
-The following screen instructs us to add the `io.axoniq.console:console-framework-client-spring-boot-starter` library to your app. This library will be used by Axon Framework to connect to AxonIQ Console and send the telemetry data required from our application to check its behaviour.
+The following screen instructs us to add the `io.axoniq.console:console-framework-client-spring-boot-starter` library to your application. The Axon Framework will use this library to connect to AxonIQ Console and send the necessary telemetry data from our application to check its behavior.
 
-NOTE: If you want to now exactly what type of data is collected and sent to AxonIQ Console by this library, you can check it on the link:https://github.com/AxonIQ/console-framework-client?tab=readme-ov-file#data-sent-to-axoniq[Data sent to AxonIQ] section at the link:https://github.com/AxonIQ/console-framework-client[AxonIQ Console Framework Client project repository in GitHub]
+NOTE: If you want to know what kind of data is collected and sent to AxonIQ Console by this library, you can check it in the link:https://github.com/AxonIQ/console-framework-client?tab=readme-ov-file#data-sent-to-axoniq[Data sent to AxonIQ] section of the link:https://github.com/AxonIQ/console-framework-client[AxonIQ Console Framework Client project repository in GitHub]
 
-Thus, go to the root `pom.xml` file of your `bike-rental` project and add the following:
+So, go to the root `pom.xml` file of your `bike-rental` project and add the following:
 
 ./pom.xml
 [source,xml,indent=0]
@@ -47,9 +47,9 @@ include::example$root/pom.xml[tags=properties;props-axoniq-console-client;!*]
 include::example$root/pom.xml[tags=dependencyManagement;deps-axoniq-console;!*]
 ----
 
-With this `dependencyManagement`, we will make sure that the version of the a `console-framework-client-*` library is the same in all the modules that we connect.
+With this `dependencyManagement`, we will ensure that the version of the a `console-framework-client-*` library is the same in all the modules we connect.
 
-Next, let's add the library to the `payment` and `rental` modules. Go to their corresponding `pom.xml` files and add the following
+Next, add the library to the `payment` and `rental` modules. Go to their respective `pom.xml` files and add the following:
 
 ./rental/pom.xml
 [source,xml,indent=0]
@@ -63,25 +63,25 @@ include::example$rental/pom.xml[tags=dependencies;deps-axoniq-console;!*]
 include::example$payment/pom.xml[tags=dependencies;deps-axoniq-console;!*]
 ----
 
-NOTE: If you are using the version of the `bike-rental` application that has split the `rental` module into several `microservices/rental-*` modules, you should add the `console-framework-client-spring-boot-starter` library to the `pom.xml` of the different microservices.
+NOTE: If you are using the version of the `bike-rental` application that has split the `rental` module into multiple `microservices/rental-*` modules, you should add the `console-framework-client-spring-boot-starter` library to the `pom.xml` of each microservice.
 
-TIP: After adding the dependencies to your projects, make sure you refresh your maven project and that the `console-framework-client-spring-boot-starter` library is on the classpath of your modules.
+TIP: After adding the dependencies to your projects, update your Maven project and ensure that the `console-framework-client-spring-boot-starter` library is on the classpath of your modules.
 
-Once that you have the dependency added, click on the `Next Step` button.
+Once you have added the dependency, click the `Next Step` button.
 
 == Configure AxonIQ Console credentials in your app
 
-In this step we will configure our `rental` and `payment` modules with the credentials to connect and send data to the workspace we created for our project.
+In this step, we will configure our `rental` and `payment` modules with the credentials to connect and send data to the workspace we created for our project.
 
-The dialog that AxonIQ Console shows in this steps allows you to give a name for the module and configure the amount of data that you want to send to AxonIQ Console fomr the dead-letter-queues.
+The dialog AxonIQ Console displays in this step allows you to give the module a name and configure the amount of data you want to send to AxonIQ Console from the dead-letter queues.
 
-Once that you provide that information, the panel be below will update the set of properties you need to configure in the `application.properties` file of your applications.
+Once you have provided this information, the panel below will update with the properties you need to configure in your applications' `application.properties` files.
 
-image:ac-app-properties.png[alt="Screenshot of the Configure AxonIQ Console dialog during the connect my application flow. The dialog shows two fields to introduce the application name and a dropdown selector that allows to select different levels of information that will be sent from the dead-letter-queues to AxonIQ Console. Below the fields there is a box containing the properties that need to be added to the axon framework application to connect to AxonIQ Console."]
+image:ac-app-properties.png[alt="Screenshot of the Configure AxonIQ Console dialog during the Connect My Application process. The dialog shows two fields to introduce the application name and a drop-down selector that allows you to select different levels of information to be sent from the dead-letter queues to AxonIQ Console. Below the fields, there is a box that contains the properties that must be added to the Axon Framework application to connect to AxonIQ Console."]
 
-WARNING: The `axoniq.console.credentials` token is specific for your workspace and should never be shared publicly. The token will be the same for all the applications/modules connecting to the same workspace (in this case for both `rental` and `payment` modules), but it will differ for other projects or workspaces.
+WARNING: The `axoniq.console.credentials` token is specific to your workspace and should never be shared publicly. The token will be the same for all the applications/modules that connect to the same workspace (in this case, for both the `rental` and `payment` modules), but it will be different for other projects or workspaces.
 
-Thus, let's add these properties to our `rental` and `payment` modules. First, open the `application.properties` file in your `rental` folder and add the following properties (copy and paste them from the aforementioned dialog in AxonIQ Console)
+So, let's add these properties to our `rental' and `payment' modules. First, open the `application.properties` file in your `rental` folder and add the following properties (copy and paste from the AxonIQ Console dialog above)
 
 ./rental/src/main/java/resources/application.properties
 [source,properties]
@@ -101,36 +101,45 @@ axoniq.console.credentials=<your credential token here>
 axoniq.console.dlq-mode=NONE
 ----
 
-NOTE: If you are using the version of the `bike-rental` application that has split the `rental` module into several `microservices/rental-*` modules, you will need to configure these properties for in the `src/main/resources/application.properties` file for all the different microservice modules.
+NOTE: If you are using the version of the `bike-rental` application that has split the `rental` module into multiple `microservices/rental-*` modules, you will need to configure these properties in the `src/main/resources/application.properties` file for each microservice module.
 
 Click on the `Next` button to continue.
 
 == Connect your application to AxonIQ Console
 
-We have everything we need configured on our Axon Framework based application to connect to AxonIQ Console. AxonIQ Console will now display a panel in which we can see it is waiting for our application to connect.
+We have everything configured in our Axon Framework-based application to connect to AxonIQ Console. AxonIQ Console will now display a panel indicating that it is waiting for our application to connect.
 
-image:ac-waiting-for-app.png[alt="Screenshot of the dialog panel that shows AxonIQ Console ready and waiting for the application to connect."]
+image:ac-waiting-for-app.png[alt="Screenshot of the dialog box showing that AxonIQ Console is ready and waiting for the application to connect."]
 
-So, you just need to run your local application. Start both the `payment` and `rental` module from your IDE as we did in during the xref:bikerental-demo::run-app-with-docker-compose.adoc[] step of the tutorial.
+Now, all you need to do is run your local application. Start both the `payment` and `rental` modules from your IDE as we did in the xref:bikerental-demo::run-app-with-docker-compose.adoc[] step of the tutorial.
 
-After the different applications are started, you should see the connection in AxonIQ Console:
+After launching the applications, you should see the connection in AxonIQ Console:
 
-image:ac-connected.png[alt="Screenshot of the page in AxonIQ Console showing that both the Payment and Rental modules are connected. the page also shows at the bottom right an orange button with the title 'Go to my workspace!"]
+image:ac-connected.png[alt="Screenshot of the AxonIQ Console page showing that both the Payment and Rental modules are connected. The page also shows an orange button at the bottom right labeled 'Go to my workspace!"]
 
 
-== You connected your applications
+== You are ready to monitor your application with AxonIQ Console
 
-Congratulations, you connected your Axon Framework based applications to AxonIQ Console.
+Congratulations, you have connected your Axon Framework-based applications to AxonIQ Console.
 
-Click on the "Go to my workspace" button to access all the info that AxonIQ Console provides from your application. That will display the main AxonIQ Console dashboard for your application:
+Click on the "Go to my workspace" button to access all the information provided by AxonIQ Console from your application. This will display the main AxonIQ Console dashboard for your application:
 
-image:ac-dashboard.png[alt="Screenshot of the main AxonIQ Console dasboard with the Payment and Rental modules connected."]
+image:ac-dashboard.png[alt="Screenshot of the main AxonIQ Console dashboard with the Payment and Rental modules connected."]
 
-The dashboard includes several tabs to group different information collected from the modules that are connected to AxonIQ Console. These tabs and the information they contain are briefly described in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:dashboard.adoc[AxonIQ Console Getting Started Guide]
+The dashboard contains several tabs that group the information collected from the modules that are connected to AxonIQ Console. These tabs and the information they contain are briefly described in the xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:dashboard.adoc[AxonIQ Console Getting Started Guide]
 
-You can explore a little bit the information provided in the different tabs, but as the application is idle, the information will not be much useful at this time.
+[NOTE]
+====
+You can explore a little bit the information provided in the different tabs, but since the application is idle, the information will not be much useful at this time.
 
-In our next step we will add some activity simulator to our application to make things more interesting in the AxonIQ Console dashboard.
+If you are using your own application it would be useful to have a script that invokes some of the endpoints of the application to keep it under certain workload.
+
+If you are using the `bike-rental` demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial, you can also check the Activity Simulator we have in the link:https://github.com/AxonIQ/bike-rental-quick-start[bike-rental Github repository] (take a look at the link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/Simulator.java[Simulator] and link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/java/io/axoniq/demo/bikerental/rental/ui/SimulatorConfigController.java[] classes and also the link:https://github.com/AxonIQ/bike-rental-quick-start/blob/main/rental/src/main/resources/application-simulator.properties[`application-simulator.properties` file])
+
+If you are using the docker-based `bike-rental` demo application provided by AxonIQ Console, you are lucky, as this version already has the activity simulator included.
+====
+
+:todo: Add link to a section explaining how to add step by step, the activity simulator to the custom bike-rental application. (draft is already stared at custom-app/bike-rental-activity-simulator.adoc)
 
 
 
