@@ -4,7 +4,7 @@
 
 In this step of the tutorial we will create a couple of delays and errors on-purpose within the `bike-rental` demo application that we have connected to our AxonIQ Console dashboard. After configuring the application to present some kind of misbehaviour or bad performance we will see more clearly how AxonIQ Console helps us monitor and detect those issues in our application.
 
-NOTE: We will use AxonFramework Firestarter we added in the xref::custom-app/add-axon-firestarter.adoc[] step of this tutorial to introduce the behaviour problems in our application. This library is not intended to be used in production environments but for scenarios in which we aim to do some stress test or chaos testing of our system.
+NOTE: We will use AxonFramework Firestarter we added in the xref:monitoring/add-axon-firestarter.adoc[] step of this tutorial to introduce the behaviour problems in our application. This library is not intended to be used in production environments but for scenarios in which we aim to do some stress test or chaos testing of our system.
 
 :page-needs-improvement: content
 :page-needs-content: Define independent error scenarios and have them as separate articles. i.e. Detecting a slow event handler, detecting a heavy aggregate (with no snapshots), detecting slow query handlers, ...

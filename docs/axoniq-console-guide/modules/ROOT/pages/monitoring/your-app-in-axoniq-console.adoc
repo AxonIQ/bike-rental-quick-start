@@ -20,7 +20,7 @@ Depending on the version of the application that you have configured to connect 
 
 The docker-based bike rental demo also has Axon Server configured to connect to AxonIQ Console, so you may also not see the same thing in the bottom half of the screen. Don't worry about that difference, as we will focus for now on the monitoring capabilities of the Axon Framework application.
 
-If you are running the bike-rental demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial, your start tab will most likely be the following:
+If you are running the bike-rental demo application you developed following the xref:bikerental-demo:ROOT:index.adoc[] tutorial, your start tab will most likely be the following:
 
 image:ac-dashboard-tab-start-local-simple-app.png[align="center",alt="Screenshot of the Axon Frameworks applications panel in the start tab of the AxonIQ Console dashboard showing only the Payment and Rental modules that correspond to the bike-rental application built following the 'Building an Axon Framework application from scratch' tutorial"]
 

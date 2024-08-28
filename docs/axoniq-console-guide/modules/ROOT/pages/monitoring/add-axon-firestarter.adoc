@@ -74,7 +74,7 @@ Once that you have configured your desired behaviour, click on the "Save taints"
 
 Now that you have Axon Firestarter configured in your application, we can start introducing some problems in our applications and see how AxonIQ Console helps us detect those issues in the behaviour of our application.
 
-We will do that on the xref::monitoring/issues-w-firestarter.adoc[].
+We will do that on the xref:monitoring/issues-w-firestarter.adoc[].
 
 
 

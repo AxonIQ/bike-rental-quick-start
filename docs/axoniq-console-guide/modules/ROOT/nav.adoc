@@ -3,13 +3,14 @@
 ** xref:introduction/guide-structure.adoc[]
 
 * xref:axoniq-console.adoc[]
-* xref:connect-your-app.adoc[]
-** xref:custom-app/prepare-app-for-console.adoc[]
-** xref:custom-app/bike-rental-activity-simulator.adoc[]
+* xref:connect-your-app/index.adoc[]
+** xref:connect-your-app/custom-app/prepare-app-for-console.adoc[]
+** xref:connect-your-app/docker-based-demo/start-docker-based-demo.adoc[]
+// ** xref:custom-app/bike-rental-activity-simulator.adoc[]
 
 * xref:monitoring/index.adoc[]
-** xref:custom-app/your-app-in-axoniq-console.adoc[]
-** xref:custom-app/add-axon-firestarter.adoc[]
+** xref:monitoring/your-app-in-axoniq-console.adoc[]
+** xref:monitoring/add-axon-firestarter.adoc[]
 ** xref:monitoring/issues-w-firestarter.adoc[]
 
 * xref:conclusion.adoc[]
