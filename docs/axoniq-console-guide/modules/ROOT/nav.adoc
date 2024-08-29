@@ -12,5 +12,6 @@
 ** xref:monitoring/your-app-in-axoniq-console.adoc[]
 ** xref:monitoring/add-axon-firestarter.adoc[]
 ** xref:monitoring/issues-w-firestarter.adoc[]
+*** xref:monitoring/slow-event-handlers.adoc[]
 
 * xref:conclusion.adoc[]
