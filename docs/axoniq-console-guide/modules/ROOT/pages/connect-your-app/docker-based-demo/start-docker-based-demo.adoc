@@ -83,7 +83,7 @@ After the download is complete and the containers are launched, you will see the
 
 image:ac-docker-app-connected.png[align="center",alt="Screenshot of the panel showing that all components of the docker-based bike rental demo application have successfully connected to AxonIQ Console"]
 
- Click on the "Continue" button.
+Click on the "Continue" button.
 
 Congratulations, you have successfully connected your application to AxonIQ Console. Before showing you the AxonIQ Console dashboard and all the information about how your system behaves, you will see another dialog with some links that may be useful for learning more about "AxonIQ Console Tools".
 
