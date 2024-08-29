@@ -119,7 +119,7 @@ image::ac-details-apps-stats-graphs-time-window.png[alt="Screenshot of the drop-
 
 If you select a different value for the time window, your graphs will update to show the evolution of your application's behavior over that period.
 
-NOTE: The free plan level of the AxonIQ Console only retains information from your connected applications for the last 10 minutes. This time range should be sufficient for evaluation purposes, but if you see the benefits of using AxonIQ Console to monitor your system, you may want to use one of the xref:reference-axoniq-console::billing.adoc[AxonIQ Console paid tiers] with your production applications, which retain information for longer.
+NOTE: The free plan level of the AxonIQ Console only retains information from your connected applications for the last 10 minutes. This time range should be sufficient for evaluation purposes, but if you see the benefits of using AxonIQ Console to monitor your system, you may want to use one of the link:https://www.axoniq.io/pricing/axoniq-console[AxonIQ Console paid tiers] with your production applications, which retain information for longer.
 
 Click on any of the graphs to enlarge it in the center of the screen.
 
