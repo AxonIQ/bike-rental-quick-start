@@ -21,7 +21,7 @@ If you prefer to explore AxonIQ Console features using the demo application and 
 
 After selecting the "Connect my application" option, the AxonIQ Console onboarding flow will ask you to name your "Workspace" and "Environment".
 
-xref:reference-axoniq-console:::workspaces/index.adoc[Workspaces] are the way that AxonIQ Console groups and separates different applications. A good name for the workspace is the name of the project or software system that groups all the applications/modules that will connect to that space in AxonIQ Console.
+Workspaces are the way that AxonIQ Console groups and separates different applications. A good name for the workspace is the name of the project or software system that groups all the applications/modules that will connect to that space in AxonIQ Console.
 
 In this case, we recommend that you use "Bike Rental" as the workspace's name and click on the 'Continue' button.
 
