@@ -1,3 +1,21 @@
 :navtitle: Conclusion
 
 = Conclusion
+
+In this guide we have walked you trhough the process to register and connect your Axon Framework-based application to AxonIQ Console, and then thanks to the capabilities of the AxonFramework Firestarter library, we were able to introduce some "problems" in our aplication and experiment how AxonIQ Console helps to identify pottential problems in our applications.
+
+You can experiment with the AxonFramework Firestarter by introducing delays or errors at various points in your modules and applications. See how the AxonIQ Console reacts and identifies the bottlenecks you have created in your system.
+
+Through these experiments, you will see how connecting your production applications to the AxonIQ Console and adding the AxonIQ Console dashboard as another useful element to your DevOps toolbelt can benefit you.
+
+.A little grame proposal to have some fun while exploring AxonIQ Console features
+[TIP]
+====
+You can play a little game with your colleagues to experiment with the power of AxonIQ Console. You can ask your colleague to configure some problems in the demo application using AxonFramework Firestarter, and then you can try to identify where the problem is using AxonIQ Console.
+
+Then you can take turns. In the second round, you will configure some problems in the application and ask them if they can figure out what problem you introduced.
+
+Take notes and explore all the possibilities offered by the AxonIQ Console. Were the problems easy to find? What problems are easier to identify with AxonIQ Console? What are the most valuable tabs to start searching for problems? What are the most challenging problems to find? Is there any other helpful information you would love to see in AxonIQ Console?
+
+Please don't be shy and don't hesitate to share your experiences with us and the rest of the community at link:https://discuss.axoniq.io/c/axoniq-console/35[the AxonIQ Console category of our Discuss forums].
+====
