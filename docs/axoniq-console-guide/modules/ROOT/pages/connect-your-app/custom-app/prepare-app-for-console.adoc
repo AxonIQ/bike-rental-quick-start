@@ -117,7 +117,7 @@ Now, all you need to do is run your local application. Start both the `payment` 
 
 After launching the applications, you should see the connection in AxonIQ Console:
 
-image:ac-connected.png[alt="Screenshot of the AxonIQ Console page showing that both the Payment and Rental modules are connected. The page also shows an orange button at the bottom right labeled 'Go to my workspace!"]
+image:ac-connected.png[alt="Screenshot of the AxonIQ Console page showing that both the Payment and Rental modules are connected. The page also shows an orange button at the bottom right labeled 'Go to my workspace"]
 
 
 == You are ready to monitor your application with AxonIQ Console
