@@ -2,17 +2,17 @@
 
 = Introducing AxonFramework Firestarter
 
-The link:https://github.com/AxonFramework/AxonFramework-FireStarter[AxonFramework-Firestarter] is a library that allows to introduce some "Taints" in your Axon Framework based application.
+The link:https://github.com/AxonFramework/AxonFramework-FireStarter[AxonFramework-Firestarter] is a library that allows you to introduce some "taints" into your Axon Framework based application.
 
-This is useful for exploratory scenarios in which we want to cause some little chaos (or start some little fires) inside our applications to test how our system will react under some stress or when some problems arise.
+This feature is helpful for exploratory scenarios where we want to create controlled chaos (or start fires) inside our applications to test how our system will react under stress or when problems arise.
 
-In the case of this tutorial we want to use AxonFramwork Firestarter to introduce some delays or cause some message handlers to produce errors and see how those situations are detected in AxonIQ Console.
+In this tutorial, we want to use AxonFramwork Firestarter to introduce delays or cause some message handlers to produce errors and see how AxonIQ Console detects and shows these situations.
 
 == Adding Axon Firestarter to your application
 
-To add Axon Firestarter to your application you only need to add the `org.axonframework.firestarter:firestarter-spring-starter` to your `bike-rental` application.
+To add Axon Firestarter to your application, simply add the `org.axonframework.firestarter:firestarter-spring-starter` to your `bike-rental` application.
 
-NOTE: If you are using the docker-based bike-rental demo AxonIQ Console provides ready to be run and connect to the dashboard, you don't need to do anything, as the docker images with the different modules have been created with Axon Firestarter. You can skip directly to xref::_[] to see it in action.
+NOTE: If you are using the Docker-based bike-rental demo that comes with AxonIQ Console ready to run and connect to the dashboard, you don't need to do anything because the bike-rental demo Docker images with the different modules have been created with Axon Firestarter. You can jump right to xref::monitoring/issues-w-firestarter.adoc[] to see it in action.
 
 The first thing we need to do is to declare the dependency management in the `pom.xml` of the root project:
 
@@ -22,7 +22,7 @@ The first thing we need to do is to declare the dependency management in the `po
 include::example$root/pom.xml[tags=dependencyManagement;deps-axon-firestarter;!*]
 ----
 
-With that, we can now add the dependency to every module in our project without specifying the version, while we keep the versions aligned. So, you simply need to declare the dependency in your `payment` and `rental` modules:
+With this configuration, we can now add the dependency to any module in our project without specifying the version while keeping the versions in sync. So all you need to do is declare the dependency in your `payment' and `rental' modules:
 
 ./payment/pom.xml
 [sources,xml]
@@ -36,21 +36,21 @@ include::example$payment/pom.xml[tags=dependencies;deps-axon-firestarter;!*]
 include::example$rental/pom.xml[tags=dependencies;deps-axon-firestarter;!*]
 ----
 
-WARNING: If you have splited your `rental` module in the different microservices defined under `/microservices` folder, you will need to add the aforementioned dependency to all the `/microservices/rental-*` modules.
+WARNING: If you split your `rental` module into the various microservices defined in the `/microservices` folder, you must add the dependency mentioned above to all the `/microservices/rental-*` modules.
 
-Once you have added the dependency to your modules, refresh your maven project and make sure AxonFramework Firstarter is listed among the libraries.
+Once you have added the dependency to your modules, update your Maven project and ensure AxonFramework Firestarter is listed among the libraries.
 
 == Accessing the Axon Firestarter console.
 
-Once that you have added the `AxonFramework Firestarter` library to your project you can start your modules and you will have a dahsboard accessible under `/fire-starter/` to "start your small fires within the Axon Framework-based application".
+Once you have added the `AxonFramework Firestarter` library to your project, you can start your modules. You will have a dashboard accessible under `/fire-starter/` to "start your little fires within the Axon Framework-based application."
 
 For example, start your `rental` module and point your browser to `https://localhost:8080/fire-starter/`, you will see the following page:
 
-image::af-firestarter-main-page.png[alt="Screenshot of the main page of the Axon Framework Firestarter attached to an Axon Framework-based application. The page title reads 'AxonFramework FireStarter Rental Monolith'. Below the title there are different sections (Events, Commands, Queries, Sagas, Token Store) with the components in the application that can be configured to change their performance."]
+image::af-firestarter-main-page.png[alt="Screenshot of the main page of the Axon Framework Firestarter attached to an Axon Framework-based application. The title of the page is 'AxonFramework FireStarter Rental Monolith'. Below the title are different sections (Events, Commands, Queries, Sagas, Token Store) with the components in the application that you can configure to change their performance."]
 
 [NOTE]
 ====
-If you are using the docker-based bike-rental demo application provided by AxonIQ Console ready to run and connect to the dashboard, you can access the Axon Firestarter page for each module at the following URLS:
+If you are using the Docker-based bike rental demo application provided by the AxonIQ Console that is ready to run and connect to the Dashboard, you can access the Axon Firestarter page for each module at the following URLS:
 
 - FireStarter *Rental Command* module: http://localhost:10100/fire-starter/
 - FireStarter *Rental Payment* module: http://localhost:10101/fire-starter/
@@ -60,21 +60,21 @@ If you are using the docker-based bike-rental demo application provided by AxonI
 
 ====
 
-This page will show you all the points in which you can configure different degrees of problems, or change the application's performance to introduce some delays.
+This page will show you all the points where you can configure different degrees of problems or change the application's performance to introduce some delays.
 
-For example, if you click on the 'Event Handlers' button of the 'Events' section, you will see a panel that allows you to introduce some fixed or random delays in the time that all the event handlers defined in the application take to process an event, and also configure them to produce some error in a certain percentage of the events that are processed.
+For example, if you click on the 'Event Handlers' button in the 'Events' section, you will see a panel that allows you to introduce fixed or random delays in the time that all the event handlers defined in this application take to process an event and configure them to produce an error in a certain percentage of the events that are processed.
 
-image::af-firestarter-event-handlers.png[alt="Screenshot of the Event Handlers panel that allows to introduce delays or configure error rates for all the event handlers in the Axon Framework application."]
+image::af-firestarter-event-handlers.png[alt="Screenshot of the Event Handlers panel, which allows to introduce delays or configure error rates for all event handlers in the Axon Framework application."]
 
-For each problem you can configure (fixed delays, random delays or error rate) you have a checckbox to enable the 'problem' and a field to configure the time or the percentage of requests that will cause that problem.
+For each problem you can configure (fixed delays, random delays, or error rate), you have a checkbox to enable the 'problem' and a field to configure the time or percentage of requests that will cause that problem.
 
-Once that you have configured your desired behaviour, click on the "Save taints" button and your application will start to mis-behave as you instructed Axon FireStarter.
+Once you have configured your desired behavior, click the "Save taints" button and your application will start behaving the way you told Axon FireStarter to behave.
 
 == Conclusion
 
-Now that you have Axon Firestarter configured in your application, we can start introducing some problems in our applications and see how AxonIQ Console helps us detect those issues in the behaviour of our application.
+Now that you have configured Axon Firestarter in your application, we can start introducing problems in our applications and see how the AxonIQ Console helps us detect these problems in our applications' behavior.
 
-We will do that on the xref:monitoring/issues-w-firestarter.adoc[].
+We will guide you on how to do it in the xref::monitoring/issues-w-firestarter.adoc[] section.
 
 
 
