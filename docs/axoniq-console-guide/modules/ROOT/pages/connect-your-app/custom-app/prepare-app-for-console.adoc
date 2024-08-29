@@ -4,7 +4,7 @@
 
 This section will prepare and connect our Axon Framework-based application to AxonIQ Console. We will follow the steps provided by the AxonIQ Console interface after xref:axoniq-console.adoc#_set_up_your_free_axoniq_console_account[signing up and setting up our free AxonIQ Console account].
 
-TIP: If you did not followed the xref:bikerental-demo::index.adoc[] tutorial and you do not have an Axon Framework-based application ready to connect to AxonIQ Console, you can also use a docker-based bike-rental application that we have prepared for you to easily start and connect to AxonIQ Console. Just skip to xref::connect-your-app/docker-based-demo/start-docker-based-demo.adoc[] section of this guide.
+TIP: If you did not follow the xref:bikerental-demo::index.adoc[] tutorial and you do not have an Axon Framework-based application ready to connect to AxonIQ Console, you can also use a docker-based bike-rental application that we have prepared for you to easily start and connect to AxonIQ Console. Just skip to xref::connect-your-app/docker-based-demo/start-docker-based-demo.adoc[] section of this guide.
 
 [NOTE]
 ====
