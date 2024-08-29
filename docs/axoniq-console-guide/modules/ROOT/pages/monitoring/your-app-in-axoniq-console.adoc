@@ -2,434 +2,433 @@
 
 = Overview your Application in AxonIQ Console
 
-Once that you start your application and all the different modules connect to AxonIQ Console you should be able to see how they are behaving in the AxonIQ Console dashboard.
+Once you have started your application and all the modules have connected to AxonIQ Console, you should see how they behave in the AxonIQ Console dashboard.
 
-The information collected from your system and shown in the AxonIQ Console dashboard is grouped into different xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:dashboard.adoc[tabs,window=_blank,role=extenrnal] to provide you a comphenensive view of your system, and also allow to dive into more detailed information for specific components.
+The AxonIQ Console dashboard groups all the information collected from your system into several xref:axoniq-console-getting-started:ac-monitor-axon-framework-applications:dashboard.adoc[tabs,window=_blank,role=extenrnal] to give you a comprehensive view of your system and also allow to drill down into more detailed information for specific components.
 
-Let's take a quick tour through the AxonIQ Console Dashboard now that we have our application connected.
+Now that our application is connected let's take a quick tour of the AxonIQ Console Dashboard.
 
 == Start tab
 
-The start tab will show all the components from our project that have been configured and connected to AxonIQ Console.
+The Start tab displays all of the components from our project that have been configured and connected to AxonIQ Console.
 
 image:ac-dashboard-tab-start.png[align="center",alt="Screenshot of the Start tab of the AxonIQ Console dashboard with the modules from the docker-based bike rental demo application connected."]
 
 [NOTE]
 ====
-Depending on the version of the application that you have configured to connect to AxonIQ Console you may see different number of applications connected. The screenshot above corresponds to the docker-based bike rental application which has the axon-framework application divided into 5 microservices (if you are running the version of the bike rental application you have developed following the tutorial you may only see two modules connected).
+Depending on the version of the application you have configured to connect to AxonIQ Console, you may see a different number of connected applications. The screenshot above corresponds to the docker-based bike rental application, which has the Axon Framework-based application divided into five microservices (if you are running the version of the bike rental application that you developed following the xref:bikerental-demo::index.adoc[] tutorial, you may see only two modules connected).
 
-The docker-based bike rental demo also has Axon Server configured to connect to AxonIQ Console, so you may also not see the same thing in the bottom half of the screen. Don't worry about that difference, as we will focus for now on the monitoring capabilities of the Axon Framework application.
+The docker-based bike rental demo also has Axon Server configured to connect to AxonIQ Console, so you may see a different thing in the bottom half of the screen reserved for the Axon Server instances. Don't worry about this difference, as we will focus on the monitoring capabilities of the Axon Framework application for now.
 
-If you are running the bike-rental demo application you developed following the xref:bikerental-demo:ROOT:index.adoc[] tutorial, your start tab will most likely be the following:
+If you are running the bike-rental demo application you developed following the xref:bikerental-demo::index.adoc[] tutorial, your Start tab will most likely look like this:
 
-image:ac-dashboard-tab-start-local-simple-app.png[align="center",alt="Screenshot of the Axon Frameworks applications panel in the start tab of the AxonIQ Console dashboard showing only the Payment and Rental modules that correspond to the bike-rental application built following the 'Building an Axon Framework application from scratch' tutorial"]
-
+image:ac-dashboard-tab-start-local-simple-app.png[align="center",alt="Screenshot of the Axon Framework applications panel in the Start tab of the AxonIQ Console dashboard, showing only the Payment and Rental modules that correspond to the bike-rental application built following the 'Building an Axon Framework application from scratch' tutorial"]
 ====
 
-If you click on any of the modules, the panel will display additional information about the number of instances of that module connected, the handlers defined in that module and the number of event processors that the application is running.
+When you click on one of the modules, the panel displays additional information about the number of instances of that module connected, the handlers defined in that module, and the number of event processors the application is running.
 
-image:ac-dashboard-tab-start-details.png[align="center",alt="Screenshot of the 'Axon Framework applications' panel from the 'Start' tab of the AxonIQ Console dashboard showing the extended information for one of the modules connected. In this case the extended information for the 'Payment Processor' module is displayed, showing that the module has 1 instances connected, defines 5 handlers and has 1 out of 1 processors online."]
+image:ac-dashboard-tab-start-details.png[align="center",alt="Screenshot of the 'Axon Framework Applications' panel from the 'Start' tab of the AxonIQ Console dashboard, showing the extended information for one of the connected modules. In this case, the extended information for the 'Payment Processor' module is displayed, showing that the module has a single instance connected, five handlers defined, and has one out of one processors online."]
 
 == Applications tab
 
-The 'Applications' tab shows a summary of the different modules and its status.
+The 'Applications' tab summarizes the different modules and their status.
 
-The information is divided in two different sections. On the top half of the panel there is a list of the different modules with specific information such as the number of online instances, the Axon Framework version they are using or the CPU and memory use of each of them.
+The information is divided into two sections. In the upper half of the panel, there is a list of the different modules with specific information, such as the number of online instances, the Axon Framework version they are using or the CPU and memory usage of each of them.
 
-image:ac-dashboard-tab-apps-list.png[align="center",alt="Screenshot of the list of the connected applications in the 'applications' tab of the AxonIQ Console dashboard. The panel shows a table with five modules connected and, for each one of them, displays information on the number of Online clientes, the Axon Framework version, the console-client version, the CPU usage, the commandBus and QueryBus capacity and the percentage of Heap used. It also shows a column to display if the each module has raised any alert."]
+image:ac-dashboard-tab-apps-list.png[align="center",alt="Screenshot of the list of the connected applications in the 'applications' tab of the AxonIQ Console dashboard. The panel displays a table with five connected modules, and each one of them displays information about the number of online clients, the Axon Framework version, the console-client library version, the CPU usage, the CommandBus and QueryBus capacity and the percentage of the Heap used. There is also a column that shows whether each module has generated an alert."]
 
-Below that table, there are several graphs that show the evolution over the last 10 minutes of different indicatros of the performance and behaviour of all the modules.
+Below this table are several graphs showing the evolution over the last ten minutes of various indicators of the modules' performance and behavior.
 
-image:ac-dashboard-tab-apps-stats.png[align="center",alt="Screenshot of the Application Statistics graphs in the 'Application' tab of the AxonIQ Console dashboard. The panel shows five graphs (Process CPU Usage, Heap Usage, CommandBus Capacity, Query Bus Capacity and Nodes) with the evolution over the last 10 minutes. Close to the 'Application Statistics' title of the section there is a message showing that there are 5 out of 8 graphs selected."]
+image:ac-dashboard-tab-apps-stats.png[align="center",alt="Screenshot of the Application Statistics graphs in the 'Application' tab of the AxonIQ Console dashboard. The panel shows five graphs (Process CPU Usage, Heap Usage, CommandBus Capacity, Query Bus Capacity and Nodes) with the evolution over the last ten minutes. Close to the 'Application Statistics' title of the section, there is a message showing that five out of eight graphs have been selected."]
 
-You can customize the list of graphs that you want to see in this area if you click on arrow close to the message that shows that there are currently 5 out of 8 graphs selected. That will show a drop-down list to select the graphs you want from a list of 8 graphs available.
+You can customize the list of graphs you want to see in this section by clicking on the arrow next to the message that says five out of eight graphs are currently selected. Doing that will display a drop-down list to select the graphs you want from all available graphs.
 
-image::ac-dashboard-tabs-apps-select-graphs.png[align=center,alt="Screenshot of the drop-down list that allows to select which graphs with application statistics will be shown in the 'Applications tab'"]
+image::ac-dashboard-tabs-apps-select-graphs.png[align=center,alt="Screenshot of the drop-down list that allows you to select which application statistics graphs to display in the 'Applications tab'"]
 
 === Detailed application information.
 
-If you click on any of the modules from the table shown in the xref:_applications_tab['Applications' tab], the tab contents will change to display more information specific to that module.
+If you click on one of the modules from the table shown in the xref:_applications_tab['Applications' tab], the tab's contents will change to display more information specific to that module.
 
-For example, if you click on the 'Payment Processor' module you will have access to more insights about the performance of that module and their components:
+For example, if you click on the 'Payment Processor' module, you will have access to more insight into the performance of that module and its components:
 
 ==== Online clients
 
-In this table you will see the number of instances of the module that are running and connected to AxonIQ Console.
+This table shows the number of instances of the module running and connected to AxonIQ Console.
 
-image::ac-details-apps-online-clients.png[alt="Screenshot of the list of Online clients for the 'Payment Processor' module in the detailed view of the applications tab in AxonIQ Console". The list shows only an instance of the module running with its node name, the Axon-Dramework version (4.9.3) and the  Console client version (1.7.1)]
+image::ac-details-apps-online-clients.png[alt="Screenshot of the list of online clients for the 'Payment Processor' module in the detailed view of the applications tab in AxonIQ Console. The list shows only one instance of the module running with its node name, Axon-Framework version (4.9.3) and the  Console client version (1.7.1)"]
 
-In this case, we will only have instance in the table. But, if at some point we need to scale out this module by deploying new instances because we detect that the Payment processor takes more time to process the payments, we would see all these clients listed with different node identifiers.:
+In this case, we will have only one instance in the table. But if, at some point, we need to scale out this module by deploying new instances because we notice that the Payment processor is taking more time to process the payments, we will see all these clients listed with different node identifiers:
 
-image::ac-details-apps-online-clients-n.png[alt="Screenshot of the list of Online clients for the 'Payment Processor' module in the detailed view of the applications tab in AxonIQ Console". The list shows four different instances of the module running with different node names, the Axon-Dramework version (4.9.3) and the  Console client version (1.7.1)]
+image::ac-details-apps-online-clients-n.png[alt="Screenshot of the list of online clients for the 'Payment Processor' module in the detailed view of the applications tab in AxonIQ Console. The list shows four different instances of the module running with different node names, the Axon Framework version used (4.9.3) and the Console-client library version (1.7.1)"]
 
 === Slowest handlers
 
-The panel also shows a list of the five slowest handlers contained in the application. For each of these handlers, the table shows the component name, the handler method and the time that takes the handler to process a message, measured in milliseconds expressed with its median value and the ninetieth percentile.
+The panel also lists the five slowest handlers in the application. For each handler, the table shows the component name, the handler method, and the time it takes the handler to process a message, measured in milliseconds, along with its median and ninetieth percentile.
 
-If you see a poor performance in your application maybe one of these slowest handlers is one of the places to start looking at.
+If you see poor performance in your application, one of these slowest handlers might be a good place to look.
 
 image::ac-details-apps-slowest-handlers.png[alt="Screenshot of the list of the five slowest handlers in the application"]
 
-If you click on any of the handlers you will access that specifc xref:_[handler detailed view] in the 'Handlers insights' tab.
+Clicking on any handler will take you to that specific xref:_handler_details[handler detail view] in the 'Handlers Insights' tab.
 
 === Application configuration
 
-We can also check the configuration of the different messaging components that the application is using. You can switch the view clicking on the three tab titles of the Configuration panel:
+We can also check the configuration of the application's different messaging components. You can change the view by clicking on the three tabs of the Configuration panel:
 
 ==== Components
 
-The components table show information about the different messaging components used by the module, along with the implementation used, whether the component is connected to an Axon Server instance and information about any Dispatch or Handler Interceptors attached to the Bus or the serializers used.
+The Components table displays information about the different messaging components used by the module, along with their implementation, whether the component is connected to an Axon Server instance, and any Dispatch or Handler Interceptors attached to the bus or serializers used.
 
-image::ac-details-apps-config-components.png[alt="Screenshot of the view of messaging components in the Configuration section of the details view in the applications tab of AxonIQ Console. The view contains a table with three rows, one for each component configured in the Payment Processor module: a CommandBus, a QueryBus and an EventStore. The table shows in different columns information like the Implementation of the component, the implementation of the Local Segment, a mark to indicate whether that component is connected to an Axon Server instance, the default context, the list fo Dispatch Interceptors configured, the List of Handleer Interceptors and the Serializers used in each component."]
+image::ac-details-apps-config-components.png[alt="Screenshot of the Messaging Components view in the Configuration section of the Details view in the Applications tab of the AxonIQ Console. The view contains a table with three rows, one for each component configured in the Payment Processor module: a CommandBus, a QueryBus, and an EventStore. The table displays in various columns information such as the component implementation, the local segment implementation, a flag indicating whether this component is connected to an Axon Server instance, the default context, the list of configured dispatch interceptors, the list of handler interceptors, and the serializers used in each component."]
 
-This information could be useful, for example to check that if any there is an interceptor attached to a Command or QueryBus that may be affecting the time that takes processing certain types of messages, or, if the serializer used to send or receive the messages is the expected one.
+This information can be useful, for example, to check if an interceptor is attached to a Command or QueryBus that might affect the time it takes to process certain types of messages or if the serializer used to send or receive the messages is the expected one.
 
 ==== Processors
 
-The processors table shows information about the event processors used in the application, along with more detailed information like the type of processor, the batch size, error handlers or any incerceptors or other components configured or attached to the processor.
+The Processors table displays information about the event processors used in the application, along with more detailed information such as processor type, batch size, error handlers, or any interceptors or other components configured or attached to the processor.
 
-image::ac-details-apps-config-processors.png[alt="Screenshot of the table with that displays the configuration for each one of the event processors of a certain module in the detailed view of an application within the 'Applications' tab of the AxonIQ Console dashboard"]
+image::ac-details-apps-config-processors.png[alt=" Screenshot of the table that displays the configuration for each of the event processors of a particular module in the Detailed view of an application within the Applications tab of the AxonIQ Console dashboard"]
 
-If you click on a particular processor in this table, you will switch to the xref::_['Details view"] of that specific processor within the 'Processors' tab.
+Clicking on a specific processor in this table will take you to the xref:_processor_details['Details View'] of that particular processor within the Processors tab.
 
 ==== Versions
 
-Clicking on the 'Versions' label will display a list of all the Axon Framework module libraries used along with their versions. This view is useful to see that the Axon Framework version used by the application and to check that all the libraries are using the latest released version.
+Clicking on the 'Versions' label lists all used Axon Framework module libraries and their versions. This view helps see the Axon Framework version used by the application and check that all libraries are using the latest released version.
 
-image::ac-details-apps-config-versions.png[alt="Screenshot of the list of Axon Framework libraries and their versions used by the application in the 'configuration' section of the details view of the 'Applications' tab of AxonIQ Console. The table also shows a checkbox to include the unused libraries in the list"]
+image::ac-details-apps-config-versions.png[alt="Screenshot of the list of Axon Framework libraries and their versions used by the application in the 'Configuration' section of the Details view of the Applications tab of the AxonIQ Console. The table also shows a checkbox to include the unused libraries in the list.]
 
-You can also check the `show unused libraries' to include the list of libraries defined but not used by the module.
+You can also check the 'Show Unused Libraries' checkbox to include the list of libraries defined but not used by the module.
 
 === Application statistics
 
-The last section of the Application details is comprised by several graphs that display the evolution over time of different metrics of the behaviour of the application.
+The last section of the Application Details tab consists of several graphs that show the evolution of various metrics of the application's behavior over time.
 
-image::ac-details-apps-stats.png[alt="Screenshot of the application statistic graphs shown for an application or module in the detailed view of the 'Applications' tab. The screenshot shows four different graphs showing the application 'Live Thread Count', the 'System Load', the 'Heap Usage' and the number of 'Nodes' during the last 10 minutes. Above the graphs, on the left, next to the Application Statistics title, there is a label that reads '4 out of 8 graphs selected' with an arrow that indicates it is a drop-down menu. On the top right side of the panel, there is another drop-down field that shows the timeframe of 10 minutes configured for the graphs."]
+image::ac-details-apps-stats.png[alt="Screenshot of the application statistics graphs displayed for an application or module in the details pane of the Applications tab. The screenshot shows four different graphs showing the application's 'Live Thread Count', 'System Load', 'Heap Usage' and 'Number of Nodes' over the last 10 minutes. Above the graphs, to the left of the Application Statistics title, there is a label that says '4 of 8 graphs selected' with an arrow indicating that this is a drop-down menu. At the top right of the panel, there is another drop-down box that displays the 10-minute time period configured for the graphs."]
 
-==== Selecting the graphs shown.
+==== Select the graphs to display.
 
-You can select the graphs you want to see by clicking in the arrow next to the label that shows that 4 out of 8 graphs are selected. Doing that will show a drop-down box with all the graphs available.
+You can select the graphs you want to see by clicking the arrow next to the label that indicates four of eight graphs are selected. This will display a drop-down box with all available graphs.
 
-image::ac-details-apps-stats-graphs-select.png[alt="Screenshot of the dropdown menu showing all the graphs available to be displayed in the 'Application Statistics' of the detailed view of the 'Applications' Tab in AxonIQ Console dashboard. The following graphs are available: Process CPU Usage, System CPU Usage, Command Bus Capacity, Query Bus Capacity, Live Thread Count, System Load, Heap Usage and Nodes."]
+image::ac-details-apps-stats-graphs-select.png[alt="Screenshot of the drop-down menu showing all the graphs available for display in the Application Statistics detail view of the Applications tab in the AxonIQ Console dashboard. The following charts are available: Process CPU Usage, System CPU Usage, Command Bus Capacity, Query Bus Capacity, Live Thread Count, System Load, Heap Usage and Nodes."]
 
 ==== Configuring the time window for the graphs
 
-By default, the graphs in the Application Statistics section will show the evolution on the module's behaviour during the last ten minutes. You can configure a different time window for the graphs using the drop-down selector in the top right side of the graphs.
+By default, the graphs in the Application Statistics section show the evolution of the module's behavior over the last ten minutes. However, you can configure a different time window using the drop-down selector at the top right of the graphs.
 
-image::ac-details-apps-stats-graphs-time-window.png[alt="Screenshot of the drop-down selector shown in the top right side that allows to configure diferent time frames for the graphs in the 'Application Statistics' view of the 'Applications' tab of AxonIQ Console. The drop-down box offerent the following options: 10 minutes, 1 hour, 6 hours, 1 day, 1 week, 2 weeks, 4 weeks"]
+image::ac-details-apps-stats-graphs-time-window.png[alt="Screenshot of the drop-down selector shown at the top right, which allows you to configure different time ranges for the graphs in the Application Statistics view of the Applications tab of the AxonIQ Console. The drop-down box offers the following options: 10 Minutes, 1 Hour, 6 Hours, 1 Day, 1 Week, 2 Weeks, 4 Weeks"]
 
-If you choose a different value for the time window, you will see your graphs updated to show the evolution of your application's behaviour over that period of time.
+If you select a different value for the time window, your graphs will update to show the evolution of your application's behavior over that period.
 
-NOTE: The free plan tier of AxonIQ Console only keeps info from your connected applications for the last 10 minutes. That should be enough for evaluation purposes, but if you see the benefits of AxonIQ Console for monitoring your system, it will be better to use with your production applications one of the xref:reference-axoniq-console::billing.adoc[AxonIQ Console paid tiers] that keep information for longer periods of time.
+NOTE: The free plan level of the AxonIQ Console only retains information from your connected applications for the last 10 minutes. This time range should be sufficient for evaluation purposes, but if you see the benefits of using AxonIQ Console to monitor your system, you may want to use one of the xref:reference-axoniq-console::billing.adoc[AxonIQ Console paid tiers] with your production applications, which retain information for longer.
 
-If you click on any of the graphs, it will be shown in bigger size in the middle of the screen.
+Click on any of the graphs to enlarge it in the center of the screen.
 
-image::ac-details-apps-stats-graph-detail.png[alt="Screenshot of one of the Live Thread Count graph, when it is displayed in bigger size in the detailed view of the 'Applications' tab in AxonIQ Console."]
+image::ac-details-apps-stats-graph-detail.png[alt="Screenshot of one of the Live Thread Count graphs when enlarged in the detail view of the Applications tab in the AxonIQ Console."]
 
 == Processors tab
 
-The 'Processors' tab groups all the information about the event processors defined in your system. The tab displays a table with the different processors, the application or module where they are defined, the processor name and information about the status and performance of each event processor.
+The Processors tab collects information about the event processors defined in your system. The tab displays a table with the different processors, the application or module where they are defined, the processor name, and information about the status and performance of each event processor.
 
 [NOTE]
 ====
-Event Processors are the components in an Axon Framework application that take care of the necessary tasks to process an Event (for example, starting a transaction, if needed) and call the Event Handler, which will define the business logic attached to the reception of the event.
+Event Processors are the components in an Axon Framework application that perform the tasks necessary to handle an event (for example, launching a transaction if required) and call the event handler that defines the business logic associated with receiving the event.
 
-You can learn more about xref:axon_framework_ref:events:event-processors/README.adoc[Event Processors in Axon Framework applications] in the section dedicated to them from the Axon Framework Reference Guide
+You can learn more about xref:axon_framework_ref:events:event-processors/README.adoc[Event Processors in Axon Framework Applications] in the dedicated section of the Axon Framework Reference Guide.
 ====
 
-In the case of our application, we can see the tree event processors that we have defined in our bike-rental application:
+In the case of our application, we can see the three event processors that we have defined in our bike-rental application:
 
-image::ac-dashboard-tab-processors.png[alt="Screenshot of the table that displays the Event processors defined in the system as shown in the ' Processors tab of the AxonIQ Console dashboard."]
+image::ac-dashboard-tab-processors.png[alt="Screenshot of the table showing the event processors defined in the system, as shown in the ' Processors tab of the AxonIQ Console dashboard."]
 
 === Processor details
 
-If you click on any processor from the table, AxonIQ Console will display a page with all the detailed information that is gathered from the processor behaviour.
+If you click on any processor in the table, the AxonIQ Console will display a page with detailed information gathered from its behavior.
 
-For example, if we click on the `io.axoniq.demo.bikerental.payment` processor from the `Payment Processor` application, we will see a lot of details on how that event processor is performing:
+For example, if we click on the `io.axoniq.demo.bikerental.payment' processor from the `Payment Processor' application, we will see more details on how this event processor is performing:
 
-image::ac-details-processors.png[alt="Screenshot of the processor detailed view in the 'Processors' tab of the AxonIQ Console dashboard. The sreenshot shows part of the detailed information of `io.axoniq.demo.bikerental.payment` processor, including the summary info table, the list of instances, and three graphs with processor performance statisctis: Segment claim percentage, latency and number of online nodes."]
+image::ac-details-processors.png[alt="Screenshot of the processor detail view in the Processors tab of the AxonIQ Console dashboard. The screenshot shows a portion of the detailed information for the `io.axoniq.demo.bikerental.payment' processor, including the summary information table, the list of instances, and three graphs showing processor performance statistics: Segment Usage Percentage, Latency, and Number of Online Nodes."]
 
-Let's briefly go over the different sections
+Let's go through the different sections.
 
 ==== Processor summary
 
-The detailed page first show table with the processor's capacity summary:
+The details page first displays the processor capacity summary table:
 
-image::ac-details-processors-summary.png[alt="Screenshot of the summary info table from the processor details view in the 'Processors' tab of the AxonIQ Console dashboard. The table shows a summary of basic information on the processor's performance: The processor's name (io.axoniq.demo.bikerental.payment), the processor mode (Pooled streaming), the number of running instances (1 out of 1), the number of segments claimed (16), the claim percentage (100%), the free sgement capacity (32751) and the latency, expressed with two values, the ingest latency (denoted by an arrow pointing down: 3 ms) and the commit latency (denoted by a DB icon with a plus sign: 4 ms). Finally there is a row to show if there is any automation configured for the processor (in the screenshot no automation is shown).  Below the table there is a row with four buttons to start, pause the processors or to marge or split segments claimed by the processor and to reset the processor config."]
+image::ac-details-processors-summary.png[alt="Screenshot of the Summary Information table from the Processor Details view in the Processors tab of the AxonIQ Console dashboard. The table displays a summary of basic information about the processor's performance: The processor name (io.axoniq.demo.bikerental.payment), the processor mode (Pooled Streaming), the number of running instances (1 of 1), the number of claimed segments (16), the claim percentage (100%), the free segment capacity (32751), and the latency expressed as two values, the ingest latency (indicated by a down arrow: 3 ms) and the commit latency (indicated by a DB icon with a plus sign: 4 ms). Finally, a row shows whether automation is configured for the processor (no automation is shown in the screenshot).  Below the table is a row of four buttons to start, pause, merge or split segments claimed by the processor, and reset the processor configuration."]
 
-Apart from the basic information about the processor, like the name, the mode the number of running instances or details about the segments claimed by the processor, this table also shows if there is any automation rules configured for the processor (in the case of the screenshot there is none).
+In addition to basic information about the processor, such as its name, mode, number of running instances, or details about the segments claimed by the processor, this table also shows whether any automation rules are configured for the processor (in the case of the screenshot, there are none).
 
-Finally, the summary table offers several buttons that allow to modify the processor's behaviour, which could be useful in case of a bad performance:
+Finally, the summary table offers several buttons to modify the behavior of the processor, which can be helpful in case of poor performance:
 
-- image:ac-details-processors-btn-start.png[fit=line,alt="a blue button with a play icon"] The play button allows to start the event processor on all nodes.
-- image:ac-details-processors-btn-pause.png[fit=line,alt="A blue button with the 'pause' icon"] The pause button allows to pause the event processor on all nodes.
-- image:ac-details-processors-btn-merge.png[fit=line,alt="a blue button with two lines going from left to right that merge into one arrow. The icon conveys the 'merge' action."] The merge button merges the largest two segments into one. This can only be done when there are more than one segment.
-- image:ac-details-processors-btn-split.png[fit=line,alt="a blue button with a line that separates into two different arrows. The icon conveys the 'split' action."] The split button, splits the smallest segment into two. This can only be done when there are free threads and all segments are claimed.
+- image:ac-details-processors-btn-start.png[fit=line,alt="A blue button with a play icon"] The button with the play icon allows you to start the Event Processor on all nodes.
+- image:ac-details-processors-btn-pause.png[fit=line,alt="A blue button with a 'pause' icon"] The Pause button allows you to pause the Event Processor on all nodes.
+- image:ac-details-processors-btn-merge.png[fit=line,alt="a blue button with two lines going from left to right that merge into an arrow. The icon conveys the 'merge' action."]. The merge button merges the two largest segments into one. The merge can only happen if there is more than one segment.
+- image:ac-details-processors-btn-split.png[fit=line,alt="a blue button with a line that splits into two different arrows. The icon conveys the 'split' action."] The split button splits the smallest segment into two. This action can only be done if there are free threads and all segments are in use.
 
-NOTE: If you want to learn more about how events are processed in an Axon Framework application and how the segments are split or merged you can read xref:axon_framework_ref:tuning:event-processing.adoc#_increasing_and_decreasing_segment_counts[Increasing and decreasing segment counts] section of the Event Processing Tuning article at the Axon Framework Reference Guide.
+NOTE: To learn more about how an Axon Framework-based application processes the events and how the segments are split or merged, you can read the xref:axon_framework_ref:tuning:event-processing.adoc#_increasing_and_decreasing_segment_counts section of the Event Processing Tuning article in the Axon Framework Reference Guide.
 
-There is a fifth option to reset the processor. Resetting the processor implies invoking any @ResetHandler methods for this processor and reset the tokens to a desired position. After clicking the 'reset processor' link, AxonIQ Console will display a dialog window asking which is the preferred position that you want to set the processor to.
+A fifth option is to reset the processor. Resetting the processor means calling any `@ResetHandler` methods on that processor and resetting the tokens to a desired position. After clicking the 'Reset Processor' link, the AxonIQ Console displays a dialog box asking you to specify the preferred position to which you want to set the processor.
 
-image::ac-details-processors-reset.png[alt="Screenshot of the 'Reset processor' dialog that explains what implies resetting the processor and offering three options for the position to set the processor to: Tail of event store - index 0 (the default selected option), Head of event store - last index, and Index at a certain point date and time. Finally there is a button to 'Execute reset']
+image::ac-details-processors-reset.png[alt="Screenshot of the Reset Processor dialog, explaining what resetting the processor entails and offering three options for the position to which the processor should be set: Tail of event memory - index 0 (the default selected option), Head of event memory - last index, and Index at a specific date and time. Finally there is a button to 'Execute reset']
 
-NOTE: If you click select the 'Index at a certain date and time' option, a field to set the desired date and time will appear.
+NOTE: A field to set the desired date and time will appear if you select the 'Index at a certain date and time' option.
 
 ==== Instances
 
-Next to the summarized info table, there is another table that shows specific information for each one of the instances.
+In addition to the summary information table, another table displays specific information for each of the instances.
 
-image::ac-details-processor-instances.png[alt="Screenshot of the table that shows the processor running in each of the instances connected to AxonIQ Console. The table has five columns (Instance name, Status, Stream percentage, Latency and Actions) and one row per instance connected (in the screenshot there is only one instance connected)."]
+image::ac-details-processor-instances.png[alt="Screenshot of the table showing the processor running in each instance connected to the AxonIQ Console. The table has five columns (Instance Name, Status, Stream Percentage, Latency, and Actions) and one row per connected instance (the screenshot shows only one instance connected )."]
 
-Along the processor information for each instance, like the status, stream percentage or latency, there is also a column that allows to pause or start the processor in one specific instance. This allows more granular operation of the processors than the buttons shown in the xref:#_processor_summary[].
+Along with the processor information for each instance, such as status, stream percentage, or latency, a column allows you to pause or start the processor in a specific instance. The buttons in this column allow more granular operation of the processors than those shown in the xref:#_processor_summary[].
 
 ==== Segments
 
-Clicking on the 'Segments' tab of the processor details view will display a list of all the segments into which the Event Stream is split.
+Clicking the Segments tab in the processor details view displays a list of all the segments into which the event stream is divided.
 
-image::ac-details-processors-segments.png[alt="Screenshot of the table of segments as it is shown in the details view of the 'Processors' tab in the AxonIQ Console dashboard. The table has seven rows to show, for each Segment, the segment number, the Node name that has claimed it, the Status, the Position at which the processor is on the segment, the ingest and commit latency, the percentage of the stream that the processor is responsible for reading and a column for actions that can be done on the segument.]
+image::ac-details-processors-segments.png[alt="Screenshot of the segments table as displayed in the details view of the Processors tab in the AxonIQ Console dashboard. The table has seven rows that show, for each segment, the segment number, the node name that claimed it, the status, the position the processor is in the segment, the ingest and commit latency, the percentage of the stream the processor is responsible for reading, and a column for actions that can be taken on the segment."]
 
-The table of segments offers the possibility, via a button on the 'Actions' column, to move any segment to another instance if there are more than one instances with the event processor running.
+The segment table provides a button in the Actions column to move any segment to another instance if multiple instances are running the event processor.
 
 ==== Event handlers
 
-Clicking on the 'Event Handlers' tab, the processor details view will display a table with all the event handlers defined associated with the event processor.
+When you click the Event Handlers tab, the processor details view displays a table of all defined event handlers associated with the event processor.
 
-image::ac-details-processors-eventhandlers.png[alt="Screenshot of the table of event handlers associated to events processed by this event processor. The table has eight columns to show, for each event handler, a marker if there any alerts triggered by the handler, the message linked to the event handler, the throughtput, the error rate, and the event handler processing time measured with the min value, the median value, the value corresponding to the ninetieth percentile and the max value."]
+image::ac-details-processors-eventhandlers.png[alt="SScreenshot of the table of event handlers associated with events processed by this event processor. The table has eight columns to show, for each event handler, a flag if there are any alerts triggered by the handler, the message associated with the event handler, the throughput, the error rate, and the event handler processing time measured with the minimum value, the median value, the value corresponding to the ninetieth percentile, and the maximum value."]
 
 ==== Automation
 
-The last tab of the main area in the processors detailed view allows to configure some automation rules for the event processor.
+The last tab of the central area in the processor detail view allows you to configure some automation rules for the event processor.
 
 image::ac-details-processors-automation.png[alt="Screenshot of the dialog that allows to configure some automation to manage the event processor."]
 
-This panel allows to configure some rules to balance the segments or to scale and balance the segments automatically on certain cases.
+This panel allows configuring some rules to balance the segments automatically or to scale and balance the segments in certain cases.
 
-WARNING: This feature is only for the paid plans of AxonIQ Console.
+WARNING: This feature is only available in the paid plans of AxonIQ Console. You can check the link:https://www.axoniq.io/pricing/axoniq-console[different plans of AxonIQ Console,window=_blank,role=external] to learn about these premium features.
 
 === Processor statistics
 
-Right below the main area, the processor details view displays three graphs with statistics on how different performance metrics of the event processor have evolved over time.
+Right below the main area, the processor details view displays three graphs showing statistics on how the event processor's various performance metrics have evolved over time.
 
-image::ac-details-processor-statistics.png[alt="Screenshot of the graphs corresponding to the Processor statistics section of the processor's details view in the 'Processor' tab of the AxonIQ Console dashboard. The section shows three line graphs corresponding to the evolution over the last 10 minutes of the Segment claim Percentage, the Latency (displaying the ingest and commit latency with lines of different color), and the number of online nodes. On the top left side of the section, next to the 'Processor Statistics' title, there is a label indicating that 3 out of 3 graphs are displayed and a arrow pointing down that indicates the message is a drow-down menu. On the top right side of the section there is another drop-down selector with the label "Time Window" and with the selected value of 10 minutes."]
+image::ac-details-processor-statistics.png[alt="Screenshot of the graphs corresponding to the Processor Statistics section of the Processor Details view in the Processor tab of the AxonIQ Console dashboard. The section displays three line graphs corresponding to the past 10 minutes of Segment Utilization Percentage, Latency (showing ingest and commit latency with different colored lines), and Number of Online Nodes. At the top left of the section, next to the Processor Statistics title, there is a label indicating that 3 of 3 graphs are displayed and a down arrow indicating that this is a drop-down menu. At the top right of the section, there is another drop-down selector labeled 'Time Window' with a selected value of ten minutes]
 
- By default, this section includes graphs for the evolution of the percentage of segments claimed, the latency and the number of online nodes.
+By default, this section contains graphs of the percentage of segments in use, latency, and number of nodes online.
 
-By clicking on the blue arrow pointing down that indicated the number of graphs selected, a drop-down selector will appear that allows you select or deselect the graphs that are displayed in this section.
+Clicking the blue down arrow that indicates the number of graphs selected will display a drop-down selector that allows you to select or deselect the graphs in this section.
 
-image::ac-details-processor-stats-select-graphs.png[]
+image::ac-details-processor-stats-select-graphs.png[alt="Screenshot of the drow-down menu that allows you to select which graphs are shown"]
 
-Finally, you can configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
+Finally, you can configure the time window displayed by the graphs using the 'Time Window' drop-down list at the top right of the section.
 
-image::ac-details-processor-stats-time-window.png[]
+image::ac-details-processor-stats-time-window.png[alt="Screenshot of the Time Window drop-down selector that allows to select the time range used in the graphs from ten minutes up to 4 weeks."]
 
-You can see any of the graphs in bigger detail by clickin on them.
+You can view each graph in more detail by clicking on it.
 
-image::ac-details-processor-stats-latency.png[]
+image::ac-details-processor-stats-latency.png[alt="Screenshot of the Latency graph shown in a pop up window"]
 
 === Application statistics
 
-The last section of the processor's details view includes some additional graphs with statistics of several metrics on the application performance that may be useful to check related to the processor's performance.
+The last section of the processor details view contains additional graphs with statistics on various application performance metrics that might be useful for checking the processors' performance.
 
-image::ac-details-processor-stats-apps.png[]
+image::ac-details-processor-stats-apps.png[alt="Screenshot of the Application statistics graphs shown in the processors tab of the AxonIQ Console dashboard."]
 
-In this case you will see by default graphs that shows the evolution over the last minute of the application's CPU usage, the System CPU usage, the command bus and quey bus capacity, the number of live threads in the different applications, or the system load, among other graphs...
+In this case, by default, you will see graphs that show the evolution over the last ten minutes of the application's CPU usage, the system CPU usage, the command bus and queuing bus capacity, the number of live threads in the different applications, or the system load, among other graphs...
 
-As with the processor's statistics section, you can select or deselect the graphs that are displayed in this section by clicking on the blue arrow pointing down that indicated the number of graphs selected.
+As in the processor statistics section, you can select or deselect the graphs displayed in this section by clicking on the blue down arrow that indicates the number of chosen graphs.
 
-image::ac-details-processors-stats-app-select-graphs.png[]
+image::ac-details-processors-stats-app-select-graphs.png[alt="Screenshot of the drow-down menu that allows you to select which graphs are shown in the Application statistics section of the AxonIQ Console dashboard"]
 
-You can also configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
+You can also configure the time window displayed by the graphs using the 'Time Window' drop-down list at the top right side of the section.
 
-image::ac-details-processor-stats-apps-time-window.png[]
+image::ac-details-processor-stats-apps-time-window.png[alt="Screenshot of the Time Window drop-down selector that allows to select the time range used in the graphs from ten minutes up to 4 weeks."]
 
 == Aggregates tab
 
-The Aggregates tab shows a list of all the Aggregates that are defined as part of the Command model.
+The Aggregates tab lists all aggregates defined as part of the command model.
 
-image::ac-dashboard-tab-aggregates.png[alt="Screenshot of the Aggregates tab of the AxonIQ Console dashboard, showing the information for the two aggregates defined in the bike-rental demo application: Payment and Bike. The tab shows a table with nine columns to display the following information for each aggregate: A mark to show if there is any alert triggered associated with the aggregate, the application name, the aggregate name, the error rate, thorughput and the execution time of commands sent to the aggregate, the load and lock time and the stream size of the events read to load the aggregate. "]
+image::ac-dashboard-tab-aggregates.png[alt="Screenshot of the Aggregates tab of the AxonIQ Console dashboard, showing information for the two aggregates defined in the bike-rental demo application: Payment and Bike. The tab displays a nine-column table that shows the following information for each aggregate: A check mark to indicate if an alert has been triggered associated with the aggregate, the application name, the aggregate name, the error rate, throughput, and execution time of commands sent to the aggregate, the load and lock time, and the stream size of events read to load the aggregate."]
 
-If you click on any of the aggregates, the tab will show the details view for that Aggregate.
+When you click one of the aggregates, the tab displays the details view for that aggregate.
 
 === Aggregate details
 
-Clicking on the 'Payment' aggregate row from the summary table of the Aggregates tab, will show the following details about the behaviour of processing request that are related to that aggregate.
+Clicking on the 'Payment' aggregate row in the Summary table on the Aggregates tab displays the following details about the behavior of the processing requests associated with this aggregate.
 
 ==== Aggregate handlers
 
-The first table in the aggregate details view of the 'Aggregates' tab shows all the message (commands in this case) handlers defined in the application that are associated with the Aggregate.
+The first table in the aggregate details view of the 'Aggregates' tab displays any message handlers (command handlers in this case) defined in the application  associated with the aggregate.
 
-image::ac-details-aggregate-handlers.png[alt="Screenshot of the table from the Aggregate details view in the AxonIQ Console dashboard that shows all the command handlers defined"]
+image::ac-details-aggregate-handlers.png[alt="Screenshot of the Aggregate Details view table in the AxonIQ Console dashboard, showing all defined command handlers"]
 
-As we can see, in our `bike-rental` demo application there are three commands that affect the 'Payment' aggregate: The `PreparePaymentCommand`, the `ConfirmPaymentCommand` and the `RejectPaymentCommand`. In our application the handlers for the first two are working with a good throughput, while the handler for the last one, is idle, as the application is not receiving any commands of that type.
+As we can see, there are three commands in our `bike-rental' demo application that affect the `Payment' aggregate: The `PreparePaymentCommand', the `ConfirmPaymentCommand', and the `RejectPaymentCommand'. In our application, the handlers for the first two are working with reasonable throughput, while the handler for the last one is idle because the application does not receive any commands of this type.
 
 === Message sources.
 
-In a event-based distributed system sometimes is easy to loose track of where the messages come from and where they are sent to. AxonIQ Console provides convenient ways to see how the different messages (commands, queries and events) travel between the different components of our system.
+In an event-based distributed system, losing track of where messages are coming from and where they are going can be easy. The AxonIQ Console provides convenient ways to see how the various messages (commands, queries, and events) travel between the different components of our system.
 
-The message sources (and the message destinations) tables in the Aggregate details view of the 'Aggregates' Tab in the AxonIQ Console dashboard is one of these useful tools to see where the commands that affect the aggregate comes from.
+The Message Sources (and Message Destinations) tables in the Aggregate Details view of the Aggregates tab in the AxonIQ Console dashboard are useful tools for identifying where the commands that affect the aggregate are coming from.
 
-image::ac-details-aggregate-msg-sources.png[]
+image::ac-details-aggregate-msg-sources.png[alt="Screenshot of the Message sources table in the Aggreate details view of the AxonIQ Console dashboard."]
 
-In our example, we can see the different message handlers or components that trigger one of the commands that affect the 'Payment' aggregate. The table in our case shows that, althought there are several points in the source code that could trigger commands for the aggregate, only the reception of `BikeRequestedEvent` are triggering the commands that affect the aggregate.
+In our example, we can see the different message handlers or components that trigger any commands that affect the Payment aggregate. The table shows that although several points in the source code could trigger commands for the aggregate, only the receipt of the `BikeRequestedEvent` triggers the commands that affect the aggregate.
 
-NOTE: If you click on any of the rows in the table, you will jump to the handler insights view showing the details of the handler for that message.
+NOTE: Clicking on any of the rows in the table will take you to the Handler Insights view, which shows the handler's details for that message.
 
 === Message destinations
 
-Similarly to the xref:_message_sources[], the message destinations allow to see what messages are triggered from the Aggregate and all the components defined in our system that handle those messages.
+Similar to the xref:_message_sources[], the message destinations allow you to see which messages are triggered by the aggregate and any components defined in our system that handle those messages.
 
-image::ac-details-aggregates-msg-destinations.png[]
+image::ac-details-aggregates-msg-destinations.png[alt="Screenshot of the Message destinations table in the aggregate details view of the AxonIQ Console dashboard."]
 
-In our example, we can see that there are three different messages triggered from the aggregate: `PaymentConfirmedEvent`, `PaymentPreparedEvent`, and `PaymentRejectedEvent`.
+In our example, we can see that the aggregate triggers three different messages: `PaymentConfirmedEvent`, `PaymentPreparedEvent`, and `PaymentRejectedEvent`.
 
-We can also see the all the handlers defined for each one of these events. For example, in the case of the `PaymentConfirmedEvent` there are two components that define a handler for it: the `PaymentSaga` and the `PaymentStatusProjection`.
+We can also see all the handlers defined for each of these events. For example, the `PaymentConfirmedEvent` has two components that define a handler: the `PaymentSaga` and the `PaymentStatusProjection`.
 
-NOTE: If you click on any of the rows in the table, you will jump to the handler insights view showing the details of the handler for that message.
+NOTE: Clicking on any of the rows in the table will take you to the Handler Insights view, which shows the handler's details for that message.
 
 === Aggregate statistics
 
-Below the general details of the aggregate, there is a section that display some graphs to show how different metrics relative to the behaviour of the aggregate evolved over time.
+Below the general details of the aggregate, a section displays graphs showing how various metrics have evolved over time relative to their behavior.
 
-image::ac-details-aggregates-stats.png[]
+image::ac-details-aggregates-stats.png[alt="Screenshot of the graphs shown in the Aggregate Statistics section of the aggregate details view in the AxonIQ Console dashboard"]
 
-In this case you will see by default graphs that shows the evolution of the overview in distribution in time of processing a (comand) request that affects an aggregate, or the message rate, or the time spent in the handler method, among other grpahs.
+In this case, by default, you will see graphs that show the evolution of the distribution of the time it takes to process a (command) request, affecting an aggregate, the message rate, or the time spent in the handler method, among other graphs.
 
-As in every other section in the AxonIQ Console dashboard that shows these type of graphs, you can select or deselect the graphs that are displayed in this section by clicking on the blue arrow pointing down that indicated the number of graphs selected.
+As with any other section of the AxonIQ Console dashboard that displays these graphs, you can select or deselect the graphs shown in this section by clicking on the blue down arrow that indicates the number of chosen graphs.
 
-And you can also configure the time window displayed by the graphs using the 'Time Window' dropdown list on the top right side of the section.
+You can also configure the time window displayed by the graphs using the 'Time Window' drop-down list in the upper right corner of the section.
 
-Finally, if you need to see any of the graphs in more detail, you can click on the graph and it will show in bigger size in the center of the page.
+Finally, if you need to see any of the graphs in more detail, you can click on them to enlarge them in the center of the page.
 
 == Handler insights
 
-The 'Handler Insights' tab offers a view to see all the message handlers defined in our system. The table shown in this view is a complete view of all the points in our application that are receiving and dealing with any type of messages.
+The Handler Insights tab provides a view of all the message handlers defined in our system. The table shown in this view is a complete view of all points in our application that receive and process messages of any type.
 
-image::ac-dashboard-handler-insights.png[alt="Screenshot of the handler insight tab of the AxonIQ Console dashboard."]
+image::ac-dashboard-handler-insights.png[alt="Screenshot of the Handler Insights tab of the AxonIQ Console Dashboard"]
 
-In the main table we can see listed all the message handler methods defined in our applications for processing commands, events or queries.
+The main table lists all our applications' message handler methods to process commands, events, or queries.
 
-For each handler the table displays information to locate the handler, such as the application, the component and the message that it handles. Below that information tha table also shows some metrics to see how the handler is performing.
+The table displays information for locating each handler, such as the application, the component, and the message it handles. Below this information, the table also shows some metrics to see how the handler is performing.
 
 [NOTE]
 ====
-In our example, we can see that the `RequestBikeCommand` handler in the `RentalCommand` application has an alert. This is expected because in the `bike-rental` demo application is implemented to cause up to a 5% of errors in this handler.
+Our example shows that the `RequestBikeCommand` handler in the `RentalCommand` application has an alert. This alert is expected because the `bike-rental` demo application implements a handler that causes up to 5% of errors in this handler.
 
-This is a hint of the benefits of using AxonIQ Console to monitor and detect problems in our system. This is only a hint of the benefits and power of AxnonIQ Console: we will create more problems on purpose in our application and see how they are detected in a later section of this tutorial.
+This alert is one of the benefits of using the AxonIQ Console to monitor and detect problems in our system. It is just a taste of the AxonIQ Console's benefits and power. In a later section of this tutorial, we will deliberately create more problems in our application and see how they are detected.
 ====
 
 === Filtering handlers
 
-On the right side of the main table showing all the message handlers, there are a series of categories that allow you to filter out the list and narrow the information that you want to see.
+On the right side of the main table showing all message handlers, there are several categories that allow you to filter the list and narrow down the information you want to see.
 
-image::ac-dashboard-handlers-filter.png[alt="Screenshot of the side-menu filter handler-insights table per application, message type, handler type or search for a specific handler."]
+image::ac-dashboard-handlers-filter.png[alt="Screenshot of the side-menu filter handler insights table by application, message type, handler type, or search for a specific handler"]
 
-For example, if just want to focus on the queries that are handled by a specific application such as the Payment processor, we could simply click on the `Payment Processor` under `All Applications` category, and then select `QueryMessage` under `All Message Types` and we will see our table updated:
+For example, if we only want to focus on the requests handled by a specific application, such as the payment processor, we could click on 'Payment Processor' under the 'All Applications' category and then select 'RequestMessage' under 'All Message Types', and we will see our table updated:
 
-image::ac-dashboard-handlers-filtered.png[Screenshot of the 'Handlers Insights' tab of the AxonIQ Console dashboard, showing the message handlers filtered to show only the message hanlders for QueryMessages defined in the Payment processor application. The main table only shows one message handler, the handler for `getPaymentId` queries in the `PaymentStatusProjection`]
+image::ac-dashboard-handlers-filtered.png[alt="Screenshot of the 'Handlers Insights' tab of the AxonIQ Console dashboard, showing the message handlers filtered to show only the message handlers for QueryMessages defined in the Payment Processor application. The main table shows only one message handler, the handler for `getPaymentId` queries in the `PaymentStatusProjection`."]
 
-If you want to reset the filter to show all the handlers again you only need to select `All Applications` and `All Message Types` again in the side-menu.
+
+If you want to reset the filter to show all handlers again, select `All Applications` and `All Message Types` in the side menu.
 
 === Searching for a specific handler.
 
-If you know the name of a specific message handler, you can use the 'Filter Hanlders' input file at the bottom of the filter side-menu to introduce the name -or part of it- of the mesage type or component type.
+If you know the name of a particular message handler, you can use the 'Filter Handlers' input file at the bottom of the filter side menu to enter the name - or part of it - of the message type or component type.
 
-When you start typing, the main table will update with only those message handlers whose Component name or message name contains the search text you introduce.
+When you start typing, the main table will update its contents with only those message handlers whose component name or message name contains the search text you introduced.
 
 image::ac-dashboard-tab-handler-search.png[alt="Screenshot of the 'Handler Insights' tab of the AxonIQ Console dashboard showing only the handlers that match the query 'Pay' in the 'Filter Handlers' input field."]
 
 
 === Handler details
 
-If you click on any of the rows of the 'Handlers Insights' tab, the page will display detailed information about that specific handler.
+If you click on any of the rows in the 'Handlers Insights' tab, the page will display detailed information about that specific handler.
 
 ==== Handler statistics
 
-The first section in the Handler Insight details view displays a group of graphs that shows how different metrics of the Handler behaviour evolved over the last period of time.
+The first section of the Handler Insight details view displays graphs showing how various handler behavior metrics have changed over time.
 
-image::ac-details-handler-statistics.png[alt="Screenshot of the Handler insight details view in the AxonIQ Console some some graphs with statistics about the recent behaviour of the handler."]
+image::ac-details-handler-statistics.png[alt="Screenshot of the Handler Insight Details view in the AxonIQ Console, showing some graphs with statistics about the recent behavior of the handler."]
 
-NOTE: If you want to see one of these graphs in more detail you can click on it and it will become bigger, and pop up to the center of the screen.
+NOTE: If you want to see any of these graphs in more detail, you can click on it and it will expand and move to the center of the screen.
 
 ===== Handler overview
 
-The first graph shows an overview of the time spent by the handler in the different steps of preocessing a message. This includes the handler execution time, the time spent to commit the message to the buses and the overhead.
+The first graph shows an overview of the time the handler spends in the different steps of preprocessing a message. This graph includes the handler execution time, the time spent committing the message to the buses, and the overhead.
 
-:page-needs-improvement: Add links to explain more in detail the execution time, the ocmmit time and the overhead (probably from the AxonIQ Console reference guide).
+:page-needs-improvement: Add links to explain more in detail the execution time, the commit time and the overhead (probably from the AxonIQ Console reference guide).
 
-image::ac-details-handlers-stats-overview.png[alt="Screenshot of the message handlers statistics overview"]
+image::ac-details-handlers-stats-overview.png[alt="Screenshot of the Message Handler Statistics Overview"]
 
 ===== Message rate
 
-The message rate graph shows the evolution of number of messages received and processed per minute in the last period of time. It also shows the amount of the messages that caused an error when they were processed.
+The message rate graph shows the history of the number of messages received and processed per minute over the last period. It also shows the number of messages that caused an error during processing.
 
-image::ac-details-handlers-stats-msg-rate.png[alt="Screenshot of the Message rate graphs from the Handler Insights details in the AxonIQ Console dashboard."]
+image::ac-details-handlers-stats-msg-rate.png[alt="Screenshot of the Message Rate graphs from the Handler Insights details in the AxonIQ Console dashboard"]
 
 ===== Total time
 
-The total time graph shows the evolution of different statistical measures of the time it took to process a message in the handler.
+The Total Time graph shows the trend of various statistical measures of the time it took to process a message in the handler.
 
 image::ac-details-handler-stats-total-time.png[alt="Screenshot of the 'Total Time' graph from the Handler Insights details in the AxonIQ Console dashboard."]
 
-The graphs shows the time that took to process the fastest message (the minimun time), the time that took to process the slowest message (the Maximun time), the mediam value of the time that took to process the messages (the median), and the max time that took to process the ninety percent of the fastests messages.
-
+The graph shows the time it took to process the fastest message (the minimum time), the time it took to process the slowest message (the maximum time), the average of the time it took to process messages (the median), and the maximum time it took to process ninety percent of the fastest messages.
 
 ===== Handler time
 
-The 'Handler Time' graph shows the evolution of different statistical measuers of the time spent by the handler in processing the messages.
+The 'Handler Time' graph shows the evolution of various statistical measures of the time taken by the handler to process messages.
 
 image::ac-details-handler-stats-handler-time.png[alt="Screenshot of the 'Handler Time' graph from the Handler Insights details in the AxonIQ Console dashboard." ]
 
-The graph shows the time that took to process the fastest message (the minimun time), the time that took to process the slowest message (the Maximun time), the mediam value of the time that took to process the messages (the median), and the max time that took to process the ninety percent of the fatest messages.
+The graph shows the time it took to process the fastest message (the minimum time), the time it took to process the slowest message (the maximum time), the average of the time it took to process messages (the median), and the maximum time it took to process ninety percent of the fastest messages.
 
 ==== Message sources
 
-Clicking on the 'Message Sources' label, the Handler Insights detail view will show all the components that send the messages that are processed by this handler.
+By clicking on the 'Message Sources' label, the Handler Insights detail view displays all components that send the messages processed by this handler.
 
-image::ac-details-handler-msg-sources.png[alt="Screenshot of the Message sources table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
+image::ac-details-handler-msg-sources.png[alt="Screenshot of the Message sources table from the Handler Insights detail view of the AxonIQ Console dahsboard."]
 
-In an event-based distributed system this is useful information to track the messages and connect the message handler with other components in our system that produce the information our component consumes. This helps to connect the different components from our distributed architecture and sometimes it gives the context we need to debug and understand potential problems.
-In an event-based distributed system this is useful information to track the messages and connect the message handler with other components in our system that produce the information our component consumes. This helps to connect the different components from our distributed architecture and sometimes it gives the context we need to debug and understand potential problems.
+In an event-based distributed system, this information is useful for tracking messages and connecting the message handler to other components in our system that produce the information our component consumes. This helps connect the various components of our distributed architecture and sometimes provides the context we need to debug and understand potential problems.
 
 ==== Message destinations
 
-Similarly to the xref:_message_sources[] sometimes is useful to see what components will receive and handle events or messages that sent from the handler we are examining.
+Similar to the xref:_message_sources[], it is sometimes helpful to see which components will receive and handle events or messages sent by the handler we are examining.
 
-This is exactly the information that we will see if we click on the 'Message destinations' label from the 'Handler Insights' details view.
+This is the information we see when we click on the 'Message destinations' label in the 'Handler Insights' details view.
 
-image::ac-details-handler-msg-destinations.png[alt="Screenshot of the Message destination table from the Handler Insights detail view from the AxonIQ Console dahsboard."]
+image::ac-details-handler-msg-destinations.png[alt="Screenshot of the Message Destinations table from the Handler Insights detail view of the AxonIQ Console dashboard."]
 
 == Message flow
 
-At the details view of the Handler Insights tab and Aggregates tab, we already saw that AxonIQ Console offers a way to see the source of the messages (events, commands or queries) that are processed by a specific handler. AxonIQ console also offers a way to see the components that receive other messages that a concrete handler sends.
+In the details view of the Handler Insights tab and the Aggregates tab, we have already seen that AxonIQ Console provides a way to know the source of the messages (events, commands, or queries) processed by a particular handler and to see the components that receive other messages that a particular handler sends.
 
-That feature offers a good way to see the "neighbourgs" of a component, that is, the handlers that are related because they emit or receive messages connected to the current component. That also allows us to have a small view of how certain messages flow through that specific component
+This feature provides an excellent way to see a component's "neighbors," that is, the handlers related because they send or receive messages associated with the current component. It also allows us to get a small view of how certain messages flow through this particular component.
 
-Apart from that, sometimes it is useful to have a more comprehensive view of the messages flowing in our system. That is exactly the view that offers the 'Message Flow' tab.
+Apart from that, it is useful to have a more comprehensive view of the messages flowing in our system. The Message Flow tab provides exactly this view.
 
-image::ac-dashboard-msg-flow.png[alt="Screenshot of the Message Flow tab in the AxonIQ Console dashboard"]
 
-In this diagram, by default we can see the different elements of our system and how they are connected:
+image::ac-dashboard-msg-flow.png[alt="Screenshot of the Message Flow tab in the AxonIQ Console Dashboard"]
 
-- The applications are represented by big circles
-- The components (Aggregates, Projections or Sagas) that are source or destination for messages (events, commands or queries), repreesnted by smaller dots.
-- The messages flowing from message sources to message destinations. These are represented by animated dotted arc lines. The stroke of those lines is bigger or smaller depending on the amount of messages flowing: the thicker the line, the more messages that are being sent in that specific connection.
-- Optionally you can select the diagram to contain also the Buses that originate some of the messages.
+By default, this diagram shows the different elements of our system and how they are connected:
+
+- The applications are represented by large circles
+- The components (aggregates, projections, or sagas) that are the source or destination of messages (events, commands, or queries), represented by smaller dots.
+- The messages that flow from message sources to message destinations. These are represented by animated dotted arcs. The stroke of these lines is thicker or thinner depending on the amount of messages flowing: the thicker the line, the more messages are sent in that particular connection.
+- Optionally, you can also select the diagram to include the buses from which some messages originate.
 
 === Customize the message flow diagram.
 
-The diagram allows certain configuration so that you can customize it to better display your system (or to your preferences).
+The diagram is configurable, so you can customize it to better represent your system according to your preferences.
 
-The first thing you can do is zoom in or zoom out the diagram by scrolling with your mouse over the diagram.
+The first thing you can do is zoom in or zoom out of the diagram by scrolling your mouse over it.
 
-You can also rearrange any of the elements on the diagram (Applications or components), and the rest of connected components will follow your new arrangement.
+You can also rearrange any elements on the diagram (applications or components), and the rest of the connected components will follow your new arrangement.
 
-Beyond that manual arrangement of the elements in the graph, you can also adjust some properties on how the graph is drawn. On the right side of the graph you have several sections to change the "physics" of the elements in the diagram.
+In addition to manually arranging the elements on the diagram, you can also adjust some properties of how the diagram is drawn. On the right side of the diagram, you have several sections that change the "physics" of the elements in the diagram.
 
-image::ac-dashboard-msg-flow-data-selection.png[fit=line,alt="Screenshot of the panel to configure the data shown in the Message Flow diagram of the AxonIQ Console dashboard."]
-image::ac-dashboard-msg-flow-aesthetics.png[fit=line,alt="Screenshot of the panel to configure the aestethics of the Message Flow diagram in the AxonIQ Console dashboard."]
-image::ac-dashboard-msg-flow-forces.png[fit=line,alt="Screenshot of the panel to configure the forces used to draw the Message flow diagram in the AxonIQ Console dashboard"]
+image::ac-dashboard-msg-flow-data-selection.png[fit=line,alt="Screenshot of the panel for configuring the data displayed in the message flow diagram of the AxonIQ Console dashboard."]
+image::ac-dashboard-msg-flow-aesthetics.png[fit=line,alt="Screenshot of the panel for configuring the aesthetics of the message flow diagram in the AxonIQ Console dashboard."]
+image::ac-dashboard-msg-flow-forces.png[fit=line,alt="Screenshot of the panel for configuring the aesthetics of the message flow diagram in the AxonIQ Console dashboard"]
 
-You can spend some time playing around with the different options and see how it renders different versions of the diagram showing how the different components of your application are connected and how the messages flow through your applications.
+You can spend some time playing around with the different options and seeing how they render different versions of the diagram, which will show how the different components of your application are connected and how messages flow through them.
 
 
 
