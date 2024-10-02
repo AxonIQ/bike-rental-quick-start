@@ -7,7 +7,6 @@ As our application grows, we won't be able to manually test that everything work
 
 In your applications, you probably already have some unit tests to check the business logic of your application.
 
-:needs-improvement: Change ref to xref:axon_framework_ref::test:index.adoc[Test Module] when docs moved from the old docs to library
 Axon Framework provides you with a https://go.axoniq.io/refguide/axon-framework/testing[Test Module,role=external,window=_blank] that will help you write unit tests designed to test the processing and handling of commands, events and queries in your application.
 
 

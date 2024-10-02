@@ -133,7 +133,7 @@ The Processors tab collects information about the event processors defined in yo
 ====
 Event Processors are the components in an Axon Framework application that perform the tasks necessary to handle an event (for example, launching a transaction if required) and call the event handler that defines the business logic associated with receiving the event.
 
-You can learn more about xref:axon_framework_ref:events:event-processors/README.adoc[Event Processors in Axon Framework Applications] in the dedicated section of the Axon Framework Reference Guide.
+You can learn more about xref:axon-framework-reference:events:event-processors/README.adoc[Event Processors in Axon Framework Applications] in the dedicated section of the Axon Framework Reference Guide.
 ====
 
 In the case of our application, we can see the three event processors that we have defined in our bike-rental application:
@@ -165,7 +165,7 @@ Finally, the summary table offers several buttons to modify the behavior of the 
 - image:ac-details-processors-btn-merge.png[fit=line,alt="a blue button with two lines going from left to right that merge into an arrow. The icon conveys the 'merge' action."]. The merge button merges the two largest segments into one. The merge can only happen if there is more than one segment.
 - image:ac-details-processors-btn-split.png[fit=line,alt="a blue button with a line that splits into two different arrows. The icon conveys the 'split' action."] The split button splits the smallest segment into two. This action can only be done if there are free threads and all segments are in use.
 
-NOTE: To learn more about how an Axon Framework-based application processes the events and how the segments are split or merged, you can read the xref:axon_framework_ref:tuning:event-processing.adoc#_increasing_and_decreasing_segment_counts section of the Event Processing Tuning article in the Axon Framework Reference Guide.
+NOTE: To learn more about how an Axon Framework-based application processes the events and how the segments are split or merged, you can read the xref:axon-framework-reference:tuning:event-processing.adoc#_increasing_and_decreasing_segment_counts section of the Event Processing Tuning article in the Axon Framework Reference Guide.
 
 A fifth option is to reset the processor. Resetting the processor means calling any `@ResetHandler` methods on that processor and resetting the tokens to a desired position. After clicking the 'Reset Processor' link, the AxonIQ Console displays a dialog box asking you to specify the preferred position to which you want to set the processor.
 
