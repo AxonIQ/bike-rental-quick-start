@@ -24,7 +24,7 @@ Even if we are going to run only one docker image (Axon Server), Docker Compose 
 
 We will start by creating the Docker Compose configuration file. Create a `compose.yaml` file in the `root` project with the following contents:
 
-[sources,yaml]
+[source,yaml]
 .compose.yaml
 ----
 include::example$root/compose.yaml[]

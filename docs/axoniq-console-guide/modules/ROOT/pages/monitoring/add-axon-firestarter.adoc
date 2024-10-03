@@ -17,7 +17,7 @@ NOTE: If you are using the Docker-based bike-rental demo that comes with AxonIQ 
 The first thing we need to do is to declare the dependency management in the `pom.xml` of the root project:
 
 ./pom.xml
-[sources,xml]
+[source,xml]
 ----
 include::example$root/pom.xml[tags=dependencyManagement;deps-axon-firestarter;!*]
 ----
@@ -25,13 +25,13 @@ include::example$root/pom.xml[tags=dependencyManagement;deps-axon-firestarter;!*
 With this configuration, we can now add the dependency to any module in our project without specifying the version while keeping the versions in sync. So all you need to do is declare the dependency in your `payment' and `rental' modules:
 
 ./payment/pom.xml
-[sources,xml]
+[source,xml]
 ----
 include::example$payment/pom.xml[tags=dependencies;deps-axon-firestarter;!*]
 ----
 
 ./rental/pom.xml
-[sources,xml]
+[source,xml]
 ----
 include::example$rental/pom.xml[tags=dependencies;deps-axon-firestarter;!*]
 ----

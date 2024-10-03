@@ -133,7 +133,7 @@ The Processors tab collects information about the event processors defined in yo
 ====
 Event Processors are the components in an Axon Framework application that perform the tasks necessary to handle an event (for example, launching a transaction if required) and call the event handler that defines the business logic associated with receiving the event.
 
-You can learn more about xref:axon-framework-reference:events:event-processors/README.adoc[Event Processors in Axon Framework Applications] in the dedicated section of the Axon Framework Reference Guide.
+You can learn more about xref:axon-framework-reference:events:event-processors/index.adoc[Event Processors in Axon Framework Applications] in the dedicated section of the Axon Framework Reference Guide.
 ====
 
 In the case of our application, we can see the three event processors that we have defined in our bike-rental application:
