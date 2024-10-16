@@ -12,7 +12,7 @@ asciidoc:
     experimental: true
     page-pagination: true
     kroki-fetch-diagram: true
- #   primary-site-manifest-url: https://library.axoniq.io/site-manifest.json
+    primary-site-manifest-url: https://docs.axoniq.io/site-manifest.json
   extensions:
   - asciidoctor-kroki
   - '@asciidoctor/tabs'
