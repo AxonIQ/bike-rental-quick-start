@@ -1,5 +1,7 @@
 :navtitle: Introduction
 :reftext: Building A Bike Rental Application
+:page-needs-improvement: content
+:page-needs-content: Add a section or another page with the required tools: Maven, java21, Springboot, etc..
 
 
 = Introduction
