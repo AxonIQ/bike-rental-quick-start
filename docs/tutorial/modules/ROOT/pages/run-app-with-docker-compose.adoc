@@ -5,22 +5,20 @@
 
 In this step, we will see how to run your application in your local environment with everything you need.
 
-If this were just a simple SpringBoot application we will simply have to run it from oir IDE. But our application needs to rely on some external messaging infrastructure to route, store and deliver the messages (commands, events and queries). In our case we will use Axon Server which acts both as a message broker to route the messages and as an event store optimized for storing and retrieving events in an Event Sourcing-based system.
+If this were only a basic Spring Boot application we would simply run it from our IDE, but our application relies on external messaging infrastructure to route, store and deliver messages (commands, events and queries). In our case, we will use Axon Server which acts both as a message broker to route the messages and as an event store optimized for storing and retrieving events in an Event Sourcing-based system.
 
-To avoid having to installing and starting the Axon Server manually, we rely on the Axon Server Docker images, and SpringBoot's support to start docker containers. In this section you will learn how to configure it to run with a single click everything you need.
+To avoid having to install and start the Axon Server manually, we will use Axon Server Docker images and Spring Boot's Docker Compose support to start Docker containers. In this section you will learn how to configure it to run everything you need with a single click.
 
 == Requisites
 
-To run everything we need easily and with just one click (or shortcut key combination) from your IDE we will use Docker Compose and docker images to start the Axon Server.
-
-Make sure you have installed the link:https://docs.docker.com/engine/[Docker Engine,role=external,window=_blank] in your system, or https://docs.docker.com/engine/install/[Install Docker Engine,role=external,window=_blank] otherwise.
+We will use Docker Compose and Docker images to start the Axon Server with just one click (or shortcut key combination) from your IDE, so make sure you have link:https://docs.docker.com/engine/[Docker Engine,role=external,window=_blank] https://docs.docker.com/engine/install/[installed,role=external,window=_blank] on your system.
 
 == Configuring Docker Compose
 
 === Docker Compose descriptor
-https://docs.docker.com/compose/[Docker Compose,role=external,window=_blank] is a tool that allows you to define all the docker containers, networks, volumes and any other characteristics that we need from the infrastructure to run our application.
+https://docs.docker.com/compose/[Docker Compose,role=external,window=_blank] is a tool that allows you to define all the Docker containers, networks, volumes and any other characteristics that we need as the infrastructure to run our application.
 
-Even if we are going to run only one docker image (Axon Server), Docker Compose is convenient because allows to start everything in one comand.
+Even though we are only going to run one Docker image (Axon Server), Docker Compose is convenient because allows us to start everything with one command.
 
 We will start by creating the Docker Compose configuration file. Create a `compose.yaml` file in the `root` project with the following contents:
 
@@ -29,16 +27,16 @@ We will start by creating the Docker Compose configuration file. Create a `compo
 ----
 include::example$root/compose.yaml[]
 ----
-<.> We define the name of the service for axonserver. This will be the name used for the service when started by Docker Desktop
-<.> The `axoniq/axonserver:latest` image refers to the docker image for the latest Axon Server published in the public dockerhub images repository.
+<.> We define the name of the service for axonserver. This will be the name used for the service when started by Docker Desktop.
+<.> The `axoniq/axonserver:latest` image refers to the latest Axon Server Docker image that has been published in link:https://hub.docker.com/[Docker Hub,role=external,window=_blank].
 <.> We set the `AXONIQ_AXONSERVER_STANDALONE` environment property to `TRUE` so that Axon Server starts without the need to do the initial configuration.
 <.> We configure the ports that will be exported from the running docker container:
 <.> `8024` is the default port to access the Axon Server console from your browser.
 <.> `8124` is Axon Server's gRPC port used by the applications.
 
-CAUTION: YAML files are sensible to tabs and spaces. Make sure you use the correct indentation using tabs.
+CAUTION: YAML files are sensitive to tabs and spaces. Make sure you use the correct indentation using tabs.
 
-Once that we have this file you should be able to run the axon server image from the command line:
+Once we have this file we should be able to run the axon server image from the command line:
 
 [,bash]
 ----
@@ -49,13 +47,13 @@ Attaching to axonserver-1
 ...
 ----
 
-We don't want to start the server manually, we will configure SpringBoot's support for Docker Compose so that the docker containers are started automatically when running the application from our IDE.
+Since we don't want to start the server manually, we will configure Spring Boot's support for Docker Compose so that the Docker containers are started automatically when running the application from our IDE.
 
-Stop the container by typing ^C on the console and move to the next section.
+Stop the container by typing `^C` on the console and move to the next section.
 
-=== Configuring SpringBoot support to run Docker Compose
+=== Configuring Spring Boot support to run Docker Compose
 
-Since v3.1 Supports starting Docker Compose services linked to the start of our application.
+Since v3.1, Spring Boot supports starting Docker Compose services before running an application.
 
 To enable that feature, we will need to add the following dependency to the maven descriptor `pom.xml` file in our `root` project:
 
@@ -65,11 +63,11 @@ To enable that feature, we will need to add the following dependency to the mave
 include::example$root/pom.xml[tags=dependencies,indent=0]
 ----
 
-Once that we have added this dependency, we can run our application right from our IDE. SpringBoot will detect the `compose.yaml` file and will start the docker containers described in that file.
+Once we have added this dependency, we can run our application right from our IDE. Spring Boot will detect the `compose.yaml` file and will start the Docker containers described in that file.
 
 == Running the application
 
-Run your application from your IDE. You should see in the logs how SpringBoot dowloads the AxonServer docker image, and starts running AxonServer automatically for you before starting your application:
+Run your application from your IDE. You should see in the logs that Spring Boot downloads the Axon Server Docker image and starts running Axon Server automatically for you before starting your application:
 
 [,console]
 ----
@@ -93,13 +91,13 @@ Run your application from your IDE. You should see in the logs how SpringBoot do
  INFO --- [Rental Monolith] verDockerComposeConnectionDetailsFactory : Detected Axon Server container. To access the dashboard, visit http://127.0.0.1:8024
 ----
 
-After the application starts, you can open your browser and go to `http://localhost:8024[,role=external,window=_blank]`. You will access the Axon Server dashboard.
+After the application starts, you can open your browser and go to `http://localhost:8024[,role=external,window=_blank]` to access the Axon Server dashboard.
 
 If you click on the "Overview" button from the right panel, you will see the Axon Server instance and your `Rental Monolith` Application connected to it.
 
 image::image$AxonServer-Dashboard.png[Screenshot of the Axon Server dashboard, showing the Rental Application connected to the Axon Server instance]
 
-In the next step we will implement the feature to retrieve a list of all the bikes in our system. So, we will look at how to implement the `Query Model` with some projections.
+In the next step we will implement a feature that retrieves a list of all the bikes in our system. In doing so, we will look at how to implement the `Query Model` with some projections.
 
 
 
