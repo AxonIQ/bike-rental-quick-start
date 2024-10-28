@@ -7,7 +7,7 @@ In this step, we will see how to run your application in your local environment 
 
 If this were only a basic Spring Boot application we would simply run it from our IDE, but our application relies on external messaging infrastructure to route, store and deliver messages (commands, events and queries). In our case, we will use Axon Server which acts both as a message broker to route the messages and as an event store optimized for storing and retrieving events in an Event Sourcing-based system.
 
-To avoid having to install and start the Axon Server manually, we will use Axon Server Docker images and Spring Boot's Docker Compose support to start Docker containers. In this section you will learn how to configure it to run everything you need with a single click.
+To avoid having to install and start the Axon Server manually, we will use Axon Server Docker images and Spring Boot's support for running Docker containers. In this section you will learn how to configure Spring Boot to run everything you need with a single click.
 
 == Requisites
 
