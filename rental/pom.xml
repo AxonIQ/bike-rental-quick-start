@@ -98,6 +98,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>3.4.1</version>
+        </dependency>
         <!-- end::deps-springboot-tests[] -->
     </dependencies>
     <!-- end::dependencies[] -->

@@ -108,6 +108,10 @@
 				<artifactId>axon-server-connector</artifactId>
 				<version>${axon.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-security</artifactId>
+			</dependency>
             <!-- end::deps-axon-bom[] -->
 			<!-- tag::deps-axon-firestarter[] -->
 			<dependency>
