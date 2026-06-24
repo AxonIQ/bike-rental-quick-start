@@ -1,7 +1,5 @@
 package io.axoniq.demo.bikerental.rental.paymentsaga;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentConfirmedEvent;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentPreparedEvent;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentRejectedEvent;
@@ -11,100 +9,132 @@ import io.axoniq.demo.bikerental.coreapi.rental.ApproveRequestCommand;
 import io.axoniq.demo.bikerental.coreapi.rental.BikeRequestedEvent;
 import io.axoniq.demo.bikerental.coreapi.rental.RejectRequestCommand;
 import io.axoniq.demo.bikerental.coreapi.rental.RequestRejectedEvent;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.deadline.DeadlineManager;
-import org.axonframework.deadline.annotation.DeadlineHandler;
-import org.axonframework.messaging.Scope;
-import org.axonframework.messaging.ScopeDescriptor;
-import org.axonframework.modelling.saga.EndSaga;
-import org.axonframework.modelling.saga.SagaEventHandler;
-import org.axonframework.modelling.saga.SagaLifecycle;
-import org.axonframework.modelling.saga.StartSaga;
-import org.axonframework.spring.stereotype.Saga;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.axoniq.demo.bikerental.rental.support.CommandDispatcher;
+import jakarta.annotation.PreDestroy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
-@Saga
+/**
+ * Coordinates payment for a bike request. This used to be an Axon Framework {@code @Saga}; here it
+ * is an in-memory state machine driven by {@link PaymentSagaProcessor} and using a
+ * {@link ScheduledExecutorService} for the deadlines (replacing the {@code DeadlineManager}).
+ * <p>
+ * Flow: a bike request kicks off a payment; once prepared we give the renter 30s to pay before the
+ * payment is auto-rejected; a confirmed payment approves the request, a rejected payment rejects it.
+ * Saga instances are keyed by the payment reference, with a secondary index on bike id.
+ */
+@Component
 public class PaymentSaga {
 
-    @Autowired
-    private transient CommandGateway commandGateway;
+    private static final Logger logger = LoggerFactory.getLogger(PaymentSaga.class);
+    private static final int PAYMENT_AMOUNT = 10;
+    private static final Duration CANCEL_AFTER = Duration.ofSeconds(30);
+    private static final Duration RETRY_AFTER = Duration.ofSeconds(5);
 
-    @Autowired
-    private transient DeadlineManager deadlineManager;
+    private final CommandDispatcher commandDispatcher;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+    private final ConcurrentHashMap<String, Instance> byReference = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, String> referenceByBikeId = new ConcurrentHashMap<>();
 
-    private String bikeId;
-    private String renter;
-
-    @JsonCreator
-    public PaymentSaga(@JsonProperty("bikeId") String bikeId,
-                       @JsonProperty("renter") String renter) {
-        this.bikeId = bikeId;
-        this.renter = renter;
+    public PaymentSaga(CommandDispatcher commandDispatcher) {
+        this.commandDispatcher = commandDispatcher;
     }
 
-    public PaymentSaga() {
+    @PreDestroy
+    public void shutdown() {
+        scheduler.shutdownNow();
     }
 
-    @StartSaga
-    @SagaEventHandler(associationProperty = "bikeId")
     public void on(BikeRequestedEvent event) {
-        this.bikeId = event.bikeId();
-        this.renter = event.renter();
-        SagaLifecycle.associateWith("paymentReference", event.rentalReference());
-        preparePayment(event.rentalReference());
+        Instance instance = new Instance(event.bikeId(), event.renter(), event.rentalReference());
+        byReference.put(event.rentalReference(), instance);
+        referenceByBikeId.put(event.bikeId(), event.rentalReference());
+        preparePayment(instance);
     }
 
-    @EndSaga
-    @SagaEventHandler(associationProperty = "paymentReference")
-    public void on(PaymentConfirmedEvent event) {
-        // we approve the bike request
-        commandGateway.send(new ApproveRequestCommand(bikeId, renter));
-    }
-
-    @SagaEventHandler(associationProperty = "paymentReference")
-    public void on(PaymentRejectedEvent event) {
-        commandGateway.send(new RejectRequestCommand(bikeId, renter));
-    }
-
-    @EndSaga
-    @SagaEventHandler(associationProperty = "bikeId")
-    public void on(RequestRejectedEvent event) {
-        deadlineManager.cancelAllWithinScope("cancelPayment");
-    }
-
-    @SagaEventHandler(associationProperty = "paymentReference")
     public void on(PaymentPreparedEvent event) {
-        deadlineManager.schedule(Duration.ofSeconds(30), "cancelPayment", event.paymentId());
+        Instance instance = byReference.get(event.paymentReference());
+        if (instance == null) {
+            return;
+        }
+        synchronized (instance) {
+            instance.paymentId = event.paymentId();
+            instance.cancelDeadline = scheduler.schedule(
+                    () -> commandDispatcher.send(new RejectPaymentCommand(event.paymentId())),
+                    CANCEL_AFTER.toMillis(), TimeUnit.MILLISECONDS);
+        }
     }
 
-    @DeadlineHandler(deadlineName = "cancelPayment")
-    public void cancelPayment(String paymentId) {
-        commandGateway.send(new RejectPaymentCommand(paymentId));
+    public void on(PaymentConfirmedEvent event) {
+        Instance instance = byReference.get(event.paymentReference());
+        if (instance == null) {
+            return;
+        }
+        commandDispatcher.send(new ApproveRequestCommand(instance.bikeId, instance.renter));
+        end(instance);
     }
 
-    @DeadlineHandler(deadlineName = "retryPayment")
-    public void preparePayment(String rentalReference) {
-        ScopeDescriptor scope = Scope.describeCurrentScope();
-        commandGateway.send(new PreparePaymentCommand(10, rentalReference))
-                      .whenComplete((r, e) -> {
-                          if (e != null) {
-                              deadlineManager.schedule(Duration.ofSeconds(5), "retryPayment", rentalReference, scope);
-                          }
-                      });
+    public void on(PaymentRejectedEvent event) {
+        Instance instance = byReference.get(event.paymentReference());
+        if (instance == null) {
+            return;
+        }
+        commandDispatcher.send(new RejectRequestCommand(instance.bikeId, instance.renter));
     }
 
-    // getters to satisfy Jackson requirements for JSON serialization
-
-    @SuppressWarnings("unused")
-    public String getBikeId() {
-        return bikeId;
+    public void on(RequestRejectedEvent event) {
+        String reference = referenceByBikeId.get(event.bikeId());
+        if (reference == null) {
+            return;
+        }
+        Instance instance = byReference.get(reference);
+        if (instance != null) {
+            end(instance);
+        }
     }
 
-    @SuppressWarnings("unused")
-    public String getRenter() {
-        return renter;
+    private void preparePayment(Instance instance) {
+        commandDispatcher.send(new PreparePaymentCommand(PAYMENT_AMOUNT, instance.paymentReference))
+                         .whenComplete((result, error) -> {
+                             if (error != null && byReference.containsKey(instance.paymentReference)) {
+                                 logger.warn("Preparing payment for {} failed, retrying in {}s",
+                                             instance.paymentReference, RETRY_AFTER.toSeconds());
+                                 scheduler.schedule(() -> preparePayment(instance),
+                                                    RETRY_AFTER.toMillis(), TimeUnit.MILLISECONDS);
+                             }
+                         });
     }
 
+    private void end(Instance instance) {
+        synchronized (instance) {
+            if (instance.cancelDeadline != null) {
+                instance.cancelDeadline.cancel(false);
+            }
+        }
+        byReference.remove(instance.paymentReference);
+        referenceByBikeId.remove(instance.bikeId);
+    }
+
+    private static final class Instance {
+
+        private final String bikeId;
+        private final String renter;
+        private final String paymentReference;
+        private volatile String paymentId;
+        private volatile ScheduledFuture<?> cancelDeadline;
+
+        private Instance(String bikeId, String renter, String paymentReference) {
+            this.bikeId = bikeId;
+            this.renter = renter;
+            this.paymentReference = paymentReference;
+        }
+    }
 }

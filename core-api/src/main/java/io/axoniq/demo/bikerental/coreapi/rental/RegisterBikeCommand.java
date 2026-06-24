@@ -1,9 +1,6 @@
 package io.axoniq.demo.bikerental.coreapi.rental;
 
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
-
-public record RegisterBikeCommand(@TargetAggregateIdentifier String bikeId, // <1>
+public record RegisterBikeCommand(String bikeId,
                                   String bikeType,
                                   String location) {
 }
-

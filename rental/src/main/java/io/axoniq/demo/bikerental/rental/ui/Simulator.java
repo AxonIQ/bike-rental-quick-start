@@ -2,9 +2,8 @@ package io.axoniq.demo.bikerental.rental.ui;
 
 import io.axoniq.demo.bikerental.coreapi.rental.CountOfBikesByTypeQuery;
 import io.axoniq.demo.bikerental.coreapi.rental.RegisterBikeCommand;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.messaging.responsetypes.ResponseTypes;
-import org.axonframework.queryhandling.QueryGateway;
+import io.axoniq.demo.bikerental.rental.support.CommandDispatcher;
+import io.axoniq.demo.bikerental.rental.support.QueryDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +20,8 @@ import java.util.concurrent.ExecutionException;
 @EnableAsync
 public class Simulator {
 
-    private final CommandGateway commandGateway;
-    private final QueryGateway queryGateway;
+    private final CommandDispatcher commandDispatcher;
+    private final QueryDispatcher queryDispatcher;
     private final BikeRentalDataGenerator bikeRentalDataGenerator;
 
     @Value("${inventory.size}")
@@ -48,9 +47,11 @@ public class Simulator {
 
     Logger logger = LoggerFactory.getLogger(Simulator.class);
 
-    public Simulator(CommandGateway commandGateway, QueryGateway queryGateway, BikeRentalDataGenerator bikeRentalDataGenerator) {
-        this.commandGateway = commandGateway;
-        this.queryGateway = queryGateway;
+    public Simulator(CommandDispatcher commandDispatcher,
+                     QueryDispatcher queryDispatcher,
+                     BikeRentalDataGenerator bikeRentalDataGenerator) {
+        this.commandDispatcher = commandDispatcher;
+        this.queryDispatcher = queryDispatcher;
         this.bikeRentalDataGenerator = bikeRentalDataGenerator;
     }
 
@@ -59,7 +60,7 @@ public class Simulator {
         this.inventoryBikeType = bikeType;
     }
 
-    public void updateRentalGenerationConfiguration(String rentalBikeType, int loops, int concurrency, int abandonPaymentFactor, int delay ){
+    public void updateRentalGenerationConfiguration(String rentalBikeType, int loops, int concurrency, int abandonPaymentFactor, int delay) {
         this.rentalBikeType = rentalBikeType;
         this.loops = loops;
         this.concurrency = concurrency;
@@ -69,7 +70,7 @@ public class Simulator {
 
     @Scheduled(fixedRate = 25000, initialDelay = 5000)
     private void generateData() {
-        try{
+        try {
             this.generateBikes();
         } catch (Exception ex) {
             logger.error("error generating inventory", ex);
@@ -79,24 +80,24 @@ public class Simulator {
     }
 
     public void generateBikes() throws ExecutionException, InterruptedException {
-
-        var query = new CountOfBikesByTypeQuery(this.inventoryBikeType);
-        long currentBikeCount = queryGateway.query(query,
-                                                    ResponseTypes.instanceOf(long.class)).get();
+        long currentBikeCount = queryDispatcher.query(CountOfBikesByTypeQuery.class.getName(),
+                                                      new CountOfBikesByTypeQuery(this.inventoryBikeType),
+                                                      Long.class).get();
 
         if (currentBikeCount < this.inventorySize) {
             for (int i = 0; i < 10; i++) {
-                commandGateway.send(new RegisterBikeCommand(UUID.randomUUID().toString(), this.inventoryBikeType, this.bikeRentalDataGenerator.randomLocation()));
+                commandDispatcher.send(new RegisterBikeCommand(UUID.randomUUID().toString(),
+                                                               this.inventoryBikeType,
+                                                               this.bikeRentalDataGenerator.randomLocation()));
             }
         }
     }
 
-
     private void generateRentals() {
         this.bikeRentalDataGenerator.generateRentals(this.rentalBikeType,
-                this.loops,
-                this.concurrency,
-                this.abandonPaymentFactor,
-                this.delayBetweenLoops).subscribe(logger::info);
+                                                     this.loops,
+                                                     this.concurrency,
+                                                     this.abandonPaymentFactor,
+                                                     this.delayBetweenLoops).subscribe(logger::info);
     }
 }

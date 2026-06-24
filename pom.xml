@@ -30,9 +30,9 @@
 		<!-- tag::mod-core-api[] -->
 		<module>core-api</module>
 		<!-- end::mod-core-api[] -->
-		<!-- tag::mod-microservices[] -->
-        <module>microservices</module>
-        <!-- end::mod-microservices[] -->
+		<!-- The microservices module demonstrates evolving the monolith into separate
+		     deployables and is still built on Axon Framework. It is excluded from this
+		     raw-gRPC rewrite. -->
 	</modules>
 	<!-- end::modules[] -->
 
@@ -43,41 +43,24 @@
 		<maven.compiler.target>21</maven.compiler.target>
 		<java.version>21</java.version>
 		<!-- end::props-java21[] -->
-		<!-- tag::props-axonframework[] -->
-        <axon.version>4.9.4</axon.version>
-		<!-- end::props-axonframework[] -->
-		<!-- tag::props-axoniq-console-client[] -->
-		<console-framework-client.version>1.7.3</console-framework-client.version>
-		<!-- end::props-axoniq-console-client[] -->
+		<!-- tag::props-axonserver-connector[] -->
+		<!-- The Axon Server Java connector exposes the raw Axon Server gRPC API
+		     (command/query/event channels) without the Axon Framework on top. -->
+		<axonserver-connector.version>2025.2.1</axonserver-connector.version>
+		<!-- end::props-axonserver-connector[] -->
     </properties>
 	<!-- end::properties[] -->
 
     <!-- tag::dependencyManagement[] -->
     <dependencyManagement>
         <dependencies>
-            <!-- tag::deps-axon-bom[] -->
+            <!-- tag::deps-axonserver-connector[] -->
             <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-bom</artifactId>
-                <version>${axon.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>io.axoniq</groupId>
+                <artifactId>axonserver-connector-java</artifactId>
+                <version>${axonserver-connector.version}</version>
             </dependency>
-            <!-- end::deps-axon-bom[] -->
-			<!-- tag::deps-axon-firestarter[] -->
-			<dependency>
-				<groupId>org.axonframework.firestarter</groupId>
-				<artifactId>firestarter-spring-starter</artifactId>
-				<version>0.0.2</version>
-			</dependency>
-			<!-- end::deps-axon-firestarter[] -->
-			<!-- tag::deps-axoniq-console[] -->
-            <dependency>
-                <groupId>io.axoniq.console</groupId>
-                <artifactId>console-framework-client-spring-boot-starter</artifactId>
-                <version>${console-framework-client.version}</version>
-            </dependency>
-            <!-- end::deps-axoniq-console[] -->
+            <!-- end::deps-axonserver-connector[] -->
         </dependencies>
     </dependencyManagement>
     <!-- end::dependencyManagement[] -->

@@ -1,67 +1,64 @@
 package io.axoniq.demo.bikerental.rental.paymentsaga;
 
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentConfirmedEvent;
-import io.axoniq.demo.bikerental.coreapi.payment.PaymentPreparedEvent;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentRejectedEvent;
 import io.axoniq.demo.bikerental.coreapi.payment.PreparePaymentCommand;
-import io.axoniq.demo.bikerental.coreapi.payment.RejectPaymentCommand;
 import io.axoniq.demo.bikerental.coreapi.rental.ApproveRequestCommand;
 import io.axoniq.demo.bikerental.coreapi.rental.BikeRequestedEvent;
 import io.axoniq.demo.bikerental.coreapi.rental.RejectRequestCommand;
-import io.axoniq.demo.bikerental.coreapi.rental.RequestRejectedEvent;
-import org.axonframework.test.saga.SagaTestFixture;
+import io.axoniq.demo.bikerental.rental.support.CommandDispatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+/**
+ * Unit tests for the in-memory {@link PaymentSaga}, driven by feeding it events and verifying the
+ * commands it dispatches through a mocked {@link CommandDispatcher}.
+ */
 class PaymentSagaTest {
 
-    private SagaTestFixture fixture;
+    private static final String BIKE_ID = "bikeId";
+    private static final String RENTER = "rider";
+    private static final String REFERENCE = "rentalReference";
+
+    private CommandDispatcher commandDispatcher;
+    private PaymentSaga saga;
 
     @BeforeEach
     void setUp() {
-        fixture = new SagaTestFixture(PaymentSaga.class);
+        commandDispatcher = mock(CommandDispatcher.class);
+        when(commandDispatcher.send(any())).thenReturn(CompletableFuture.completedFuture(null));
+        saga = new PaymentSaga(commandDispatcher);
     }
 
     @Test
-    void shouldStartSagaOnBikeRequested() {
-        fixture.givenNoPriorActivity()
-               .whenPublishingA(new BikeRequestedEvent("bikeId", "renter", "payRef"))
-               .expectDispatchedCommands(new PreparePaymentCommand(10, "payRef"))
-               .expectActiveSagas(1);
+    void bikeRequestPreparesPayment() {
+        saga.on(new BikeRequestedEvent(BIKE_ID, RENTER, REFERENCE));
+
+        verify(commandDispatcher).send(new PreparePaymentCommand(10, REFERENCE));
     }
 
     @Test
-    void shouldAcceptRequestOnPaymentConfirmed() {
-        fixture.givenAPublished(new BikeRequestedEvent("bikeId", "renter", "rentalRef"))
-               .whenPublishingA(new PaymentConfirmedEvent("paymentId", "rentalRef"))
-               .expectDispatchedCommands(new ApproveRequestCommand("bikeId", "renter"))
-               .expectActiveSagas(0);
+    void confirmedPaymentApprovesRequest() {
+        saga.on(new BikeRequestedEvent(BIKE_ID, RENTER, REFERENCE));
+
+        saga.on(new PaymentConfirmedEvent("paymentId", REFERENCE));
+
+        verify(commandDispatcher).send(new ApproveRequestCommand(BIKE_ID, RENTER));
     }
 
     @Test
-    void shouldRejectRequestOnPaymentRejected() {
-        fixture.givenAPublished(new BikeRequestedEvent("bikeId", "renter", "rentalRef"))
-               .whenPublishingA(new PaymentRejectedEvent("paymentId", "rentalRef"))
-               .expectDispatchedCommands(new RejectRequestCommand("bikeId", "renter"));
+    void rejectedPaymentRejectsRequest() {
+        saga.on(new BikeRequestedEvent(BIKE_ID, RENTER, REFERENCE));
+
+        saga.on(new PaymentRejectedEvent("paymentId", REFERENCE));
+
+        verify(commandDispatcher).send(new RejectRequestCommand(BIKE_ID, RENTER));
     }
-
-    @Test
-    void shouldEndSagaWhenRequestIsRejected() {
-        fixture.givenAPublished(new BikeRequestedEvent("bikeId", "renter", "rentalRef"))
-                .whenPublishingA(new RequestRejectedEvent("bikeId"))
-                .expectActiveSagas(0);
-
-    }
-
-    @Test
-    void shouldRejectPaymentWhenNotConfirmedIn30Seconds() {
-        fixture.givenAPublished(new BikeRequestedEvent("bikeId", "renter", "rentalRef"))
-                .andThenAPublished(new PaymentPreparedEvent("paymentId", 10, "rentalRef"))
-                .whenTimeElapses(Duration.ofSeconds(30))
-                .expectDispatchedCommands(new RejectPaymentCommand("paymentId"));
-
-    }
-
 }

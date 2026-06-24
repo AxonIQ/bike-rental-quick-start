@@ -23,12 +23,6 @@
             <scope>provided</scope>
         </dependency>
         <!-- end::deps-spring-boot-starter-data[] -->
-        <!-- tag::deps-axon-modelling[] -->
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-modelling</artifactId>
-        </dependency>
-        <!-- end::deps-axon-modelling[] -->
     </dependencies>
     <!-- end::dependencies[] -->
 

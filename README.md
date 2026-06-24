@@ -1,5 +1,25 @@
 # Evolving a service from monolith to microservices with Axon Framework and Axon Server
 
+> **Note — `as-grpc-api` branch:** on this branch the Rental and Payment services are rebuilt on the
+> **raw Axon Server gRPC API** (via [`axonserver-connector-java`](https://github.com/AxonIQ/axonserver-connector-java))
+> instead of the Axon Framework. There is no command bus, query bus, aggregate repository, saga
+> manager or tracking event processor from the framework — those capabilities are implemented
+> directly against Axon Server's command, query and event channels:
+>
+> | Capability | Framework (main) | Raw gRPC (this branch) |
+> |---|---|---|
+> | Command handling | `@Aggregate` + `CommandGateway` | `commandChannel().registerCommandHandler/sendCommand`; aggregates rebuilt by replaying `eventChannel().openAggregateStream(...)` and appended via an append-events transaction (see `*CommandHandler`) |
+> | Queries / subscription queries | `@QueryHandler` + `QueryGateway`/`QueryUpdateEmitter` | a `QueryHandler` on `queryChannel()` plus a small `SubscriptionRegistry` emitting `QueryUpdate`s (see `*Projection`, `QueryDispatcher`) |
+> | Event processors | tracking/streaming processors + token store | a thread reading `eventChannel().openStream(token,…)` with the token persisted in one JPA row (see `*EventProcessor`, `ProjectionToken`) |
+> | Saga + deadlines | `@Saga` + `DeadlineManager` | in-memory state machine + `ScheduledExecutorService` (see `PaymentSaga`) |
+>
+> Spring Boot still provides the web layer and the JPA-backed read models. The `microservices`
+> module (the monolith-to-microservices split) still relies on the Axon Framework and is excluded
+> from the build on this branch.
+>
+> **Version note:** the connector must match the Axon Server line it talks to. This branch targets
+> the `axoniq/axonserver:latest` image (2025.2.x) with connector `2025.2.1` (`axonserver-connector.version` in the root `pom.xml`).
+
 The goal of this repo is to show how one can develop a well structured monolithic application that can evolve to become a set of microservices
 using [Axon Framework and Axon Server](https://developer.axoniq.io/).
 

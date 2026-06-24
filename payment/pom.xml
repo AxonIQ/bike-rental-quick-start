@@ -28,35 +28,13 @@
             <scope>runtime</scope>
         </dependency>
         <!-- end::deps-h2[] -->
-        <!-- tag::deps-axonframework[] -->
+        <!-- tag::deps-axonserver-connector[] -->
+        <!-- The raw Axon Server gRPC client, replacing the Axon Framework. -->
         <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-spring-boot-starter</artifactId>
+            <groupId>io.axoniq</groupId>
+            <artifactId>axonserver-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- end::deps-axonframework[] -->
-        <!-- tag::deps-axon-micrometer[] -->
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-micrometer</artifactId>
-        </dependency>
-        <!-- end::deps-axon-micrometer[] -->
-        <!-- tag::deps-axon-firestarter[] -->
-        <dependency>
-            <groupId>org.axonframework.firestarter</groupId>
-            <artifactId>firestarter-spring-starter</artifactId>
-        </dependency>
-        <!-- end::deps-axon-firestarter[] -->
-        <!-- tag::deps-axoniq-console[] -->
-        <dependency>
-            <groupId>io.axoniq.console</groupId>
-            <artifactId>console-framework-client-spring-boot-starter</artifactId>
-        </dependency>
-        <!-- end::deps-axoniq-console[] -->
+        <!-- end::deps-axonserver-connector[] -->
         <!-- tag::deps-springboot-starter-actuator[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

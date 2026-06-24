@@ -4,62 +4,52 @@ import io.axoniq.demo.bikerental.coreapi.payment.ConfirmPaymentCommand;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentConfirmedEvent;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentPreparedEvent;
 import io.axoniq.demo.bikerental.coreapi.payment.PaymentRejectedEvent;
-import io.axoniq.demo.bikerental.coreapi.payment.PreparePaymentCommand;
 import io.axoniq.demo.bikerental.coreapi.payment.RejectPaymentCommand;
-import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.eventsourcing.EventSourcingHandler;
-import org.axonframework.modelling.command.AggregateIdentifier;
-import org.axonframework.spring.stereotype.Aggregate;
 
-import java.util.UUID;
+import java.util.List;
 
-import static org.axonframework.modelling.command.AggregateLifecycle.apply;
-
-@Aggregate
+/**
+ * The Payment decision model. Formerly an Axon Framework {@code @Aggregate}; now a plain object
+ * that {@link PaymentCommandHandler} rebuilds by replaying events ({@link #apply(Object)}) before
+ * asking it to decide on a command.
+ */
 public class Payment {
 
-    @AggregateIdentifier
     private String id;
-
     private boolean closed;
     private String paymentReference;
+    private long lastSequence = -1;
 
-    public Payment() {
-    }
-
-    @CommandHandler
-    public Payment(PreparePaymentCommand command) {
-        String paymentId = UUID.randomUUID().toString();
-        apply(new PaymentPreparedEvent(paymentId, command.amount(), command.paymentReference()));
-    }
-
-    @CommandHandler
-    public void handle(ConfirmPaymentCommand command) {
-        if (!closed) {
-            apply(new PaymentConfirmedEvent(command.paymentId(), paymentReference));
+    public void apply(Object event) {
+        if (event instanceof PaymentPreparedEvent e) {
+            this.id = e.paymentId();
+            this.paymentReference = e.paymentReference();
+        } else if (event instanceof PaymentConfirmedEvent e) {
+            this.closed = true;
+        } else if (event instanceof PaymentRejectedEvent e) {
+            this.closed = true;
         }
     }
 
-    @CommandHandler
-    public void handle(RejectPaymentCommand command) {
-        if (!closed) {
-            apply(new PaymentRejectedEvent(command.paymentId(), paymentReference));
+    public List<Object> decideOnConfirm(ConfirmPaymentCommand command) {
+        if (closed) {
+            return List.of();
         }
+        return List.of(new PaymentConfirmedEvent(command.paymentId(), paymentReference));
     }
 
-    @EventSourcingHandler
-    protected void on(PaymentPreparedEvent event) {
-        this.id = event.paymentId();
-        this.paymentReference = event.paymentReference();
+    public List<Object> decideOnReject(RejectPaymentCommand command) {
+        if (closed) {
+            return List.of();
+        }
+        return List.of(new PaymentRejectedEvent(command.paymentId(), paymentReference));
     }
 
-    @EventSourcingHandler
-    protected void on(PaymentConfirmedEvent event) {
-        this.closed = true;
+    public long lastSequence() {
+        return lastSequence;
     }
 
-    @EventSourcingHandler
-    protected void on(PaymentRejectedEvent event) {
-        this.closed = true;
+    public void setLastSequence(long lastSequence) {
+        this.lastSequence = lastSequence;
     }
 }
