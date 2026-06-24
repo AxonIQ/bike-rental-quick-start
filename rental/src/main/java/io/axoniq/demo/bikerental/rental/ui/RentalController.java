@@ -8,6 +8,7 @@ import io.axoniq.demo.bikerental.coreapi.rental.BikeStatusNamedQueries;
 import io.axoniq.demo.bikerental.coreapi.rental.RegisterBikeCommand;
 import io.axoniq.demo.bikerental.coreapi.rental.RequestBikeCommand;
 import io.axoniq.demo.bikerental.coreapi.rental.ReturnBikeCommand;
+import io.axoniq.demo.bikerental.rental.query.BikeStatusProjection;
 import io.axoniq.demo.bikerental.rental.support.CommandDispatcher;
 import io.axoniq.demo.bikerental.rental.support.QueryDispatcher;
 import org.springframework.http.codec.ServerSentEvent;
@@ -27,13 +28,16 @@ public class RentalController {
 
     private final CommandDispatcher commandDispatcher;
     private final QueryDispatcher queryDispatcher;
+    private final BikeStatusProjection bikeStatusProjection;
     private final BikeRentalDataGenerator bikeRentalDataGenerator;
 
     public RentalController(CommandDispatcher commandDispatcher,
                             QueryDispatcher queryDispatcher,
+                            BikeStatusProjection bikeStatusProjection,
                             BikeRentalDataGenerator bikeRentalDataGenerator) {
         this.commandDispatcher = commandDispatcher;
         this.queryDispatcher = queryDispatcher;
+        this.bikeStatusProjection = bikeStatusProjection;
         this.bikeRentalDataGenerator = bikeRentalDataGenerator;
     }
 
@@ -58,22 +62,22 @@ public class RentalController {
 
     @GetMapping("/bikeUpdates")
     public Flux<ServerSentEvent<String>> subscribeToAllUpdates() {
-        return queryDispatcher.subscriptionQueryMany(BikeStatusNamedQueries.FIND_ALL, null, BikeStatus.class)
-                              .map(BikeStatus::description)
-                              .map(description -> ServerSentEvent.builder(description).build());
+        return bikeStatusProjection.subscribeAll()
+                                   .map(BikeStatus::description)
+                                   .map(description -> ServerSentEvent.builder(description).build());
     }
 
     @GetMapping("/bikeUpdatesJson")
     public Flux<ServerSentEvent<BikeStatus>> subscribeToAllUpdatesJson() {
-        return queryDispatcher.subscriptionQueryMany(BikeStatusNamedQueries.FIND_ALL, null, BikeStatus.class)
-                              .map(status -> ServerSentEvent.builder(status).build());
+        return bikeStatusProjection.subscribeAll()
+                                   .map(status -> ServerSentEvent.builder(status).build());
     }
 
     @GetMapping("/bikeUpdates/{bikeId}")
     public Flux<ServerSentEvent<String>> subscribeToBikeUpdates(@PathVariable("bikeId") String bikeId) {
-        return queryDispatcher.subscriptionQuery(BikeStatusNamedQueries.FIND_ONE, bikeId, BikeStatus.class)
-                              .map(BikeStatus::description)
-                              .map(description -> ServerSentEvent.builder(description).build());
+        return bikeStatusProjection.subscribeOne(bikeId)
+                                   .map(BikeStatus::description)
+                                   .map(description -> ServerSentEvent.builder(description).build());
     }
 
     @PostMapping("/requestBike")
@@ -109,14 +113,14 @@ public class RentalController {
 
     @GetMapping(value = "watch", produces = "text/event-stream")
     public Flux<String> watchAll() {
-        return queryDispatcher.subscriptionQueryMany(BikeStatusNamedQueries.FIND_ALL, null, BikeStatus.class)
-                              .map(bs -> bs.getBikeId() + " -> " + bs.description());
+        return bikeStatusProjection.subscribeAll()
+                                   .map(bs -> bs.getBikeId() + " -> " + bs.description());
     }
 
     @GetMapping(value = "watch/{bikeId}", produces = "text/event-stream")
     public Flux<String> watchBike(@PathVariable("bikeId") String bikeId) {
-        return queryDispatcher.subscriptionQuery(BikeStatusNamedQueries.FIND_ONE, bikeId, BikeStatus.class)
-                              .map(bs -> bs.getBikeId() + " -> " + bs.description());
+        return bikeStatusProjection.subscribeOne(bikeId)
+                                   .map(bs -> bs.getBikeId() + " -> " + bs.description());
     }
 
     @PostMapping(value = "/generateRentals")

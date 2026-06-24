@@ -42,14 +42,9 @@
             <scope>test</scope>
         </dependency>
         <!-- end::deps-reactor[] -->
-        <!-- tag::deps-axonserver-connector[] -->
-        <!-- The raw Axon Server gRPC client. This replaces the Axon Framework: we talk
-             to Axon Server's command/query/event channels directly. -->
-        <dependency>
-            <groupId>io.axoniq</groupId>
-            <artifactId>axonserver-connector-java</artifactId>
-        </dependency>
-        <!-- end::deps-axonserver-connector[] -->
+        <!-- No Axon Framework or Axon Server gRPC client here: this branch talks to Axon Server
+             purely over its Integration HTTP API, using Spring's RestClient (spring-web) and the
+             handler controllers under /axon/**. -->
         <!-- tag::deps-springboot-starter-actuator[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

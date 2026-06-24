@@ -1,24 +1,33 @@
 # Evolving a service from monolith to microservices with Axon Framework and Axon Server
 
-> **Note — `as-grpc-api` branch:** on this branch the Rental and Payment services are rebuilt on the
-> **raw Axon Server gRPC API** (via [`axonserver-connector-java`](https://github.com/AxonIQ/axonserver-connector-java))
-> instead of the Axon Framework. There is no command bus, query bus, aggregate repository, saga
-> manager or tracking event processor from the framework — those capabilities are implemented
-> directly against Axon Server's command, query and event channels:
+> **Note — `as-http-api` branch:** on this branch the Rental and Payment services are rebuilt on the
+> **Axon Server [Integration HTTP API](https://docs.axoniq.io/axon-server-reference/v2026.0/axon-server/administration/integration/)**
+> only — no Axon Framework and no gRPC client (`axonserver-connector-java`) at all. The only Axon
+> dependency is plain HTTP, made with Spring's `RestClient`.
 >
-> | Capability | Framework (main) | Raw gRPC (this branch) |
-> |---|---|---|
-> | Command handling | `@Aggregate` + `CommandGateway` | `commandChannel().registerCommandHandler/sendCommand`; aggregates rebuilt by replaying `eventChannel().openAggregateStream(...)` and appended via an append-events transaction (see `*CommandHandler`) |
-> | Queries / subscription queries | `@QueryHandler` + `QueryGateway`/`QueryUpdateEmitter` | a `QueryHandler` on `queryChannel()` plus a small `SubscriptionRegistry` emitting `QueryUpdate`s (see `*Projection`, `QueryDispatcher`) |
-> | Event processors | tracking/streaming processors + token store | a thread reading `eventChannel().openStream(token,…)` with the token persisted in one JPA row (see `*EventProcessor`, `ProjectionToken`) |
-> | Saga + deadlines | `@Saga` + `DeadlineManager` | in-memory state machine + `ScheduledExecutorService` (see `PaymentSaga`) |
+> The Integration option is the HTTP equivalent of the gRPC channels: each service **registers an
+> endpoint and handlers** with Axon Server on startup (`POST /v2/endpoints` and `.../commandHandlers`,
+> `.../queryHandlers`, `.../eventHandlers` — see `IntegrationRegistrar`), and Axon Server then
+> **pushes** commands, queries and events to the service's HTTP handler endpoints (the controllers
+> under `/axon/**`). The services **send** messages with `POST /v2/commands|queries|events` and **load
+> aggregates** with `GET /v2/aggregates/{id}/events`.
+>
+> | Capability | Framework (main) | gRPC (`as-grpc-api`) | Integration HTTP (this branch) |
+> |---|---|---|---|
+> | Command handling | `@Aggregate` + `CommandGateway` | command channel | command handler registered with Axon Server → it `POST`s to `/axon/command`; aggregate rebuilt via `GET /v2/aggregates/{id}/events`, new events appended via `POST /v2/events` (see `*CommandHandler`, `CommandHandlerController`) |
+> | Queries | `@QueryHandler` + `QueryGateway` | query channel | query handler registered → Axon Server `POST`s to `/axon/query`; sent via `POST /v2/queries` (see `*Projection`, `QueryHandlerController`, `QueryDispatcher`) |
+> | Subscription queries | `QueryUpdateEmitter` | subscription query | **not supported by the HTTP API** — served in-process from the read model (live UI updates via a Reactor `SubscriptionRegistry`; cross-service waits via short-interval polling, see `QueryDispatcher#subscriptionQuery`) |
+> | Event processors | tracking processors + token store | `openStream(token,…)` | Integration **event handlers** = persistent streams whose position Axon Server tracks server-side; it `POST`s event batches to `/axon/events/*` (see `EventHandlerController`) |
+> | Saga + deadlines | `@Saga` + `DeadlineManager` | in-memory state machine | unchanged in-memory state machine + `ScheduledExecutorService`, fed by an event-handler callback (see `PaymentSaga`) |
 >
 > Spring Boot still provides the web layer and the JPA-backed read models. The `microservices`
-> module (the monolith-to-microservices split) still relies on the Axon Framework and is excluded
-> from the build on this branch.
+> module still relies on the Axon Framework and is excluded from the build on this branch.
 >
-> **Version note:** the connector must match the Axon Server line it talks to. This branch targets
-> the `axoniq/axonserver:latest` image (2025.2.x) with connector `2025.2.1` (`axonserver-connector.version` in the root `pom.xml`).
+> **Reachability note:** Axon Server must be able to reach each service to push messages to it. Set
+> `axon.integration.callback-url` (in each `application.properties`) to a URL reachable from wherever
+> Axon Server runs — when Axon Server runs in Docker and the apps run on the host, that means
+> `http://host.docker.internal:8080` (rental) and `:8081` (payment). The `axon.axonserver.http-url`
+> (default `http://localhost:8024`) points the other way, at Axon Server's HTTP port.
 
 The goal of this repo is to show how one can develop a well structured monolithic application that can evolve to become a set of microservices
 using [Axon Framework and Axon Server](https://developer.axoniq.io/).

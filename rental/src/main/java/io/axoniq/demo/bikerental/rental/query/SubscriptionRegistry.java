@@ -1,47 +1,41 @@
 package io.axoniq.demo.bikerental.rental.query;
 
-import io.axoniq.axonserver.connector.Registration;
-import io.axoniq.axonserver.connector.query.QueryHandler;
-import io.axoniq.axonserver.grpc.query.QueryUpdate;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Keeps track of the active subscription queries against a projection and pushes updates to them.
- * This is the small piece that replaces Axon Framework's {@code QueryUpdateEmitter}: when the
- * projection changes, it asks this registry to emit a {@link QueryUpdate} to every subscription
- * whose query name matches and whose (optional) filter value equals the one supplied.
+ * Keeps track of active in-memory subscriptions to a projection and pushes updates to them. This is
+ * the HTTP-branch replacement for Axon Framework's {@code QueryUpdateEmitter} (and for the gRPC
+ * branch's subscription-query support, which the HTTP query API does not offer): because the read
+ * model lives in this JVM and is fed by an event-handler callback, we can serve live UI updates
+ * locally as a Reactor {@link Flux}.
+ * <p>
+ * A subscription has an optional filter: a {@code null} filter receives every emit (used for
+ * "find all"); a non-null filter only receives emits whose key equals it (used for "find one" by id).
  */
-public class SubscriptionRegistry {
+public class SubscriptionRegistry<T> {
 
-    private record Subscription(String queryName, Object filter, QueryHandler.UpdateHandler handler) {
+    private record Subscription<T>(Object filter, Sinks.Many<T> sink) {
 
     }
 
-    private final Set<Subscription> subscriptions = ConcurrentHashMap.newKeySet();
+    private final Set<Subscription<T>> subscriptions = ConcurrentHashMap.newKeySet();
 
-    /**
-     * Registers a subscription for the given query name. A {@code null} filter matches every emit
-     * for that query name (used for "find all"); a non-null filter only matches emits carrying an
-     * equal filter value (used for "find one" by id).
-     */
-    public Registration register(String queryName, Object filter, QueryHandler.UpdateHandler handler) {
-        Subscription subscription = new Subscription(queryName, filter, handler);
+    public Flux<T> register(Object filter) {
+        Sinks.Many<T> sink = Sinks.many().multicast().onBackpressureBuffer();
+        Subscription<T> subscription = new Subscription<>(filter, sink);
         subscriptions.add(subscription);
-        return () -> {
-            subscriptions.remove(subscription);
-            return CompletableFuture.completedFuture(null);
-        };
+        return sink.asFlux().doFinally(signal -> subscriptions.remove(subscription));
     }
 
-    public void emit(String queryName, Object filterValue, QueryUpdate update) {
-        for (Subscription subscription : subscriptions) {
-            if (subscription.queryName().equals(queryName)
-                    && (subscription.filter() == null || Objects.equals(subscription.filter(), filterValue))) {
-                subscription.handler().sendUpdate(update);
+    public void emit(Object key, T value) {
+        for (Subscription<T> subscription : subscriptions) {
+            if (subscription.filter() == null || Objects.equals(subscription.filter(), key)) {
+                subscription.sink().tryEmitNext(value);
             }
         }
     }

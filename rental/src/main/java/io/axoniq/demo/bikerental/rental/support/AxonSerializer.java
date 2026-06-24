@@ -1,62 +1,59 @@
 package io.axoniq.demo.bikerental.rental.support;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.protobuf.ByteString;
-import io.axoniq.axonserver.grpc.SerializedObject;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.List;
 
 /**
  * Converts application payloads (commands, events, queries, results - all plain Java records/objects)
- * to and from the {@link SerializedObject} representation that the Axon Server gRPC API works with.
+ * to and from the JSON {@link JsonNode} representation used in the Axon Server Integration HTTP API
+ * message envelopes (see {@link AxonServerMessages}).
  * <p>
- * The convention used here is the same one Axon Framework's Jackson serializer uses: the
- * {@code type} of the {@link SerializedObject} holds the fully qualified class name and the
- * {@code data} holds the JSON representation. Because the type travels with the payload, the
- * receiving side can always reconstruct the original object.
+ * The convention is the one Axon Framework's Jackson serializer uses: the message carries the fully
+ * qualified class name as its {@code payloadType}, and the {@code payload} is the JSON form of the
+ * object. Because the type travels with the payload, the receiving side can reconstruct the original.
  */
 @Component
 public class AxonSerializer {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    public SerializedObject serialize(Object payload) {
-        try {
-            return SerializedObject.newBuilder()
-                                   .setType(payload.getClass().getName())
-                                   .setData(ByteString.copyFrom(objectMapper.writeValueAsBytes(payload)))
-                                   .build();
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to serialize " + payload.getClass(), e);
-        }
+    public AxonSerializer(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
-    public <T> T deserialize(SerializedObject serializedObject, Class<T> type) {
-        try {
-            return objectMapper.readValue(serializedObject.getData().toByteArray(), type);
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to deserialize payload of type " + serializedObject.getType(), e);
-        }
+    /** The JSON form of a payload object, ready to drop into a message envelope. */
+    public JsonNode toJson(Object payload) {
+        return objectMapper.valueToTree(payload);
     }
 
-    public Object deserialize(SerializedObject serializedObject) {
+    public <T> T fromJson(JsonNode payload, Class<T> type) {
+        if (payload == null || payload.isNull()) {
+            return null;
+        }
+        return objectMapper.convertValue(payload, type);
+    }
+
+    /** Reconstructs an object from its JSON payload using the fully qualified type carried with it. */
+    public Object fromJson(JsonNode payload, String payloadType) {
+        if (payload == null || payload.isNull()) {
+            return null;
+        }
         try {
-            return deserialize(serializedObject, Class.forName(serializedObject.getType()));
+            return fromJson(payload, Class.forName(payloadType));
         } catch (ClassNotFoundException e) {
-            throw new IllegalStateException("Unknown payload type: " + serializedObject.getType(), e);
+            throw new IllegalStateException("Unknown payload type: " + payloadType, e);
         }
     }
 
-    public <T> List<T> deserializeList(SerializedObject serializedObject, Class<T> elementType) {
-        try {
-            return objectMapper.readValue(
-                    serializedObject.getData().toByteArray(),
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, elementType));
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to deserialize list payload", e);
+    public <T> List<T> listFromJson(JsonNode payload, Class<T> elementType) {
+        if (payload == null || payload.isNull()) {
+            return List.of();
         }
+        return objectMapper.convertValue(
+                payload,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, elementType));
     }
 }

@@ -2,7 +2,7 @@ package io.axoniq.demo.bikerental.rental.support;
 
 /**
  * Thrown on the dispatching side when Axon Server reports that a command handler completed
- * exceptionally (the gRPC {@code CommandResponse} carried an error code).
+ * exceptionally (the {@code POST /v2/commands} call returned an error status).
  */
 public class CommandExecutionException extends RuntimeException {
 

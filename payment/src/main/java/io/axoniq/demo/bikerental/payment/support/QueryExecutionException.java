@@ -2,7 +2,7 @@ package io.axoniq.demo.bikerental.payment.support;
 
 /**
  * Thrown on the dispatching side when Axon Server reports that a query handler completed
- * exceptionally (the gRPC {@code QueryResponse} carried an error code).
+ * exceptionally (the {@code POST /v2/queries} call returned an error status).
  */
 public class QueryExecutionException extends RuntimeException {
 

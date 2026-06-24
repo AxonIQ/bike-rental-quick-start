@@ -1,77 +1,63 @@
 package io.axoniq.demo.bikerental.payment.support;
 
-import io.axoniq.axonserver.connector.ResultStream;
-import io.axoniq.axonserver.connector.query.QueryChannel;
-import io.axoniq.axonserver.grpc.query.QueryRequest;
-import io.axoniq.axonserver.grpc.query.QueryResponse;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Thin replacement for Axon Framework's {@code QueryGateway} (point-to-point queries only, which is
- * all the payment service dispatches), built on the Axon Server {@link QueryChannel}.
+ * all the payment service dispatches), built on the Axon Server Integration HTTP API: a query is sent
+ * with {@code POST /v2/queries} and routed by Axon Server to the registered query handler.
  */
 @Component
 public class QueryDispatcher {
 
-    private final QueryChannel queryChannel;
+    private final AxonServerClient client;
     private final AxonSerializer serializer;
+    private final ExecutorService executor = Executors.newFixedThreadPool(8);
 
-    public QueryDispatcher(QueryChannel queryChannel, AxonSerializer serializer) {
-        this.queryChannel = queryChannel;
+    public QueryDispatcher(AxonServerClient client, AxonSerializer serializer) {
+        this.client = client;
         this.serializer = serializer;
     }
 
+    @PreDestroy
+    public void stop() {
+        executor.shutdownNow();
+    }
+
     public <R> CompletableFuture<R> query(String queryName, Object payload, Class<R> responseType) {
-        return firstResponse(queryChannel.query(buildRequest(queryName, payload)))
-                .thenApply(response -> response.hasPayload()
-                        ? serializer.deserialize(response.getPayload(), responseType)
-                        : null);
+        return CompletableFuture.supplyAsync(() -> {
+            AxonServerMessages.QueryResult result =
+                    client.sendQuery(buildQuery(queryName, payload, responseType, "SINGLE"));
+            return result == null ? null : serializer.fromJson(result.payload(), responseType);
+        }, executor);
     }
 
     public <R> CompletableFuture<List<R>> queryMany(String queryName, Object payload, Class<R> elementType) {
-        return firstResponse(queryChannel.query(buildRequest(queryName, payload)))
-                .thenApply(response -> response.hasPayload()
-                        ? serializer.deserializeList(response.getPayload(), elementType)
-                        : List.<R>of());
+        return CompletableFuture.supplyAsync(() -> {
+            AxonServerMessages.QueryResult result =
+                    client.sendQuery(buildQuery(queryName, payload, elementType, "MULTIPLE"));
+            return result == null ? List.<R>of() : serializer.listFromJson(result.payload(), elementType);
+        }, executor);
     }
 
-    private QueryRequest buildRequest(String queryName, Object payload) {
-        QueryRequest.Builder builder = QueryRequest.newBuilder().setQuery(queryName);
-        if (payload != null) {
-            builder.setPayload(serializer.serialize(payload));
-        }
-        return builder.build();
-    }
-
-    private CompletableFuture<QueryResponse> firstResponse(ResultStream<QueryResponse> stream) {
-        CompletableFuture<QueryResponse> future = new CompletableFuture<>();
-        stream.onAvailable(() -> {
-            try {
-                QueryResponse response;
-                while ((response = stream.nextIfAvailable()) != null) {
-                    if (future.isDone()) {
-                        continue;
-                    }
-                    if (!response.getErrorCode().isEmpty()) {
-                        future.completeExceptionally(
-                                new QueryExecutionException(response.getErrorMessage().getMessage()));
-                    } else {
-                        future.complete(response);
-                    }
-                }
-                if (stream.isClosed() && !future.isDone()) {
-                    future.completeExceptionally(stream.getError()
-                                                       .orElseGet(() -> new QueryExecutionException(
-                                                               "Query completed without a result")));
-                }
-            } catch (Exception e) {
-                future.completeExceptionally(e);
-            }
-        });
-        future.whenComplete((r, e) -> stream.close());
-        return future;
+    private AxonServerMessages.Query buildQuery(String queryName, Object payload,
+                                                Class<?> responseType, String cardinality) {
+        return new AxonServerMessages.Query(
+                queryName,
+                payload == null ? null : payload.getClass().getName(),
+                null,
+                responseType.getName(),
+                cardinality,
+                null,
+                UUID.randomUUID().toString(),
+                null,
+                payload == null ? null : serializer.toJson(payload));
     }
 }

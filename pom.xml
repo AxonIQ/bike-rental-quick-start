@@ -43,27 +43,10 @@
 		<maven.compiler.target>21</maven.compiler.target>
 		<java.version>21</java.version>
 		<!-- end::props-java21[] -->
-		<!-- tag::props-axonserver-connector[] -->
-		<!-- The Axon Server Java connector exposes the raw Axon Server gRPC API
-		     (command/query/event channels) without the Axon Framework on top. -->
-		<axonserver-connector.version>2025.2.1</axonserver-connector.version>
-		<!-- end::props-axonserver-connector[] -->
+		<!-- This branch uses no Axon Framework or Axon Server gRPC client: the Rental and Payment
+		     services integrate with Axon Server purely over its Integration HTTP API. -->
     </properties>
 	<!-- end::properties[] -->
-
-    <!-- tag::dependencyManagement[] -->
-    <dependencyManagement>
-        <dependencies>
-            <!-- tag::deps-axonserver-connector[] -->
-            <dependency>
-                <groupId>io.axoniq</groupId>
-                <artifactId>axonserver-connector-java</artifactId>
-                <version>${axonserver-connector.version}</version>
-            </dependency>
-            <!-- end::deps-axonserver-connector[] -->
-        </dependencies>
-    </dependencyManagement>
-    <!-- end::dependencyManagement[] -->
 
     <!-- tag::dependencies[] -->
 	<dependencies>

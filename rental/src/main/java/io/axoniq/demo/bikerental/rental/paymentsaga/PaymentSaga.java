@@ -53,6 +53,24 @@ public class PaymentSaga {
         scheduler.shutdownNow();
     }
 
+    /**
+     * Entry point used by the event handler controller: routes an event to the matching {@code on}
+     * method. Events the saga does not care about are ignored.
+     */
+    public void accept(Object event) {
+        if (event instanceof BikeRequestedEvent e) {
+            on(e);
+        } else if (event instanceof PaymentPreparedEvent e) {
+            on(e);
+        } else if (event instanceof PaymentConfirmedEvent e) {
+            on(e);
+        } else if (event instanceof PaymentRejectedEvent e) {
+            on(e);
+        } else if (event instanceof RequestRejectedEvent e) {
+            on(e);
+        }
+    }
+
     public void on(BikeRequestedEvent event) {
         Instance instance = new Instance(event.bikeId(), event.renter(), event.rentalReference());
         byReference.put(event.rentalReference(), instance);
