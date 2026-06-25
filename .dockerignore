@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+.db
+*.db
+.git
+.idea
+.vscode
+frontend
+docs
+images

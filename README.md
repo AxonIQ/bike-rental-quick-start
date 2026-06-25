@@ -1,9 +1,13 @@
 # Evolving a service from monolith to microservices with Axon Framework and Axon Server
 
-> **Note — `as-http-api` branch:** on this branch the Rental and Payment services are rebuilt on the
-> **Axon Server [Integration HTTP API](https://docs.axoniq.io/axon-server-reference/v2026.0/axon-server/administration/integration/)**
-> only — no Axon Framework and no gRPC client (`axonserver-connector-java`) at all. The only Axon
-> dependency is plain HTTP, made with Spring's `RestClient`.
+> **Note — `as-http-ts-api` branch:** this is a **TypeScript / Node.js** rewrite of the `as-http-api`
+> branch. The Rental and Payment services keep exactly the same logic and talk to Axon Server over its
+> **[Integration HTTP API](https://docs.axoniq.io/axon-server-reference/v2026.0/axon-server/administration/integration/)**
+> only — no Axon Framework and no gRPC client. There is no Java and no Spring here: the web layer is
+> [Express](https://expressjs.com/), the Axon Server client is plain `fetch`, and the read models are
+> persisted to an embedded [SQLite](https://www.sqlite.org/) database via
+> [`better-sqlite3`](https://github.com/WiseLibs/better-sqlite3) (the stand-in for the H2 database the
+> Java branch used).
 >
 > The Integration option is the HTTP equivalent of the gRPC channels: each service **registers an
 > endpoint and handlers** with Axon Server on startup (`POST /v2/endpoints` and `.../commandHandlers`,
@@ -12,22 +16,22 @@
 > under `/axon/**`). The services **send** messages with `POST /v2/commands|queries|events` and **load
 > aggregates** with `GET /v2/aggregates/{id}/events`.
 >
-> | Capability | Framework (main) | gRPC (`as-grpc-api`) | Integration HTTP (this branch) |
+> | Capability | Framework (main) | gRPC (`as-grpc-api`) | Integration HTTP / TypeScript (this branch) |
 > |---|---|---|---|
-> | Command handling | `@Aggregate` + `CommandGateway` | command channel | command handler registered with Axon Server → it `POST`s to `/axon/command`; aggregate rebuilt via `GET /v2/aggregates/{id}/events`, new events appended via `POST /v2/events` (see `*CommandHandler`, `CommandHandlerController`) |
-> | Queries | `@QueryHandler` + `QueryGateway` | query channel | query handler registered → Axon Server `POST`s to `/axon/query`; sent via `POST /v2/queries` (see `*Projection`, `QueryHandlerController`, `QueryDispatcher`) |
-> | Subscription queries | `QueryUpdateEmitter` | subscription query | **not supported by the HTTP API** — served in-process from the read model (live UI updates via a Reactor `SubscriptionRegistry`; cross-service waits via short-interval polling, see `QueryDispatcher#subscriptionQuery`) |
-> | Event processors | tracking processors + token store | `openStream(token,…)` | Integration **event handlers** = persistent streams whose position Axon Server tracks server-side; it `POST`s event batches to `/axon/events/*` (see `EventHandlerController`) |
-> | Saga + deadlines | `@Saga` + `DeadlineManager` | in-memory state machine | unchanged in-memory state machine + `ScheduledExecutorService`, fed by an event-handler callback (see `PaymentSaga`) |
+> | Command handling | `@Aggregate` + `CommandGateway` | command channel | command handler registered with Axon Server → it `POST`s to `/axon/command`; aggregate rebuilt via `GET /v2/aggregates/{id}/events`, new events appended via `POST /v2/events` (see `*CommandHandler`, `command-handler-controller.ts`) |
+> | Queries | `@QueryHandler` + `QueryGateway` | query channel | query handler registered → Axon Server `POST`s to `/axon/query`; sent via `POST /v2/queries` (see `*Projection`, `query-handler-controller.ts`, `QueryDispatcher`) |
+> | Subscription queries | `QueryUpdateEmitter` | subscription query | **not supported by the HTTP API** — served in-process from the read model (live UI updates via an in-memory `SubscriptionRegistry`; cross-service waits via short-interval polling, see `QueryDispatcher.pollFor`) |
+> | Event processors | tracking processors + token store | `openStream(token,…)` | Integration **event handlers** = persistent streams whose position Axon Server tracks server-side; it `POST`s event batches to `/axon/events/*` (see `event-handler-controller.ts`) |
+> | Saga + deadlines | `@Saga` + `DeadlineManager` | in-memory state machine | unchanged in-memory state machine driven by an event-handler callback, with `setTimeout` deadlines (see `PaymentSaga`) |
 >
-> Spring Boot still provides the web layer and the JPA-backed read models. The `microservices`
-> module still relies on the Axon Framework and is excluded from the build on this branch.
+> The repository is an npm workspaces monorepo: `core-api` (shared domain messages + the Axon Server
+> HTTP client), `payment` and `rental`.
 >
 > **Reachability note:** Axon Server must be able to reach each service to push messages to it. Set
-> `axon.integration.callback-url` (in each `application.properties`) to a URL reachable from wherever
-> Axon Server runs — when Axon Server runs in Docker and the apps run on the host, that means
-> `http://host.docker.internal:8080` (rental) and `:8081` (payment). The `axon.axonserver.http-url`
-> (default `http://localhost:8024`) points the other way, at Axon Server's HTTP port.
+> `AXON_INTEGRATION_CALLBACK_URL` to a URL reachable from wherever Axon Server runs — when Axon Server
+> runs in Docker and the apps run on the host, that means `http://host.docker.internal:8080` (rental)
+> and `:8081` (payment). `AXON_AXONSERVER_HTTP_URL` (default `http://localhost:8024`) points the other
+> way, at Axon Server's HTTP port.
 
 The goal of this repo is to show how one can develop a well structured monolithic application that can evolve to become a set of microservices
 using [Axon Framework and Axon Server](https://developer.axoniq.io/).
@@ -42,17 +46,41 @@ a bike rental.
 
 The following software must be installed in your local environment:
 
-* JDK version 21.
+* Node.js version 20 (or newer).
 
-* Docker-Compose
+* Docker Compose
 
 ## Quick Start
 
-* An IDE such as [Jetbrains IDEA](https://www.jetbrains.com/idea/) is recommended.
-### Start Services
-Begin by running the `PaymentApplication` and `RentalApplication` Services in this order.  
-This will start a docker image of Axon-Server using run the docker-compose.yaml file found in the root of the project. 
-Once you have both services started you can see them connected to Axon-Server at http://localhost:8024/#overview
+### Start Axon Server
+Start Axon Server with the `compose.yaml` in the root of the project:
+
+```shell
+docker compose up -d
+```
+
+Once it is up you can reach its dashboard at http://localhost:8024/#overview
+
+### Build and start the services
+Install the dependencies and build all workspaces once:
+
+```shell
+npm install
+npm run build
+```
+
+Then start the **Payment** and **Rental** services (in two terminals, in this order):
+
+```shell
+npm run start:payment   # listens on :8081
+npm run start:rental    # listens on :8080
+```
+
+(During development you can use `npm run dev` inside the `payment`/`rental` workspaces to run the
+TypeScript sources directly without a build step.)
+
+Each service registers itself with Axon Server on startup; you can then see them connected at
+http://localhost:8024/#overview
 ![Axon Server Overview](/images/Bike-Rental-Quick-Start-AxonServer-Overview.png)
 
 From this page you are able to navigate to the details for each application by clicking on the application in the diagram.
@@ -74,23 +102,21 @@ Now that your inventory is in place it is time to make some money!!  To simulate
 ```### Generate Rentals``` of the of [requests.http](/requests.http) file.
 
 
-## Evolving Rental Application monolith to microservices
-Great news!  The Axoniq World Wide Bike Rental Service is renting bikes faster than we can buy them!  As a result our
-Rental Application is experiencing some scalability issues.  To handle this increase in volume on our application it has
-been determined that we need to break out the parts of the Rental Application each in to their own service.  Our updated
-architecture now looks like the following...![Axoniq World Wide Bike Rental Microservices Architecture](/images/Bike-Rental-Quick-Start.microservices.png)
+## Simulator
 
-To make this happen run the [create-microservices.sh](create-microservices.sh) script to copy the necessary files into 
-the pre-defined services in the project. Once the script is complete, you must stop the running `RentalApplication` app (port conflict),
-and then run the new services `RentalCommandApplication`, `RentalPaymentSagaApplication`, `RentalQueryApplication`, and `UserInterfaceApplication`.
+The Rental service can continuously generate inventory and rentals on its own. Start it with the
+`simulator` profile to top up the bike inventory and run rental cycles every 25 seconds:
 
-This allows us to run each aspect of our Rental domain as an independent service with no functional changes to the code base. 
-Our initial approach of using features in Axon Framework such as Command Gateway and Query Gateway have provided us with
-location independence between our components.   We are now able to evolve and scale each component as necessary to handle 
-the increased load of our ever growing bike rental business.
+```shell
+SPRING_PROFILES_ACTIVE=simulator npm run start:rental
+```
 
+The simulation parameters (inventory size, bike type, loops, concurrency, …) can be tuned with the
+`INVENTORY_*` and `RENTAL_SIMULATION_*` environment variables (see `rental/src/config.ts`) or
+reconfigured at runtime via the `/inventoryGenerationConfig` and `/rentalGenerationConfig` endpoints.
 
-## Monitoring our Axon Framework and Axon Server based services
-To be able to understand the performance of our services, we can use the [Axoniq Console](https://console.axoniq.io). Using 
-Axoniq Console we can register each of our microservices, check on performance command handling within our Aggregates (Bike and Payment),
-query handling performance, and event processors as well. 
+## Evolving to microservices
+
+The Framework-based branches split the Rental monolith into separate Command, Query, Payment-saga and
+UI deployables. That decomposition is out of scope for this TypeScript / Integration-HTTP branch,
+which keeps Rental and Payment as the two services.

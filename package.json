@@ -1,0 +1,29 @@
+{
+  "name": "bike-rental",
+  "version": "0.0.1",
+  "description": "Bike rental demo on the Axon Server Integration HTTP API, written in TypeScript",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "core-api",
+    "payment",
+    "rental"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "node --import tsx --test rental/src/command/*.test.ts rental/src/paymentsaga/*.test.ts",
+    "start:rental": "node --import tsx rental/src/index.ts",
+    "start:payment": "node --import tsx payment/src/index.ts"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

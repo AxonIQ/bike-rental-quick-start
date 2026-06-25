@@ -1,0 +1,17 @@
+{
+  "name": "@bikerental/rental",
+  "version": "0.0.1",
+  "description": "Rental service on the Axon Server Integration HTTP API",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "start": "node dist/index.js",
+    "dev": "node --import tsx src/index.ts"
+  },
+  "dependencies": {
+    "@bikerental/core-api": "*",
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.19.2"
+  }
+}

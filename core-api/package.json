@@ -1,0 +1,14 @@
+{
+  "name": "@bikerental/core-api",
+  "version": "0.0.1",
+  "description": "Shared domain messages and the Axon Server Integration HTTP client",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc --build"
+  }
+}
